@@ -1,0 +1,7 @@
+{
+    "name": "Text Editor",
+    "description": "Halaman Text Editor",
+    "version": "1.0",
+    "namespace": "TextEditor",
+    "service": "TextEditorServiceProvider"
+}

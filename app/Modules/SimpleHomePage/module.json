@@ -1,0 +1,7 @@
+{
+    "name": "Simple Home Page",
+    "description": "Modul Standar untuk Halaman Home Yang Simple",
+    "version": "1.0",
+    "namespace": "SimpleHomePage",
+    "service": "SimpleHomePageServiceProvider"
+}
