@@ -177,6 +177,7 @@ return [
 
         // vendor
         Yajra\DataTables\DataTablesServiceProvider::class,
+        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
 
         // official
         App\Providers\ModuleServiceProvider::class,
@@ -234,6 +235,7 @@ return [
         
         // vendor
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
     ],
 
 ];

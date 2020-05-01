@@ -120,23 +120,23 @@ $breadcrumb = [
 @push('js')
     <script>
         $(document).ready(() => {
-                var canvas = document.querySelector("canvas#signature")
-                var signaturePad = new SignaturePad(canvas)
+                var canvas = document.querySelector("canvas#signature");
+                var signaturePad = new SignaturePad(canvas);
 
             setTimeout(() => {
                 var parentWidth = $(canvas).parent().outerWidth();
-                canvas.style.border = "1px solid black"
+                canvas.style.border = "1px solid black";
                 canvas.style.width = "100%";
                 canvas.style.height = "300px";
                 
-                document.getElementById('btn-clear').addEventListener('click', () => signaturePad.clear())
+                document.getElementById('btn-clear').addEventListener('click', () => signaturePad.clear());
                 document.getElementById('btn-undo').addEventListener('click', () => {
                     var data = signaturePad.toData();
                     if (data) {
                         data.pop();
                         signaturePad.fromData(data);
                     }
-                })
+                });
 
                 function resizeCanvas() {
                     var ratio =  Math.max(window.devicePixelRatio || 1, 1);
@@ -149,13 +149,12 @@ $breadcrumb = [
                 window.addEventListener("resize", resizeCanvas);
                 resizeCanvas();
 
-                signaturePad.fromDataURL(`{{ $user->data->ttd }}`)
-            }, 1000)
+                signaturePad.fromDataURL('{{ $user->data->ttd }}');
+            }, 1000);
 
             $('form').on('submit', (e) => {
-                // e.preventDefault()
-                $('input[name="data[ttd]"]').val(signaturePad.toDataURL())
-            })
-        })
+                $('input[name="data[ttd]"]').val(signaturePad.toDataURL());
+            });
+        });
     </script>
 @endpush
