@@ -20,10 +20,13 @@
     <link rel="stylesheet" type="text/css" href="{{ assets('css/core/menu/menu-types/vertical-menu-modern.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ assets('css/core/colors/palette-gradient.css') }}">
     <style>
-    table.dataTable { 
-        width: 100%!important; 
-        border-collapse: collapse; 
-    }
+    .dataTable {  width: 100%!important;  border-collapse: collapse;  }
+    .dataTables_wrapper { padding: 0!important; }
+    .card-table { padding: 0; }
+    .dataTables_wrapper .row:nth-child(1) { padding: 0 2rem; padding-top: 1.8rem; }
+    .dataTables_wrapper .row:nth-child(2) { padding: 0 .05rem; }
+    .dataTables_wrapper .row:nth-child(3) { padding: 0 2rem; padding-bottom: 1.8rem; }
+    .custom-control-label::after { cursor: pointer; }
     </style>
     @stack('css')
 </head>

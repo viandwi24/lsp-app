@@ -34,11 +34,16 @@ $breadcrumb = [
                             </ul>
                         </div>
                     </div>
-                    <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard card-table">
                         <table id="table" class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
-                                    <th width="5%"><input type="checkbox" id="bulk_check_selectall"></th>
+                                    <th width="5%">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="bulk_check_selectall" class="custom-control-input">
+                                            <label class="custom-control-label" for="bulk_check_selectall"></label>
+                                        </div>
+                                    </th>
                                     <th width="8%">#</th>
                                     <th>Nama</th>
                                     <th>Alamat</th>
@@ -65,51 +70,64 @@ $breadcrumb = [
 
 @push('js')
     <script>
-        let datatable = null;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                datatable: null,
+            },
+            methods: {
+                loadTable() {
+                    if (this.datatable != null) {
+                        this.datatable = null
+                        this.datatable.destroy()
+                    }
 
-        function loadTable() {
-            let index = 1;
-            // if (datatable != null) return 
-
-            datatable = $('#table').DataTable( {
-                ajax: "{{ url()->route('admin.tuk.index') }}",
-                processing: true,
-                columns: [
-                    { 
-                        data: null,
-                        sortable: false,
-                        render: (data) => `
-                            <input type="checkbox" class=".bulk" name="bulk_check" value="` + data.id + `">
-                        `
-                    },
-                    { render: () => index++ },
-                    { data: 'nama' },
-                    { data: 'alamat' },
-                    { data: 'no_telp' },
-                    {
-                        data: null,
-                        render: (data, type, row) => `
-                            <div>
-                                <a href="{{ url()->route('admin.tuk.index') . '/' }}`+data.id+`/edit" class="btn btn-sm btn-warning"><i class="ft-edit"></i></a>
-                                <form method="post" action="{{ url()->route('admin.tuk.index') . '/' }}`+data.id+`" style="display: inline-block;">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger"><i class="ft-trash"></i></button>
-                                </form>
-                            </div>
-                        `
-                    },
-                ]
-            });
-        }
-        
-        $('#reload').on('click', () => datatable.ajax.reload())
-        $('#bulkDelete').on('click', () => {
-            var url = '{{ url()->route("admin.tuk.index") }}/' + bulkSelectedItem
-            var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);
-            $('body').append(form);
-            form.submit();
+                    this.datatable = $('#table').DataTable( {
+                        ajax: "{{ url()->route('admin.tuk.index') }}",
+                        processing: true,
+                        order: [[1, 'asc']],
+                        columnDefs: [ { orderable: false, targets: [0, 5] }, ],
+                        columns: [
+                            { 
+                                data: null,
+                                render: (data) => `
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="bulk custom-control-input" id="bulk_check` + data.id + `" name="bulk_check" value="` + data.id + `">
+                                        <label class="custom-control-label" for="bulk_check` + data.id + `"></label>
+                                    </div>
+                                `
+                            },
+                            { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+                            { data: 'nama' },
+                            { data: 'alamat' },
+                            { data: 'no_telp' },
+                            {
+                                data: null,
+                                render: (data, type, row) => `
+                                    <div>
+                                        <a href="{{ url()->route('admin.tuk.index') . '/' }}`+data.id+`/edit" class="btn btn-sm btn-warning"><i class="ft-edit"></i></a>
+                                        <form method="post" action="{{ url()->route('admin.tuk.index') . '/' }}`+data.id+`" style="display: inline-block;">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger"><i class="ft-trash"></i></button>
+                                        </form>
+                                    </div>
+                                `
+                            },
+                        ]
+                    });
+                },
+            },
+            mounted() {
+                this.loadTable()
+                $('#reload').on('click', () => this.datatable.ajax.reload(null, false))
+                $('#bulkDelete').on('click', () => {
+                    var url = '{{ url()->route("admin.tuk.index") }}/' + bulkSelectedItem
+                    var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);
+                    $('body').append(form);
+                    form.submit();
+                })
+            }
         })
-        loadTable()
     </script>
 @endpush

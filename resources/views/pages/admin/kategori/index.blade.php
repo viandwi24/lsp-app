@@ -34,11 +34,16 @@ $breadcrumb = [
                             </ul>
                         </div>
                     </div>
-                    <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard card-table">
                         <table id="table" class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
-                                    <th width="5%"><input type="checkbox" id="bulk_check_selectall"></th>
+                                    <th width="5%">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="bulk_check_selectall" class="custom-control-input">
+                                            <label class="custom-control-label" for="bulk_check_selectall"></label>
+                                        </div>
+                                    </th>
                                     <th width="8%">#</th>
                                     <th>Nama</th>
                                     <th>Deskripsi</th>
@@ -70,12 +75,16 @@ $breadcrumb = [
                     this.datatable = $('#table').DataTable( {
                         ajax: "{{ url()->route('admin.kategori.index') }}",
                         processing: true,
+                        order: [[1, 'asc']],
+                        columnDefs: [ { orderable: false, targets: [0, 4] }, ],
                         columns: [
                             { 
                                 data: null,
-                                sortable: false,
                                 render: (data) => `
-                                    <input type="checkbox" class=".bulk" name="bulk_check" value="` + data.id + `">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="bulk custom-control-input" id="bulk_check` + data.id + `" name="bulk_check" value="` + data.id + `">
+                                        <label class="custom-control-label" for="bulk_check` + data.id + `"></label>
+                                    </div>
                                 `
                             },
                             { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
@@ -102,7 +111,7 @@ $breadcrumb = [
             },
             mounted() {
                 this.loadTable()
-                $('#reload').on('click', () => this.datatable.ajax.reload())
+                $('#reload').on('click', () => this.datatable.ajax.reload(null, false))
                 $('#bulkDelete').on('click', () => {
                     var url = '{{ url()->route("admin.kategori.index") }}/' + bulkSelectedItem
                     var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);

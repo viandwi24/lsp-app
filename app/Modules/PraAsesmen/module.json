@@ -1,0 +1,7 @@
+{
+    "name": "Pra - Asesmen",
+    "description": "Tahap 1 Pra Asesment mencakup FR-APL-01 dan FR-APL-02",
+    "version": "1.0",
+    "namespace": "PraAsesmen",
+    "service": "PraAsesmenServiceProvider"
+}

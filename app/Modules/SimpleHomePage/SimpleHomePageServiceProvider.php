@@ -12,27 +12,27 @@ class SimpleHomePageServiceProvider extends ServiceProvider implements ModuleSer
 {
     public function register()
     {
-        // 
+        // load route
+        Route::middleware('web')->group(__DIR__ . '/routes.php');
+
+        // load view
+        $this->loadViewsFrom(__DIR__.'/views', 'SimpleHomePage');
     }
 
     public function boot()
     {
-        // load view
-        $this->loadViewsFrom(__DIR__.'/views', 'SimpleHomePage');
-        
-        // load route
-        Route::middleware('web')->group(__DIR__ . '/routes.php');
-
         // add menu
-        Dashboard::addMenu('admin', [
+        // dd(route('simplehomepage.edit.inde'));
+        // dd(Route::getRoutes());
+        Dashboard::addMenu(['admin', 'superadmin'], [
             'type' => 'header',
             'text' => 'Simple Home Page',
         ]);
-        Dashboard::addMenu('admin', [
+        Dashboard::addMenu(['admin', 'superadmin'], [
             'type' => 'item',
             'text' => 'Edit Home',
             'icon' => 'la la-edit',
-            'link' => url('admin/simplehomepage/edit')
+            'link' => route('simplehomepage.edit')
         ]);
     }
 
@@ -43,7 +43,10 @@ class SimpleHomePageServiceProvider extends ServiceProvider implements ModuleSer
         // check text editor module must loaded
         if (!in_array('TextEditor', Module::getLoadedModules())) $error = 'Membutukan Module Text Editor Untuk Bisa Berjalan.';
 
+        // if error, return status error
         if ($error != null ) return [ 'status' => 'error', 'error' => $error ];
+
+        // if not error, return ready
         return [ 'status' => 'ready' ];
     }
 }

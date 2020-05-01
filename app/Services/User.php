@@ -7,6 +7,8 @@ class User
 {
     static public function make($role = 'asesi', $nama, $email, $password, $data)
     {
+        $data = self::validateData($role, $data);
+
         return UserModel::create([
             'nama' => $nama,
             'email' => $email,
@@ -15,5 +17,29 @@ class User
             'role' => $role,
             'ttd' => null,
         ]);
+    }
+
+    static public function validateData($user, $data)
+    {
+        $role = ($user instanceof \App\User ? $user->role : $user);
+        $newData = ($user instanceof \App\User ? $user->data : $data);
+        $rules = [];
+
+        if ($role == 'admin')
+        {
+            $rules = ['ttd', 'nik'];
+        } elseif ($role == 'asesor') {
+            $rules = ['ttd', 'nik'];
+        } elseif ($role == 'asesi') {
+            $rules = ['ttd'];
+        }
+        
+        // 
+        foreach ($data as $key => $value)
+        {
+            $newData->{$key} = $value;
+        }
+
+        return $newData;
     }
 }

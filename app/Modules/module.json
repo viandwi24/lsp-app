@@ -1,1 +1,1 @@
-{"modules":["Core","TextEditor","SimpleHomePage"],"load":{"0":"Core","2":"SimpleHomePage","3":"TextEditor"}}
+{"modules":["TextEditor","SimpleHomePage","PraAsesmen"],"load":["SimpleHomePage","TextEditor"]}

@@ -10,8 +10,8 @@ Route::get('/', function () {
 // Admin Route
 Route::group([
     'namespace' => '\Modules\SimpleHomePage\\',
-    'middleware' => ['auth', 'role:admin']
+    'middleware' => ['auth', 'role:admin,superadmin']
 ], function () {
-    Route::get('admin/simplehomepage/edit', 'SimpleHomePageController@index')->name('simplehomepage.edit');
-    Route::post('admin/simplehomepage/edit', 'SimpleHomePageController@update')->name('simplehomepage.update');
+    Route::get('module/simplehomepage/edit', 'SimpleHomePageController@index')->name('simplehomepage.edit');
+    Route::post('module/simplehomepage/edit', 'SimpleHomePageController@update')->name('simplehomepage.update');
 });

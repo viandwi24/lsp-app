@@ -78,7 +78,7 @@ class Module
                 $service = app($service_provider);
                 if ($step == 'register')
                 {
-                    $service->register();
+                    $service->register(app());
                 } else {
                     $service->boot();
                 }
@@ -127,6 +127,9 @@ class Module
                     'setup' => $result['setup'],
                     'info' => $module_config,
                 ];
+            } else {
+                unset(self::$loadedServices[$item]);
+                unset(self::$loadedModules[$index]);
             }
         }
         return self::$loadedModules;
@@ -197,7 +200,9 @@ class Module
             $result = (object) json_decode($string, true);
             array_push($result->load, $module);
 
-            $result = json_encode($result);
+            $result = json_encode((array) $result);
+            $result = (array) json_decode($result, true);
+            $result = json_encode((array) $result);
             return file_put_contents($config_path, $result);
         }
     }
@@ -213,7 +218,7 @@ class Module
             $result = json_decode($string, true);
             unset($result['load'][array_search( $module, $result['load'] )]);
 
-            $result = json_encode($result);
+            $result = json_encode((array) $result);
             return file_put_contents($config_path, $result);
         }
     }

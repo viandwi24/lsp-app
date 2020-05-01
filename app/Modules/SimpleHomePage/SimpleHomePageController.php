@@ -23,6 +23,6 @@ class SimpleHomePageController extends Controller
     {
         $request->validate(['code' => 'required']);
         file_put_contents($this->file, $request->code);
-        return redirect()->back();
+        return redirect()->back()->with('alert', [ 'type' => 'success', 'title' => 'Sukses', 'text' => 'Template Home Berhasil Disimpan!' ]);
     }
 }

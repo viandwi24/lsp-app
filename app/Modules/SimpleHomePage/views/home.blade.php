@@ -72,7 +72,7 @@
                 <div class="m-b-md">&copy; D-IT PRODUCTION</div>
 
                 <div class="links">
-                    <a href="#">Masuk</a>
+                    <a href="{{ route('login') }}">Masuk</a>
                     <a href="#">Daftar</a>
                     <a href="#">Tentang</a>
                     <a href="#">Dokumentasi</a>

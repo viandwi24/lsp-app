@@ -24,6 +24,8 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Module::load('boot');
+        $this->app->booted(function () {
+            Module::load('boot');
+        });
     }
 }

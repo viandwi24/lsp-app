@@ -9,7 +9,15 @@ class Dashboard
 
     public static function addMenu($role, $data)
     {
-        self::$newMenu[$role][] = $data;
+        if (is_array($role))
+        {
+            foreach($role as $item)
+            {
+                self::$newMenu[$item][] = $data;
+            }
+        } else {
+            self::$newMenu[$role][] = $data;
+        }
     }
 
     protected static function defaultSidebarMenu()
@@ -17,16 +25,16 @@ class Dashboard
         return [
             'admin' => [
                 [ 'type' => 'item', 'text' => 'Home', 'icon' => 'la la-home', 'link' => url()->route('admin.home') ],
-                [ 'type' => 'item', 'text' => 'Profil', 'icon' => 'la la-user', 'link' => url()->route('admin.profil.index') ],
+                [ 'type' => 'item', 'text' => 'Profil', 'icon' => 'la la-user', 'link' => url()->route('admin.profil') ],
                 
                 [ 'type' => 'header', 'text' => 'Manajemen' ],
                 [ 'type' => 'item', 'text' => 'Kategori', 'icon' => 'la la-tags', 'link' => url()->route('admin.kategori.index'), 'match' => 'admin/kategori*' ],
                 [ 'type' => 'item', 'text' => 'Tempat Uji', 'icon' => 'la la-map-marker', 'link' => url()->route('admin.tuk.index'),  'match' => 'admin/tuk*' ],
                 [ 'type' => 'item', 'text' => 'Jadwal', 'icon' => 'la la-calendar', 'link' => url()->route('admin.jadwal.index'),  'match' => 'admin/jadwal*' ],
-                [ 'type' => 'item', 'text' => 'Skema', 'icon' => 'la la-book', 'link' => url('tes') ],
+                [ 'type' => 'item', 'text' => 'Skema', 'icon' => 'la la-book', 'link' => url()->route('admin.skema.index'),  'match' => 'admin/skema*' ],
                 [ 'type' => 'treeview', 'text' => 'User', 'icon' => 'la la-users', 'items' =>  [
                     [ 'text' => 'Asesi', 'link' => url()->route('admin.user.asesi.index'),  'match' => 'admin/user/asesi*' ],
-                    [ 'text' => 'Asesor', 'link' => url('tes') ],
+                    [ 'text' => 'Asesor', 'link' => url()->route('admin.user.asesor.index'),  'match' => 'admin/user/asesor*' ],
                 ]],
             ],
 
