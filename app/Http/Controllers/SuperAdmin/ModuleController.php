@@ -4,14 +4,14 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Services\Module;
+use Viandwi24\ModuleSystem\Facades\Module;
 
 class ModuleController extends Controller
 {
     public function index()
     {
-        return view('pages.superadmin.module.index');
+        $modules = Module::get();
+        return view('pages.superadmin.module.index', compact('modules'));
     }
 
     public function action()

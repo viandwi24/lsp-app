@@ -1,23 +1,47 @@
 <?php
-namespace Modules\PraAsesmen;
+namespace App\Modules\PraAsesmen;
 
-use Illuminate\Support\ServiceProvider;
-use App\Interfaces\ModuleServiceProvider;
+use App\Modules\PraAsesmen\Models\Permohonan;
+use Viandwi24\ModuleSystem\Base\Service;
+use Viandwi24\ModuleSystem\Interfaces\ModuleInterface;
 use App\Services\SkemaDashboard;
 use Illuminate\Support\Facades\Route;
+use Schema;
 
-class PraAsesmenServiceProvider extends ServiceProvider implements ModuleServiceProvider
+class PraAsesmenServiceProvider extends Service implements ModuleInterface
 {
     public function register()
     {
-        // load route
         Route::middleware('web')->group(__DIR__ . '/routes.php');
-
-        // load view
         $this->loadViewsFrom(__DIR__.'/views', 'PraAsesmen');
     }
 
     public function boot()
+    {
+        $this->addSkemaMenu();
+    }
+
+    public function check()
+    {
+        $error = null;
+
+        // check table
+        if (!$this->checkTable()) return [
+            'state' => 'not_ready', 
+            'setup' => route('PraAsesmen.setup'),
+            'boot' => false
+        ];
+
+        // ready
+        return [ 'state' => 'ready' ];
+    }
+
+    /**
+     * add skema menu
+     *
+     * @return void
+     */
+    protected function addSkemaMenu()
     {
         SkemaDashboard::addMenu([
             'link' => function ($item) {
@@ -30,10 +54,12 @@ class PraAsesmenServiceProvider extends ServiceProvider implements ModuleService
         });
     }
 
-    public function checkInstalled()
+    /**
+     * check table exist
+     */
+    protected function checkTable()
     {
-        return [
-            'status' => 'ready'
-        ];
+        $table = (new Permohonan)->getTable();
+        return (Schema::hasTable($table));
     }
 }

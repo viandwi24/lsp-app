@@ -22,43 +22,37 @@ $breadcrumb = [
                     <div class="card-body p-0">
                         <table class="table table-bordered">
                             <thead>
-                                <th width="5%">#</th>
                                 <th>Nama</th>
                                 <th>Deskripsi</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">...</th>
                             </thead>
                             <tbody>
-                                @php
-                                    $module = \App\Services\Module::getAllWithLoaded();
-                                    $i = 1;
-                                @endphp
-                                @foreach ($module as $item)
+                                @foreach ($modules as $item)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
                                         <td>{{ $item->info->name }}</td>
                                         <td>{{ $item->info->description }}</td>
                                         <td class="text-center">
-                                            @if ($item->status == 'ready')
+                                            @if ($item->state == 'ready')
                                                 <span class="badge badge-success">
-                                            @elseif ($item->status == 'not_ready')
+                                            @elseif ($item->state == 'not_ready')
                                                 <span class="badge badge-warning">
                                             @else
                                                 <span class="badge badge-danger">
                                             @endif
-                                                {{ $item->status }}
+                                                {{ $item->state }}
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            @if ($item->status == 'ready')
+                                            @if ($item->state == 'ready')
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
-                                            @elseif ($item->status == 'not_ready')
+                                            @elseif ($item->state == 'not_ready')
                                                 <a href="{{ $item->setup }}" class="link success">Setup Now</a> |
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
-                                            @elseif ($item->status == 'error')
+                                            @elseif ($item->state == 'error')
                                                 <a href="javascript:void" onclick="showError('{{ $item->info->name }}', '{{ $item->error }}')" class="link red">Lihat Error</a> |
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
-                                            @elseif ($item->status == 'disable')
+                                            @elseif ($item->state == 'disable')
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=enable&name=' . $item->name }}" class="link text-success">Aktifkan</a>
                                             @endif
                                         </td>

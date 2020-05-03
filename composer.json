@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "pragmarx/version": "^1.2",
+        "viandwi24/laravel-module-system": "dev-master",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

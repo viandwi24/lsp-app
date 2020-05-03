@@ -1,14 +1,14 @@
 <?php
-namespace Modules\SimpleHomePage;
+namespace App\Modules\SimpleHomePage;
 
-use Illuminate\Support\ServiceProvider;
-use App\Interfaces\ModuleServiceProvider;
+use Viandwi24\ModuleSystem\Base\Service;
+use Viandwi24\ModuleSystem\Interfaces\ModuleInterface;
 use Illuminate\Support\Facades\Route;
 
 use App\Services\Dashboard;
-use App\Services\Module;
+use Viandwi24\ModuleSystem\Facades\Module;
 
-class SimpleHomePageServiceProvider extends ServiceProvider implements ModuleServiceProvider
+class SimpleHomePageServiceProvider extends Service implements ModuleInterface
 {
     public function register()
     {
@@ -20,10 +20,8 @@ class SimpleHomePageServiceProvider extends ServiceProvider implements ModuleSer
     }
 
     public function boot()
-    {
+    {        
         // add menu
-        // dd(route('simplehomepage.edit.inde'));
-        // dd(Route::getRoutes());
         Dashboard::addMenu(['admin', 'superadmin'], [
             'type' => 'header',
             'text' => 'Simple Home Page',
@@ -36,17 +34,17 @@ class SimpleHomePageServiceProvider extends ServiceProvider implements ModuleSer
         ]);
     }
 
-    public function checkInstalled()
+    public function check()
     {
         $error = null;
 
         // check text editor module must loaded
-        if (!in_array('TextEditor', Module::getLoadedModules())) $error = 'Membutukan Module Text Editor Untuk Bisa Berjalan.';
+        if (!Module::has('TextEditor')) $error = 'Membutukan Module Text Editor Untuk Bisa Berjalan.';
 
         // if error, return status error
-        if ($error != null ) return [ 'status' => 'error', 'error' => $error ];
+        if ($error != null ) return [ 'state' => 'error', 'error' => $error ];
 
         // if not error, return ready
-        return [ 'status' => 'ready' ];
+        return [ 'state' => 'ready' ];
     }
 }

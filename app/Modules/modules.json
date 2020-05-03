@@ -1,0 +1,12 @@
+{
+    "list": [
+        "PraAsesmen",
+        "SimpleHomePage",
+        "TextEditor"
+    ],
+    "load": [
+        "PraAsesmen",
+        "SimpleHomePage",
+        "TextEditor"
+    ]
+}

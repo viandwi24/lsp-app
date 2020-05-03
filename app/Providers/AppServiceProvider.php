@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\Helper;
+use Viandwi24\ModuleSystem\Facades\Module;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // dd(Module::get());
     }
 }

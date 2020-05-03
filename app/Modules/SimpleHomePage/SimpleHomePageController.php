@@ -1,5 +1,5 @@
 <?php
-namespace Modules\SimpleHomePage;
+namespace App\Modules\SimpleHomePage;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

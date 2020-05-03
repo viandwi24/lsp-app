@@ -1,6 +1,9 @@
 {
     "name": "Text Editor",
     "description": "Halaman Text Editor",
+    "author": "viandwi24",
+    "email": "fiandwi0424@gmail.com",
+    "web": "viandwi24.github.io",
     "version": "1.0",
     "namespace": "TextEditor",
     "service": "TextEditorServiceProvider"

@@ -1,10 +1,10 @@
 <?php
-namespace Modules\TextEditor;
+namespace App\Modules\TextEditor;
 
-use Illuminate\Support\ServiceProvider;
-use App\Interfaces\ModuleServiceProvider;
+use Viandwi24\ModuleSystem\Base\Service;
+use Viandwi24\ModuleSystem\Interfaces\ModuleInterface;
 
-class TextEditorServiceProvider extends ServiceProvider implements ModuleServiceProvider
+class TextEditorServiceProvider extends Service implements ModuleInterface
 {
     public function register()
     {
@@ -16,10 +16,10 @@ class TextEditorServiceProvider extends ServiceProvider implements ModuleService
         $this->loadViewsFrom(__DIR__.'/views', 'TextEditor');
     }
 
-    public function checkInstalled()
+    public function check()
     {
         return [
-            'status' => 'ready'
+            'state' => 'ready'
         ];
     }
 }
