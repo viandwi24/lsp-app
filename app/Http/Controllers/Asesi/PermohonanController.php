@@ -37,7 +37,21 @@ class PermohonanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // var
+        $user = auth()->user();
+        $data = [];
+
+        // tanda tangan
+        if (empty($user->data->ttd))
+        {
+            return redirect()->back()
+                ->withInput($request->all())
+                ->with('alert', ['type' => 'error', 'title' => 'Error', 'text' => 'Anda belum mengeset tanda tangan.']);            
+        }
+        $data['ttd'] = $user->data->ttd;
+        
+        
+        dd($data);
     }
 
     /**

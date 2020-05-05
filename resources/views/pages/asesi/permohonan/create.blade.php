@@ -5,16 +5,17 @@ $breadcrumb = [
     ['text' => 'Dashboard', 'link' => url('') ],
     ['text' => 'Asesi', 'link' => route('asesi.home') ],
     ['text' => 'Permohonan', 'link' => route('asesi.permohonan.index') ],
+    ['text' => 'Buat']
 ];
 @endphp
 
 @section('content')
     <!-- content-header -->
-    <x-dashboard-content-header :title="$skema->judul" :breadcrumb="$breadcrumb" type="2-col" />
+    <x-dashboard-content-header :title="$skema->judul" :breadcrumb="$breadcrumb" :autoBread="false" type="basic-bottom" />
     
     <!-- content -->
     <x-dashboard-content>
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
                 <div class="bs-callout-info callout-border-left mb-2 p-1">
                     <strong>Perhatian!</strong>
@@ -50,129 +51,242 @@ $breadcrumb = [
                             <label>Admin</label>
                             <input value="{{ $skema->admin->nama }}" type="text" class="form-control" readonly>
                         </div>
-
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <th width="8%">#</th>
-                                <th>Kode</th>
-                                <th>Unit</th>
-                                <th width="25%">Jenis</th>
-                            </thead>
-                            <tbody>
-                                @php $i = 1; @endphp
-                                @foreach ($skema->unit as $unit)
-                                    <tr>
-                                        <td>{{ $i++ }}</td>
-                                        <td>{{ $unit->kode }}</td>
-                                        <td>{{ $unit->judul }}</td>
-                                        <td>{{ $unit->jenis }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <th width="8%">#</th>
+                                    <th>Kode</th>
+                                    <th>Unit</th>
+                                    <th width="25%">Jenis</th>
+                                </thead>
+                                <tbody>
+                                    @php $i = 1; @endphp
+                                    @foreach ($skema->unit as $unit)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $unit->kode }}</td>
+                                            <td>{{ $unit->judul }}</td>
+                                            <td>{{ $unit->jenis }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </x-dashboard-card>
 
-                <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
-                    <strong>Perhatian!</strong>
-                    <p>
-                        Isi data diri sesuai dengan asli, nama dan email dapat diubah
-                        di Halaman Profil, harap diingat ketika Formulir di kirim, nama
-                        dan email tidak akan bisa diubah.
-                    </p>
-                </div>
-                <x-dashboard-card title="Data Pribadi">
-                    <x-slot name="heading">
-                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                    </x-slot>
+                {{-- form --}}
+                <form action="{{ route('asesi.permohonan.store') }}" method="POST">
+                    @csrf
+                    <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
+                        <strong>Perhatian!</strong>
+                        <p>
+                            Isi data diri sesuai dengan asli, nama dan email dapat diubah
+                            di Halaman Profil, harap diingat ketika Formulir di kirim, nama
+                            dan email tidak akan bisa diubah.
+                        </p>
+                    </div>
 
-                    <x-slot name="content">
-                        <div class="card-body mb-0 pb-0">
-                            <div class="form">
-                                <div class="form-group">
-                                    <h4>Bagian 1 : Rincian Data Pemohon Sertifikasi</h4>
-                                    <p>Pada bagian ini, cantumkan data pribadi, data pendidikan formal serta data pekerjaan anda pada saat ini.</p>
+                    <x-dashboard-card title="Data Pribadi">
+                        <x-slot name="heading">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            {{-- data diri --}}
+                            <div class="card-body mb-0 pb-0">
+                                <div class="form">
+                                    <div class="form-group">
+                                        <h4>Bagian 1 : Rincian Data Pemohon Sertifikasi</h4>
+                                        <p>Pada bagian ini, cantumkan data pribadi, data pendidikan formal yang tepat.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr class="mt-2">
-                        <div class="card-body">
-                            <div class="form">
-                                <div>
-                                    <div class="form-group"><h3>A. Data Diri</h3></div>
-                                    <div class="form-group">
-                                        <label>Nama Lengkap :</label>
-                                        <input value="{{ $user->nama }}" name="data_diri[nama]" readonly required placeholder="Nama Lengkap" type="text" class="form-control">
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Tempat Lahir :</label>
-                                                <input value="{{ old('data_diri.tempat_lahir') }}" name="data_diri[tempat_lahir]" required placeholder="Tempat Lahir" type="text" class="form-control">
+                            <hr class="mt-2">
+                            <div class="card-body">
+                                <div class="form">
+                                    <div>
+                                        <div class="form-group"><h3>A. Data Diri</h3></div>
+                                        <div class="form-group">
+                                            <label>Nama Lengkap :</label>
+                                            <input value="{{ $user->nama }}" name="data_diri[nama]" readonly required placeholder="Nama Lengkap" type="text" class="form-control">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Tempat Lahir :</label>
+                                                    <input value="{{ old('data_diri.tempat_lahir') }}" name="data_diri[tempat_lahir]" required placeholder="Tempat Lahir" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Tanggal Lahir :</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <span class="la la-calendar-o"></span>
+                                                        </span>
+                                                        </div>
+                                                        <input value="{{ old('data_diri.tanggal_lahir') }}" name="data_diri[tanggal_lahir]" type='text' class="form-control pickadate" placeholder="Tanggal Lahir" required />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Tanggal Lahir :</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                      <span class="input-group-text">
-                                                        <span class="la la-calendar-o"></span>
-                                                      </span>
-                                                    </div>
-                                                    <input value="{{ old('data_diri.tanggal_lahir') }}" name="data_diri[tanggal_lahir]" type='text' class="form-control pickadate" placeholder="Tanggal Lahir" required />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Jenis Kelamin :</label>
+                                                    <select name="data_diri[jenis_kelamin]" required placeholder="Jenis Kelamin" type="text" class="form-control">
+                                                        <option value="">---Jenis Kelamin---</option>
+                                                        <option value="laki-laki" {{ old('data_diri.jenis_kelamin') == 'laki-laki' ? 'selected' : '' }}>Laki - Laki</option>
+                                                        <option value="perempuan" {{ old('data_diri.jenis_kelamin') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Kebangsaan :</label>
+                                                    <input value="{{ old('data_diri.kebangsaan') }}" name="data_diri[kebangsaan]" required placeholder="Kebangsaan" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alamat Rumah :</label>
+                                            <textarea name="data_diri[alamat]" required placeholder="Alamat Rumah" class="form-control">{{ old('data_diri.alamat') }}</textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>No. Telp :</label>
+                                                    <input value="{{ old('data_diri.no_telp') }}" name="data_diri[no_telp]" required placeholder="No. Telp" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email :</label>
+                                                    <input value="{{ $user->email }}" name="data_diri[email]" readonly required placeholder="Email" type="email" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pendidikan Terakhir :</label>
+                                            <input value="{{ old('data_diri.pendidikan_terakhir') }}" name="data_diri[pendidikan_terakhir]" required placeholder="Pendidikan Terakhir" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- kerja --}}
+                            <hr>
+                            <div class="card-body mb-0 pb-0">
+                                <div class="form-group">
+                                    <h3>B. Data Pekerjaan Sekarang</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form">
+                                    <div>
+                                        <div class="form-group text-center">
+                                            <div class="custom-control custom-radio mr-4" style="display: inline-block;">
+                                                <input class="custom-control-input" value="1" name="bekerja" name="bekerja" type="radio" id="bekerja_true" v-model="bekerja" checked>
+                                                <label class="custom-control-label" for="bekerja_true">Saya Bekerja</label>
+                                            </div>
+                                            <div class="custom-control custom-radio" style="display: inline-block;">
+                                                <input class="custom-control-input" value="0" name="bekerja" name="bekerja" type="radio" id="bekerja_false" v-model="bekerja">
+                                                <label class="custom-control-label" for="bekerja_false">Saya Tidak Bekerja</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nama Lembaga / Perusahaan :</label>
+                                            <input required :disabled="bekerja == 0" placeholder="Nama Lembaga / Perusahaan" type="text" name="data_pekerjaan[nama]" value="{{ old('data_pekerjaan.nama') }}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Jabatan :</label>
+                                            <input required :disabled="bekerja == 0" placeholder="Jabatan" type="text" name="data_pekerjaan[jabatan]" value="{{ old('data_pekerjaan.jabatan') }}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alamat Kantor :</label>
+                                            <textarea required :disabled="bekerja == 0" placeholder="Alamat Kantor" name="data_pekerjaan[alamat]" class="form-control">{{ old('data_pekerjaan.alamat') }}</textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>No. Telp :</label>
+                                                    <input required :disabled="bekerja == 0" placeholder="No. Telp" type="text" name="data_pekerjaan[no_telp]" value="{{ old('data_pekerjaan.no_telp') }}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email :</label>
+                                                    <input required :disabled="bekerja == 0" placeholder="Email" type="email" name="data_pekerjaan[email]" value="{{ old('data_pekerjaan.email') }}" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Jenis Kelamin :</label>
-                                                <select required placeholder="Jenis Kelamin" type="text" class="form-control">
-                                                    <option value="">---Jenis Kelamin---</option>
-                                                    <option value="laki-laki">Laki - Laki</option>
-                                                    <option value="perempuan">Perempuan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Kebangsaan :</label>
-                                                <input required placeholder="Kebangsaan" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        </x-slot>
+                    </x-dashboard-card>
+
+                    {{-- bagian 2 --}}
+                    <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
+                        <strong>Perhatian!</strong>
+                        <p>
+                            Isi tujuan yang sesuai dengan tujuan anda untuk mengikuti
+                            asesmen ini.
+                        </p>
+                    </div>
+                    <x-dashboard-card title="Sertifikasi">
+                        <x-slot name="heading">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <div class="card-body mb-0 pb-0">
+                                <div class="form">
                                     <div class="form-group">
-                                        <label>Alamat Rumah :</label>
-                                        <textarea required placeholder="Alamat Rumah" class="form-control"></textarea>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>No. Telp :</label>
-                                                <input required placeholder="No. Telp" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Email :</label>
-                                                <input value="{{ $user->email }}" readonly required placeholder="Email" type="email" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Pendidikan Terakhir :</label>
-                                        <input required placeholder="Pendidikan Terakhir" type="text" class="form-control">
+                                        <h4>Bagian 2 : Data Sertifikasi</h4>
+                                        <p>
+                                            Tuliskan Judul dan Nomor Skema Sertifikasi, Tujuan Asesmen serta Daftar Unit Kompetensi sesuai kemasan 
+                                            pada skema sertifikasi yang anda ajukan untuk mendapatkan pengakuan sesuai dengan latar belakang 
+                                            pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </x-slot>
+                            <hr class="mt-4">
+                            <div class="card-body">
+                                <div class="form">
+                                    <div>
+                                        <div class="form-group"><h3>A. Sertifikasi</h3></div>
+                                        @php
+                                            $tujuan = ['sertifikasi' => 'Sertifikasi', 'sertifikasi_ulang' => 'Sertifikasi Ulang', 'lainnya' => 'Lainnya'];
+                                        @endphp
+                                        <div class="form-group">
+                                            <label>Tujuan Asesmen :</label>
+                                            <select placeholder="Tujuan" required name="tujuan_asesmen" class="form-control">
+                                                <option value="">---Pilih Tujuan Asesmen---</option>
+                                                @foreach ($tujuan as $key => $value)
+                                                    <option value="{{ $key }}" {{ old('tujuan_asesmen') == $key ? 'selected' : '' }}>{{ $value }}</option>                                                    
+                                                @endforeach
+                                            </select>                                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </x-slot>
+                    </x-dashboard-card>
+                    
+                    
+                    {{-- submit --}}
+                    <button type="submit" class="btn btn-block btn-primary">
+                        <i class="ft-upload"></i> Kirim Permohonan
+                    </button>
+                </form>
+                {{-- form:end --}}
 
-                    <!-- body -->
-                </x-dashboard-card>
             </div>
         </div>
     </x-dashboard-content>
@@ -183,6 +297,7 @@ $breadcrumb = [
         var vm = new Vue({
             el: '#app',
             data: {
+                bekerja: {{ old('bekerja', 0) }}
             },
             methods: {
             },
