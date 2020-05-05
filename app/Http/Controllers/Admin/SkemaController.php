@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Facades\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -39,8 +40,10 @@ class SkemaController extends Controller
     public function create()
     {
         $users = User::where('role', 'admin')->get();
+        $kategoris = Kategori::all();
         $admins = new Select2($users, ['id', 'nama']);
-        return view('pages.admin.skema.create', compact('admins'));
+        $kategoris = new Select2($kategoris, ['nama']);
+        return view('pages.admin.skema.create', compact('kategoris', 'admins'));
     }
 
     /**
@@ -55,9 +58,11 @@ class SkemaController extends Controller
             'judul' => 'required',
             'kode' => 'required',
             'admin_id' => 'required|numeric',
+            'kategori_id' => 'required|array',
         ]);
 
         $store = Skema::create($request->only('judul', 'kode', 'admin_id'));
+        $store->kategori()->sync($request->kategori_id);
         return redirect()->route('admin.skema.index')
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Tambah Data Berhasil.']);
     }
@@ -117,8 +122,10 @@ class SkemaController extends Controller
         // 
         } else {
             $users = User::where('role', 'admin')->get();
+            $kategoris = Kategori::all();
             $admins = new Select2($users, ['id', 'nama']);
-            return view('pages.admin.skema.edit', compact('skema', 'admins'));
+            $kategoris = new Select2($kategoris, ['nama']);
+            return view('pages.admin.skema.edit', compact('skema', 'admins', 'kategoris'));
         }
     }
 
@@ -182,8 +189,10 @@ class SkemaController extends Controller
                 'judul' => 'required',
                 'kode' => 'required',
                 'admin_id' => 'required|numeric',
+                'kategori_id' => 'required|array',
             ]);
             $update = $skema->update($request->only('judul', 'kode', 'admin_id'));
+            $skema->kategori()->sync($request->kategori_id);
             return redirect()->route('admin.skema.show', [$skema->id])
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
         

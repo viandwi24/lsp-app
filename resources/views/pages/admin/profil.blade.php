@@ -38,6 +38,10 @@ $breadcrumb = [
                                         <label>Email</label>
                                         <input type="text" name="email" class="form-control" value="{{ $user->email }}">
                                     </div>
+                                    <div class="form-group">
+                                        <label>NIK</label>
+                                        <input type="text" name="data[nik]" class="form-control" value="{{ $user->data->nik }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>

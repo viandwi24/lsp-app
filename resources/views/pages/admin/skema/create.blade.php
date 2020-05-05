@@ -48,6 +48,12 @@ $breadcrumb = [
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-md-right">Kategori :</label>
+                                <div class="col-md-6">
+                                    <select name="kategori_id[]" class="select2 form-control" id="selectKategori" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <button class="btn btn-primary">
                                         <i class="ft-save"></i> Simpan
@@ -64,7 +70,11 @@ $breadcrumb = [
 
 @push('js')
     <script>
-    $('#selectAdmin').select2({ data: @JSON($admins->array()) })
+    $(document).ready(() => {
+        $('#selectAdmin').select2({ data: @JSON($admins->array()) });
+        $('#selectKategori').select2({ data: @JSON($kategoris->array()) });
+        $('#selectKategori').val(@JSON(old('kategori_id'))).trigger('change');
+    });
     </script>
 @endpush
 

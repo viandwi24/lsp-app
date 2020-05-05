@@ -1,7 +1,7 @@
 {
+    "load": [],
     "list": [
         "SimpleHomePage",
         "TextEditor"
-    ],
-    "load": []
+    ]
 }

@@ -1,9 +1,9 @@
-@extends('layouts.dashboard', ['title' => 'Asesi \ Berkas'])
+@extends('layouts.dashboard', ['title' => 'Admin \ Berkas'])
 
 @php
 $breadcrumb = [
     ['text' => 'Dashboard', 'link' => url('') ],
-    ['text' => 'Asesi', 'link' => route('asesi.berkas.index') ]
+    ['text' => 'Admin', 'link' => route('admin.berkas') ]
 ];
 @endphp
 
@@ -13,16 +13,7 @@ $breadcrumb = [
 
     <!-- content -->
     <x-dashboard-content>
-        <div class="alert alert-info" v-if="loading">
-            <i class="la la-spinner spinner"></i>
-            Sedang mengupload berkas... dimohon menunggu sampai selesai.
-        </div>
-        <form action="{{ url()->route('asesi.berkas.store') }}" method="POST" id="form-file" enctype="multipart/form-data">
-            @csrf
-            <input @change="formChange" type="file" name="file" id="file" style="display: none">
-        </form>
-
-        <div v-if="!loading">
+        <div>
             <x-dashboard-card title="Berkas" classBody="card-table">
                 <x-slot name="heading">
                     <div class="dropdown" style="display: inline-block;">
@@ -33,7 +24,6 @@ $breadcrumb = [
                             <a class="dropdown-item" id="bulkDelete">Hapus</a>
                         </div>
                     </div>
-                    <li><a class="btn btn-sm btn-success" href="" @click.prevent="triggerForm"><i class="ft-plus"></i> Upload</a></li>
                     <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                 </x-slot>
@@ -50,6 +40,7 @@ $breadcrumb = [
                                     </div>
                                 </th>
                                 <th width="8%">#</th>
+                                <th>User</th>
                                 <th>Nama</th>
                                 <th>Tipe</th>
                                 <th>Ukuran</th>
@@ -78,7 +69,6 @@ $breadcrumb = [
         var vm = new Vue({
             el: '#app',
             data: {
-                loading: false,
                 datatable: null,
                 columns: [
                             { 
@@ -91,6 +81,7 @@ $breadcrumb = [
                                 `
                             },
                             { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+                            { data: 'user.nama' },
                             { data: 'nama' },
                             { data: 'tipe' },
                             {
@@ -102,7 +93,7 @@ $breadcrumb = [
                                 render: (data, type, row) => `
                                     <div>
                                         <a href="{{ route('berkas.download') }}/` + data.path + `" class="btn btn-sm btn-success"><i class="ft-download"></i></a>
-                                        <form method="post" action="{{ url()->route('asesi.berkas.index') . '/' }}`+data.id+`" style="display: inline-block;">
+                                        <form method="post" action="{{ url()->route('admin.berkas') . '/' }}`+data.id+`" style="display: inline-block;">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-danger"><i class="ft-trash"></i></button>
@@ -120,7 +111,7 @@ $breadcrumb = [
                     }
 
                     this.datatable = $('#table').DataTable( {
-                        ajax: "{{ url()->route('asesi.berkas.index') }}",
+                        ajax: "{{ url()->route('admin.berkas') }}",
                         processing: true,
                         order: [[1, 'asc']],
                         columnDefs: [ { orderable: false, targets: [0, 3] }, ],
@@ -153,7 +144,7 @@ $breadcrumb = [
                 this.loadTable();
                 $('#reload').on('click', () => this.datatable.ajax.reload(null, false));
                 $('#bulkDelete').on('click', () => {
-                    var url = '{{ url()->route("asesi.berkas.index") }}/' + bulkSelectedItem
+                    var url = '{{ url()->route("admin.berkas") }}/' + bulkSelectedItem
                     var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);
                     $('body').append(form);
                     form.submit();

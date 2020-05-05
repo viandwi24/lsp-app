@@ -19,7 +19,9 @@ class ProfilController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'nama' => 'required|min:6'
+            'nama' => 'required|min:6',
+            'data.nik' => 'required',
+            'data.ttd' => 'required'
         ]);
         $user = auth()->user();
         $data = $request->only('nama');

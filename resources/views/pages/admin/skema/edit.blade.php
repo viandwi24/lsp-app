@@ -50,6 +50,12 @@ $breadcrumb = [
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-md-right">Kategori :</label>
+                                <div class="col-md-6">
+                                    <select name="kategori_id[]" class="select2 form-control" id="selectKategori" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <a href="{{ route('admin.skema.show', [$skema->id]) }}" class="btn btn-warning">
                                         <i class="ft-chevron-left"></i> Kembali
@@ -69,8 +75,12 @@ $breadcrumb = [
 
 @push('js')
     <script>
-    $('#selectAdmin').select2({ data: @JSON($admins->array()) })
-    $('#selectAdmin').val({{ $skema->admin_id }}).trigger('change')
+    $(document).ready(() => {
+        $('#selectAdmin').select2({ data: @JSON($admins->array()) });
+        $('#selectAdmin').val({{ $skema->admin_id }}).trigger('change');
+        $('#selectKategori').select2({ data: @JSON($kategoris->array()) });
+        $('#selectKategori').val(@JSON($skema->kategori->pluck('id'))).trigger('change');
+    });
     </script>
 @endpush
 

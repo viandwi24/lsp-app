@@ -11,6 +11,8 @@ Route::group([
     Route::get('', 'HomeController@index')->name('home');
     Route::get('profil', 'ProfilController@index')->name('profil');
     Route::post('profil', 'ProfilController@update')->name('profil.update');
+    Route::get('berkas', 'BerkasController@index')->name('berkas');
+    Route::delete('berkas/{id}', 'BerkasController@destroy')->name('berkas.destroy');
 
     Route::resource('kategori', 'KategoriController');
     Route::resource('tuk', 'TukController');

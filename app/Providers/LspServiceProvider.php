@@ -55,7 +55,7 @@ class LspServiceProvider extends ServiceProvider
                 [ 'text' => 'Asesi', 'link' => route('admin.user.asesi.index'),  'match' => 'admin/user/asesi*' ],
                 [ 'text' => 'Asesor', 'link' => route('admin.user.asesor.index'),  'match' => 'admin/user/asesor*' ],
             ]])
-            ->add('admin', [ 'type' => 'item', 'text' => 'Berkas', 'icon' => 'la la-folder', 'link' => route('admin.skema.index'),  'match' => 'admin/skema*' ])
+            ->add('admin', [ 'type' => 'item', 'text' => 'Berkas', 'icon' => 'la la-folder', 'link' => route('admin.berkas') ])
 
             // asesor
             ->add('asesor', [ 'type' => 'item', 'text' => 'Home', 'icon' => 'la la-home', 'link' => route('asesor.home') ])

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Asesi;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Berkas;
-use App\User;
 use DataTables;
 use Illuminate\Http\Request;
 
@@ -19,11 +18,11 @@ class BerkasController extends Controller
     {
         if ($request->ajax())
         {
-            $berkas = User::findOrFail(auth()->user()->id)->berkas;
+            $berkas = Berkas::with('user')->get();
             return DataTables::of($berkas)->make();
         }
         
-        return view('pages.asesi.berkas');
+        return view('pages.admin.berkas');
     }
 
     /**
@@ -44,42 +43,7 @@ class BerkasController extends Controller
      */
     public function store(Request $request)
     {
-        // var
-        $upload_path = 'berkas';
-        $user_id = auth()->user()->id;
-
-        // validate
-        $request->validate(['file' => 'required|file']);
-        $file = $request->file;
-        $role = 'private';
-        if ($request->has('role'))
-        {
-            $request->validate(['role' => 'required|in:private,public']);
-            $role = $request->role;
-        }
-        
-        
-        // get info file
-        $file_name = $file->getClientOriginalName();
-        $file_mime = $file->getClientMimeType();
-        $file_size = $file->getSize();
-        
-        // upload
-        $store = $file->store($upload_path);
-        $file_stored = str_replace($upload_path . '/', '', $store);
-
-        // db
-        $upload_file = Berkas::create([
-            'user_id' => $user_id,
-            'nama' => $file_name,
-            'path' => $file_stored,
-            'tipe' => $file_mime,
-            'ukuran' => $file_size,
-            'role' => $role
-        ]);
-
-        return redirect()->route('asesi.berkas.index')
-            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Tambah Data Berhasil.']);
+        //
     }
 
     /**
@@ -127,10 +91,9 @@ class BerkasController extends Controller
         $ids = \explode(',', $id);
         $berkas = Berkas::findOrFail($ids);
         $destroy = $berkas->each(function ($berkas, $key) {
-            if ($berkas->user_id != auth()->user()->id) abort(403);
             $berkas->delete();
         });
-        return redirect()->route('asesi.berkas.index')
+        return redirect()->route('admin.berkas')
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menghapus Data Berhasil.']);
     }
 }

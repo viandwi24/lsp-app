@@ -29,4 +29,9 @@ class Skema extends Model
     {
         return $this->belongsToMany('App\Models\Jadwal', 'skema_jadwal');
     }
+    
+    public function kategori()
+    {
+        return $this->belongsToMany('App\Models\Kategori', 'skema_kategori');
+    }
 }
