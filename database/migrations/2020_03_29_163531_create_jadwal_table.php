@@ -18,8 +18,7 @@ class CreateJadwalTable extends Migration
             $table->id();
             $table->string('nama');
             $table->longText('pengumuman')->nullable();
-            $table->json('acara')//->default(new Expression('(JSON_ARRAY())'));
-            ->default('[]');
+            $table->json('acara')->default(new Expression('(JSON_ARRAY())'));
             $table->timestamps();
         });
     }

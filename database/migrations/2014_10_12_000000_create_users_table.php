@@ -22,8 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', ['asesi', 'asesor', 'admin', 'superadmin'])->default('asesi');
 
             $table->text('ttd')->nullable();
-            $table->json('data')//->default(new Expression('(JSON_OBJECT())'));
-            ->default('{}');
+            $table->json('data')->default(new Expression('(JSON_OBJECT())'));
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

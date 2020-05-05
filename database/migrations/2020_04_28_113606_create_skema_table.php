@@ -19,10 +19,8 @@ class CreateSkemaTable extends Migration
             $table->bigInteger('admin_id')->unsigned();
             $table->string('judul');
             $table->string('kode');
-            $table->json('unit')//->default(new Expression('(JSON_ARRAY())'));
-            ->default('[]');
-            $table->json('berkas')//->default(new Expression('(JSON_ARRAY())'));
-            ->default('[]');
+            $table->json('unit')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('berkas')->default(new Expression('(JSON_ARRAY())'));
             $table->boolean('aktif')->default(true);
             $table->timestamps();
 
