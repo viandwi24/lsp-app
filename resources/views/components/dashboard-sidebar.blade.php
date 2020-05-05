@@ -1,5 +1,5 @@
 @php
-    if (auth()->check()) $menu = \App\Services\Dashboard::getSidebarMenu()[auth()->user()->role];
+    if (auth()->check()) $menu = \App\Facades\Menu::get('dashboard.sidebar')->toArray(auth()->user()->role);
 @endphp
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">

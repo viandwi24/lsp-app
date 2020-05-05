@@ -19,7 +19,8 @@ class TextEditorServiceProvider extends Service implements ModuleInterface
     public function check()
     {
         return [
-            'state' => 'ready'
+            'state' => 'ready',
+            'option' => url('/module/option')
         ];
     }
 }

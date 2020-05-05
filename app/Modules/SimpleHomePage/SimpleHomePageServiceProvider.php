@@ -1,6 +1,7 @@
 <?php
 namespace App\Modules\SimpleHomePage;
 
+use App\Facades\Menu;
 use Viandwi24\ModuleSystem\Base\Service;
 use Viandwi24\ModuleSystem\Interfaces\ModuleInterface;
 use Illuminate\Support\Facades\Route;
@@ -22,16 +23,9 @@ class SimpleHomePageServiceProvider extends Service implements ModuleInterface
     public function boot()
     {        
         // add menu
-        Dashboard::addMenu(['admin', 'superadmin'], [
-            'type' => 'header',
-            'text' => 'Simple Home Page',
-        ]);
-        Dashboard::addMenu(['admin', 'superadmin'], [
-            'type' => 'item',
-            'text' => 'Edit Home',
-            'icon' => 'la la-edit',
-            'link' => route('simplehomepage.edit')
-        ]);
+        Menu::get('dashboard.sidebar')
+            ->add(['admin', 'superadmin'], [ 'type' => 'header', 'text' => 'Simple Home Page', ])
+            ->add(['admin', 'superadmin'], [ 'type' => 'item', 'text' => 'Edit Home', 'icon' => 'la la-edit', 'link' => route('simplehomepage.edit') ]);
     }
 
     public function check()

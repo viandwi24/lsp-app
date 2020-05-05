@@ -8,7 +8,7 @@ class Skema extends Model
 {
     protected $table = 'skema';
     protected $guarded = [];
-    protected $casts = [ 'unit' => 'array','berkas' => 'array' ];
+    protected $casts = [ 'unit' => 'object','berkas' => 'object' ];
 
     public function admin()
     {

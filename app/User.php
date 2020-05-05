@@ -14,4 +14,9 @@ class User extends Authenticatable
     protected $fillable = [ 'nama', 'email', 'password', 'role', 'ttd', 'data' ];
     protected $hidden = [ 'password', 'remember_token', ];
     protected $casts = [ 'email_verified_at' => 'datetime', 'data' => 'object' ];
+
+    public function berkas()
+    {
+        return $this->hasMany('App\Models\Berkas');
+    }
 }

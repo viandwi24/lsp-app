@@ -15,44 +15,39 @@ $breadcrumb = [
     <x-dashboard-content>
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Kategori</h4>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <div class="dropdown" style="display: inline-block;">
-                                    <button class="btn btn-sm btn-danger dropdown-toggle disable-on-bulk-check-null" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Aksi Untuk <span class="bulk_check_count"></span> Item
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" id="bulkDelete">Hapus</a>
-                                    </div>
-                                </div>
-                                <li><a class="btn btn-sm btn-success" href="{{ url()->route('admin.kategori.create') }}"><i class="ft-plus"></i> Tambah</a></li>
-                                <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                            </ul>
+                <x-dashboard-card title="Kategori" classBody="card-table">
+                    <x-slot name="heading">
+                        <div class="dropdown" style="display: inline-block;">
+                            <button class="btn btn-sm btn-danger dropdown-toggle disable-on-bulk-check-null" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Aksi Untuk <span class="bulk_check_count"></span> Item
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="bulkDelete">Hapus</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body card-dashboard card-table">
-                        <table id="table" class="table table-striped table-bordered zero-configuration">
-                            <thead>
-                                <tr>
-                                    <th width="5%">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" id="bulk_check_selectall" class="custom-control-input">
-                                            <label class="custom-control-label" for="bulk_check_selectall"></label>
-                                        </div>
-                                    </th>
-                                    <th width="8%">#</th>
-                                    <th>Nama</th>
-                                    <th>Deskripsi</th>
-                                    <th width="15%" class="text-center">...</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
+                        <li><a class="btn btn-sm btn-success" href="{{ url()->route('admin.kategori.create') }}"><i class="ft-plus"></i> Tambah</a></li>
+                        <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
+                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                    </x-slot>
+
+                    <!-- Body -->
+                    <table id="table" class="table table-striped table-bordered zero-configuration">
+                        <thead>
+                            <tr>
+                                <th width="5%">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="bulk_check_selectall" class="custom-control-input">
+                                        <label class="custom-control-label" for="bulk_check_selectall"></label>
+                                    </div>
+                                </th>
+                                <th width="8%">#</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th width="15%" class="text-center">...</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </x-dashboard-card>
             </div>
         </div>
     </x-dashboard-content>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Facades\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
@@ -11,7 +12,6 @@ use App\User;
 use App\Models\Skema;
 use App\Models\Tuk;
 use App\Services\Select2;
-use App\Services\SkemaDashboard;
 
 class SkemaController extends Controller
 {
@@ -70,8 +70,8 @@ class SkemaController extends Controller
      */
     public function show(Skema $skema)
     {
-        $dashboardMenu = SkemaDashboard::getMenu($skema);
-        $dashboardWidget = SkemaDashboard::getWidget($skema);
+        $dashboardMenu = Menu::get('dashboard.skema')->toArray('admin');
+        $dashboardWidget = Menu::get('dashboard.skema.widget')->toArray('admin');
         return view('pages.admin.skema.show', compact('skema', 'dashboardMenu', 'dashboardWidget'));
     }
 

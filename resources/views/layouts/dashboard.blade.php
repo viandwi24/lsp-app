@@ -27,6 +27,7 @@
     .dataTables_wrapper .row:nth-child(2) { padding: 0 .05rem; }
     .dataTables_wrapper .row:nth-child(3) { padding: 0 2rem; padding-bottom: 1.8rem; }
     .custom-control-label::after { cursor: pointer; }
+    .form-group > label { font-weight: bold; }
     </style>
     @stack('css')
 </head>
@@ -113,6 +114,34 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     {{-- <script src="{{ assets('vendors/js/vue/vue.min.js') }}"></script> --}}
+    <script>
+        if (typeof $.fn.dataTable != 'undefined')
+        {
+            $.extend(true, $.fn.dataTable.defaults, {
+                "language": {
+                    "emptyTable": "Tidak ada item satupun",
+                    "lengthMenu": "Menampilkan _MENU_ item per halaman",
+                    "zeroRecords": "Tidak ada yang ditemukan - sorry",
+                    "info": "Menampilkan _PAGE_ dari _PAGES_ halaman.",
+                    "infoEmpty": "Tidak ada item satupun",
+                    "infoFiltered": "(terfilter dari _MAX_ total item)",
+                    "loadingRecords": "Sedang memuat...",
+                    "processing": "Sedang memproses...",
+                    "search": "Cari :",
+                    "paginate": {
+                        "first": "Awal",
+                        "previous": "Sebelum",
+                        "next": "Selanjutnya",
+                        "last": "Akhir"
+                    },
+                    "aria": {
+                        "sortAscending": ": Mengurutkan kolom menaik",
+                        "sortDescending": ": Mengurutkan kolom menurun"
+                    }
+                }
+            });
+        }
+    </script>
     @stack('js')
     <x-server-alert />
 </body>

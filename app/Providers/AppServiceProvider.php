@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Helper;
+use Viandwi24\ModuleSystem\Facades\Menu;
 use Viandwi24\ModuleSystem\Facades\Module;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
-        Helper::load();
     }
 
     /**
@@ -28,6 +27,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // dd(Module::get());
+        // 
+    }
+
+
+
+
+    // 
+    protected function bindClass()
+    {
+        $this->app->bind('menu',function() {
+            return new \App\Services\Menu;
+        });
     }
 }

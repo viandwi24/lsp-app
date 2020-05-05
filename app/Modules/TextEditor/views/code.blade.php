@@ -130,6 +130,7 @@
 		var stylesheet = $('[title="theme"]');
 		stylesheet.attr('href',"{{ assets('vendors/css/editors/theme/') . '/' }}"+theme+ ".css");
 		editor1.setOption("theme", theme);
+        $('#select').val(theme).trigger('change')
         return theme
 	}
 	var choice = (location.hash && location.hash.slice(1)) ||

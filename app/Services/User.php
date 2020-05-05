@@ -33,6 +33,14 @@ class User
         } elseif ($role == 'asesi') {
             $rules = ['ttd'];
         }
+
+        // 
+        $newData = (array) $newData;
+        foreach ($rules as $item)
+        {
+            $newData[$item] = '';
+        }
+        $newData = (object) $newData;
         
         // 
         foreach ($data as $key => $value)

@@ -44,14 +44,21 @@ $breadcrumb = [
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            @if ($item->state == 'ready')
+                                            @if ($item->state == 'ready' || $item->state == 'error' || $item->state == 'not_ready')
+                                                @if ($item->state == 'not_ready')
+                                                    <a href="{{ $item->setup }}" class="link success">Setup Now</a> |
+                                                @endif
+
+                                                @if ($item->state == 'error')
+                                                    <a href="javascript:void" onclick="showError('{{ $item->info->name }}', '{{ $item->error }}')" class="link red">Lihat Error</a> |
+                                                @endif
+
+                                                @isset($item->option)
+                                                    <a href="{{ $item->option }}" class="link info">Option</a> |
+                                                @endisset
+                                                
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
-                                            @elseif ($item->state == 'not_ready')
-                                                <a href="{{ $item->setup }}" class="link success">Setup Now</a> |
-                                                <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
-                                            @elseif ($item->state == 'error')
-                                                <a href="javascript:void" onclick="showError('{{ $item->info->name }}', '{{ $item->error }}')" class="link red">Lihat Error</a> |
-                                                <a href="{{ url()->route('superadmin.module.action') .'?action=disable&name=' . $item->name }}" class="link red">Nonaktifkan</a>
+
                                             @elseif ($item->state == 'disable')
                                                 <a href="{{ url()->route('superadmin.module.action') .'?action=enable&name=' . $item->name }}" class="link text-success">Aktifkan</a>
                                             @endif
@@ -74,11 +81,11 @@ $breadcrumb = [
                             </li>
                             <li>
                                 <span class="badge badge-warning">not_ready</span>
-                                Keadaan Module sudah diload tetapi membutuhkan setup
+                                Keadaan Module sudah terdaftar tetapi membutuhkan setup
                             </li>
                             <li>
                                 <span class="badge badge-danger">error</span>
-                                Keadaan Module sudah diload tetapi memiliki suatu state error
+                                Keadaan Module sudah terdaftar tetapi memiliki suatu state error
                             </li>
                             <li>
                                 <span class="badge badge-danger">disable</span>

@@ -180,7 +180,7 @@ return [
         HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
 
         // official
-        // App\Providers\ModuleServiceProvider::class,
+        App\Providers\LspServiceProvider::class,
         Viandwi24\ModuleSystem\ServiceProvider::class,
     ],
 
