@@ -19,4 +19,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Berkas');
     }
+
+    public function permohonan()
+    {
+        return $this->hasMany('App\Models\Permohonan');
+    }
 }

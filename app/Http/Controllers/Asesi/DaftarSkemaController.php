@@ -7,13 +7,13 @@ use App\Models\Skema;
 use DataTables;
 use Illuminate\Http\Request;
 
-class SkemaController extends Controller
+class DaftarSkemaController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax())
         {
-            $skema = Skema::with('admin')->get();
+            $skema = Skema::with('admin')->whereNotIn('id', auth()->user()->permohonan->pluck('id'))->get();
             return DataTables::of($skema)->make();
         }
         

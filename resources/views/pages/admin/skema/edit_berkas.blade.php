@@ -101,13 +101,13 @@ $breadcrumb = [
             data: {
                 berkas: @JSON($skema->berkas),
                 formatSelect: [
-                    { id: '.jpg', text: '.jpg' },
-                    { id: '.png', text: '.png' },
-                    { id: '.bmp', text: '.bmp' },
-                    { id: '.jpeg', text: '.jpeg' },
-                    { id: '.pdf', text: '.pdf' },
-                    { id: '.doc', text: '.doc' },
-                    { id: '.docx', text: '.docx' },
+                    { id: 'jpg', text: '.jpg' },
+                    { id: 'png', text: '.png' },
+                    { id: 'bmp', text: '.bmp' },
+                    { id: 'jpeg', text: '.jpeg' },
+                    { id: 'pdf', text: '.pdf' },
+                    { id: 'doc', text: '.doc' },
+                    { id: 'docx', text: '.docx' },
                 ]
             },
             methods: {

@@ -13,9 +13,10 @@ Route::group([
     Route::post('profil', 'ProfilController@update')->name('profil.update');
 
     // pendaftaran
-    Route::get('skema', 'SkemaController@index')->name('skema');
+    Route::get('skema', 'DaftarSkemaController@index')->name('skema');
     Route::get('permohonan/create/{skema}', 'PermohonanController@create')->name('permohonan.create');
-    Route::resource('permohonan', 'PermohonanController')->except(['create']);
+    Route::post('permohonan/create/{skema}', 'PermohonanController@store')->name('permohonan.store');
+    Route::resource('permohonan', 'PermohonanController')->except(['create', 'store']);
     
     Route::resource('berkas', 'BerkasController');
 });

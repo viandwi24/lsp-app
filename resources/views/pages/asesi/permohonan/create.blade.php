@@ -76,7 +76,7 @@ $breadcrumb = [
                 </x-dashboard-card>
 
                 {{-- form --}}
-                <form action="{{ route('asesi.permohonan.store') }}" method="POST">
+                <form action="{{ route('asesi.permohonan.store', [$skema->id]) }}" method="POST">
                     @csrf
                     <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
                         <strong>Perhatian!</strong>
@@ -280,6 +280,57 @@ $breadcrumb = [
                     </x-dashboard-card>
                     
                     
+
+                    {{-- bagian 2 --}}
+                    <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
+                        <strong>Perhatian!</strong>
+                        <ul>
+                            <li>File yang diupload harus sesuai rule.</li>
+                            <li>Maksimal Size File adalah 40mb.</li>
+                            <li>Upload File bisa dilakukan di menu Berkas.</li>
+                        </ul>
+                    </div>
+                    <x-dashboard-card title="Berkas Persyaratan & Pendukung" classBody="card-table">
+                        <x-slot name="heading">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        </x-slot>
+
+                        <!-- body -->
+                        @php
+                            // dd($skema->berkas);
+                        @endphp
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <th width="14%">Jenis</th>
+                                <th>Nama Dokumen</th>
+                                <th>Format</th>
+                                <th>Pilih Berkas</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($skema->berkas as $berkas)
+                                    <tr>
+                                        <td>Berkas {{ ucfirst($berkas->jenis) }}</td>
+                                        <td>
+                                            <input type="text" name="berkas_nama[]" class="form-control form-control-sm" value="{{ $berkas->nama }}" {{ ($berkas->tipe == 'ditentukan') ? 'readonly' : '' }}>
+                                        </td>
+                                        <td>
+                                            @if ($berkas->tipe == 'kustom')
+                                                <div class="badge badge-primary">Apapun</div>
+                                            @else
+                                                <div class="badge badge-primary">{{ implode(',', $berkas->format) }}</div>                                                
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <select name="berkas_file[]" class="select2 form-control berkas-file" style="width: 100%;"></select>
+                                        </td>
+                                    </tr>                                    
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </x-dashboard-card>
+
+
                     {{-- submit --}}
                     <button type="submit" class="btn btn-block btn-primary">
                         <i class="ft-upload"></i> Kirim Permohonan
@@ -310,6 +361,8 @@ $breadcrumb = [
                     selectMonths: true,
                     selectYears: true
                 });
+
+                $('.berkas-file').select2({ data: @JSON($berkass->array()) });
             }
         })
     </script>
@@ -326,6 +379,7 @@ $breadcrumb = [
     <link rel="stylesheet" href="{{ assets('vendors/css/pickers/pickadate/pickadate.css') }}">
     <link rel="stylesheet" href="{{ assets('css/core/colors/palette-callout.css') }}">
     <link rel="stylesheet" href="{{ assets('css/plugins/pickers/daterange/daterange.css') }}">
+    <link rel="stylesheet" href="{{ assets('vendors/css/forms/selects/select2.min.css') }}">
 @endpush
 
 @push('js-library')
@@ -335,4 +389,5 @@ $breadcrumb = [
     <script src="{{ assets('vendors/js/pickers/pickadate/legacy.js') }}" type="text/javascript"></script>
     <script src="{{ assets('vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
     <script src="{{ assets('vendors/js/pickers/daterange/daterangepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/forms/select/select2.full.min.js') }}"></script>
 @endpush
