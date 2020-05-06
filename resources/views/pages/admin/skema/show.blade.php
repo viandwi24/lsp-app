@@ -43,7 +43,7 @@ $breadcrumb = [
                 <div class="card-body" style="border-top: 1px solid #F9FAFD;">
                     <div class="card-title">Tambahan</div>
                     @foreach ($dashboardMenu as $item)
-                        <a href="{{ $item['link'] }}" class="btn btn-sm btn-block btn-outline-info">{!! $item['text'] !!}</a>
+                        <a href="{{ $item['link']($skema) }}" class="btn btn-sm btn-block btn-outline-info">{!! $item['text']($skema) !!}</a>
                     @endforeach
                     {{-- <a href="#" class="btn btn-sm btn-block btn-outline-info"><i class="ft-book"></i> Assesment</a>
                     <a href="#" class="btn btn-sm btn-block btn-outline-info"><i class="ft-book"></i> Feedback</a> --}}

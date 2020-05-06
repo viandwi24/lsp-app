@@ -20,4 +20,7 @@ Route::group([
     Route::resource('user/asesi', 'UserAsesiController', ['as' => 'user', 'parameters' => ['asesi' => 'user']]);
     Route::resource('user/asesor', 'UserAsesorController', ['as' => 'user', 'parameters' => ['asesor' => 'user']]);
     Route::resource('skema', 'SkemaController');
+    Route::group([ 'as' => 'skema.' ], function () {
+        Route::resource('skema/{skema}/permohonan', 'SkemaPermohonanController');
+    });
 });

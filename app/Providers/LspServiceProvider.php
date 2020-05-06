@@ -69,5 +69,14 @@ class LspServiceProvider extends ServiceProvider
             ->add('asesi', [ 'type' => 'item', 'text' => 'Daftar Skema', 'icon' => 'la la-book', 'link' => route('asesi.skema') ])
             ->add('asesi', [ 'type' => 'header', 'text' => 'Pra Asesmen' ])
             ->add('asesi', [ 'type' => 'item', 'text' => 'Permohonan', 'icon' => 'la la-book', 'link' => route('asesi.permohonan.index') ]);
+
+        
+        // 
+        Menu::get('dashboard.skema')
+            ->add('admin', [ 'link' => function ($skema) {
+                return route('admin.skema.permohonan.index', [$skema->id]);
+            }, 'text' => function () {
+                return '<i class="ft-navigation"></i> Permohonan Asesi';
+            }]);
     }
 }
