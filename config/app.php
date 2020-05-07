@@ -175,13 +175,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // vendor
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
-
         // official
         App\Providers\LspServiceProvider::class,
         Viandwi24\ModuleSystem\ServiceProvider::class,
+
+        // vendor
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
+        Recca0120\Terminal\TerminalServiceProvider::class,
     ],
 
     /*

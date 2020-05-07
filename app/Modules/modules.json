@@ -1,5 +1,8 @@
 {
-    "load": [],
+    "load": [
+        "SimpleHomePage",
+        "TextEditor"
+    ],
     "list": [
         "SimpleHomePage",
         "TextEditor"
