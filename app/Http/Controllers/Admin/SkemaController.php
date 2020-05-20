@@ -61,8 +61,25 @@ class SkemaController extends Controller
             'kategori_id' => 'required|array',
         ]);
 
+        // create
         $store = Skema::create($request->only('judul', 'kode', 'admin_id'));
+
+        // add relation table
+        $store->frpaap01()->create([
+            'asesi' => 'Hasil pelatihan dan / atau pendidikan',
+            'tujuan_asesmen' => 'Sertifikasi',
+            'konteks_asesmen_lingkungan' => 'Tempat kerja nyata',
+            'konteks_asesmen_peluang_mengumpulan_bukti' => 'Tersedia',
+            'konteks_asesmen_hubungan_standar_kompetensi' => 'Bukti untuk mendukung asesmen / RPL',
+            'konteks_asesmen_pelaku_asesmen' => 'Lembaga Sertifikasi',
+            'relevan_dikonfirmasi' => 'Manajer sertifikasi LSP',
+            'tolak_ukur' => 'Standar kompetensi',
+        ]);
+
+        // kategori
         $store->kategori()->sync($request->kategori_id);
+
+
         return redirect()->route('admin.skema.index')
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Tambah Data Berhasil.']);
     }

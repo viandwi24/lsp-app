@@ -15,9 +15,9 @@ class Permohonan extends Model
     ];
     protected $appends = ['created_at_diff', 'status'];
 
-    public function user()
+    public function asesi()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'asesi_id');
     }
 
     public function berkas()
@@ -29,6 +29,12 @@ class Permohonan extends Model
     {
         return $this->belongsTo('App\Models\Skema');
     }
+    
+    public function asesi_skema()
+    {
+        return $this->hasOne('App\Models\AsesiSkema');
+    }
+
 
     public function getCreatedAtDiffAttribute()
     {
@@ -38,5 +44,10 @@ class Permohonan extends Model
     public function getStatusAttribute()
     {
         return ($this->approved_at == null) ? 'Belum Disetujui' : 'Disetujui';
+    }
+
+    public function permohonan_asesi_asesor()
+    {
+        return $this->hasOne('App\Models\PermohonanAsesiAsesor', 'permohonan_id');
     }
 }

@@ -59,7 +59,11 @@ class LspServiceProvider extends ServiceProvider
 
             // asesor
             ->add('asesor', [ 'type' => 'item', 'text' => 'Home', 'icon' => 'la la-home', 'link' => route('asesor.home') ])
-            ->add('asesor', [ 'type' => 'item', 'text' => 'Profil', 'icon' => 'la la-user', 'link' => url('tes') ])
+            ->add('asesor', [ 'type' => 'item', 'text' => 'Profil', 'icon' => 'la la-user', 'link' => route('asesor.profil') ])
+            ->add('asesor', [ 'type' => 'header', 'text' => 'Manajemen' ])
+            ->add('asesor', [ 'type' => 'item', 'text' => 'Skema Saya', 'icon' => 'la la-book', 'link' => route('asesor.skema') ])
+            ->add('asesor', [ 'type' => 'item', 'text' => 'Permohonan Asesi', 'icon' => 'la la-list', 'link' => route('asesor.permohonan.index') ])
+            ->add('asesor', [ 'type' => 'item', 'text' => 'Asesi Saya', 'icon' => 'la la-users', 'link' => route('asesor.asesi') ])
 
             // asesi
             ->add('asesi', [ 'type' => 'item', 'text' => 'Home', 'icon' => 'la la-home', 'link' => route('asesi.home') ])

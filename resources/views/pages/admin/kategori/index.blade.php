@@ -25,7 +25,7 @@ $breadcrumb = [
                                 <a class="dropdown-item" id="bulkDelete">Hapus</a>
                             </div>
                         </div>
-                        <li><a class="btn btn-sm btn-success" href="{{ url()->route('admin.kategori.create') }}"><i class="ft-plus"></i> Tambah</a></li>
+                        <li><a class="btn btn-sm btn-success" href="{{ route('admin.kategori.create') }}"><i class="ft-plus"></i> Tambah</a></li>
                         <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                     </x-slot>

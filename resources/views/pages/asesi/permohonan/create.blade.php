@@ -312,7 +312,11 @@ $breadcrumb = [
                                     <tr>
                                         <td>Berkas {{ ucfirst($berkas->jenis) }}</td>
                                         <td>
-                                            <input type="text" name="berkas_nama[]" class="form-control form-control-sm" value="{{ $berkas->nama }}" {{ ($berkas->tipe == 'ditentukan') ? 'readonly' : '' }}>
+                                            @if ($berkas->tipe == 'kustom')
+                                                <input type="text" name="berkas_nama[]" class="form-control form-control-sm" placeholder="Kosongkan jika tidak mengupload file, isi nama dokumen jika melampirkan file.">
+                                            @else
+                                                <input type="text" name="berkas_nama[]" class="form-control form-control-sm" value="{{ $berkas->nama }}" {{ ($berkas->tipe == 'ditentukan') ? 'readonly' : '' }}>
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($berkas->tipe == 'kustom')
@@ -328,6 +332,63 @@ $breadcrumb = [
                                 @endforeach
                             </tbody>
                         </table>
+                    </x-dashboard-card>
+
+
+                    {{-- bagian asesment pribadi --}}
+                    <div class="bs-callout-info callout-border-left mt-2 mb-2 p-1">
+                        <strong>Perhatian!</strong> lakukan asesmen mandiri dengan 
+                        mencentang kolom "bisa" jika sesuai.
+                    </div>
+                    <x-dashboard-card title="Asesmen Mandiri" classBody="card-table">
+                        <x-slot name="heading">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        </x-slot>
+
+                        <!-- body -->
+                        @php
+                            // dd($skema->unit);
+                        @endphp
+                        @foreach ($skema->unit as $unit_index => $unit)
+                            <table class="table table-hover table-bordered m-0">
+                                <tbody>
+                                    <tr style="background: #e0e0e0;">
+                                        <th class="text-right" width="15%">Unit Kompetensi :</th>
+                                        <th>{{ $unit->kode }} {{ $unit->judul }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-hover table-bordered m-0">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="2">Dapatkan saya ?</th>
+                                        <th width="7%">BK</th>
+                                        <th width="7%">K</th>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    @foreach ($unit->elemen as $elemen_index => $elemen)
+                                        <tr>
+                                            <td colspan="4">{{ $elemen->elemen }}</td>
+                                        </tr>
+
+                                        @foreach ($elemen->kuk as $kuk_index => $kuk)
+                                            <tr>
+                                                <td width="5%">{{ $unit_index }}.{{ $elemen_index }}</td>
+                                                <td>{{ $kuk->kuk }}</td>
+                                                <td>
+                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="true" checked>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="false">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endforeach
                     </x-dashboard-card>
 
 
@@ -371,6 +432,7 @@ $breadcrumb = [
 @push('css')
     <style>
         .form-section { border-bottom: 1px solid #34495e; }
+        tbody { border: 0!important; }
     </style>
 @endpush
 

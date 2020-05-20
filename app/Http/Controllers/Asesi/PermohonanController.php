@@ -9,6 +9,7 @@ use App\Services\Select2;
 use App\User;
 use DataTables;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class PermohonanController extends Controller
 {
@@ -22,7 +23,7 @@ class PermohonanController extends Controller
         if ($request->ajax())
         {
             $user = auth()->user();
-            $permohonan = Permohonan::with('user', 'skema')->whereUserId($user->id)->get();
+            $permohonan = Permohonan::with('asesi', 'skema')->whereAsesiId($user->id)->get();
             return DataTables::of($permohonan)->make();
         }
 
@@ -38,6 +39,7 @@ class PermohonanController extends Controller
     {
         $user = auth()->user();
         $berkass = new Select2(auth()->user()->berkas, ['nama']);
+        // dd($skema->unit);
         return view('pages.asesi.permohonan.create', compact('skema', 'user', 'berkass'));
     }
 
@@ -66,23 +68,35 @@ class PermohonanController extends Controller
             'data_diri.pendidikan_terakhir' => 'required',
             'tujuan_asesmen' => 'required|in:sertifikasi,sertifikasi_ulang,lainnya',
             'bekerja' => 'required|in:0,1|boolean',
+            'kuk' => 'required'
         ]);
         $data['data_diri'] = $request->data_diri;
         $data['tujuan_asesmen'] = $request->tujuan_asesmen;
         $data['bekerja'] = ($request->bekerja) ? true : false;
+        $data['kuk'] = [];
+        foreach($request->kuk as $unit_index => $unit)
+        {
+            foreach($unit as $elemen_index => $elemen)
+            {
+                foreach($elemen as $kuk_index => $kuk)
+                {
+                    $data['kuk'][$unit_index][$elemen_index][$kuk_index] = ($kuk == "true") ? true : false;
+                }   
+            }
+        }
 
 
         // pekerjaan
         if ($request->bekerja == '1')
         {
             $request->validate([
-                'pekerjaan.nama' => 'required',
-                'pekerjaan.jabatan' => 'required',
-                'pekerjaan.alamat' => 'required',
-                'pekerjaan.no_telp' => 'required',
-                'pekerjaan.email' => 'required|email',
+                'data_pekerjaan.nama' => 'required',
+                'data_pekerjaan.jabatan' => 'required',
+                'data_pekerjaan.alamat' => 'required',
+                'data_pekerjaan.no_telp' => 'required',
+                'data_pekerjaan.email' => 'required|email',
             ]);
-            $data['pekerjaan'] = $request->pekerjaan;
+            $data['pekerjaan'] = $request->data_pekerjaan;
         }
 
 
@@ -103,17 +117,20 @@ class PermohonanController extends Controller
             {
                 $request->validate(['berkas_file.' . $i => 'required|exists:berkas,id']);
             } else {
-                $request->validate([
-                    'berkas_nama.' . $i => 'required',
-                    'berkas_file.' . $i => 'required|exists:berkas,id',
-                ]);
+                if ($request->has('berkas_file.' . $i))
+                {
+                    $request->validate([
+                        'berkas_nama.' . $i => 'required',
+                        'berkas_file.' . $i => 'required|exists:berkas,id',
+                    ]);
+                }
             }
             $i++;
         }
 
         // 
         $permohonan = Permohonan::create([
-            'user_id' => $user->id,
+            'asesi_id' => $user->id,
             'skema_id' => $skema->id,
             'skema' => $skema,
             'data' => $data,
@@ -123,12 +140,15 @@ class PermohonanController extends Controller
         $i = 0;
         foreach($skema->berkas as $berkas)
         {
-            $berkas_nama = $request->berkas_nama[$i];
-            if ($berkas->tipe == 'ditentukan') $berkas_nama = $berkas->nama;
+            if ($request->has('berkas_file.' . $i))
+            {
+                $berkas_nama = $request->berkas_nama[$i];
+                if ($berkas->tipe == 'ditentukan') $berkas_nama = $berkas->nama;
+                $permohonan->berkas()->attach( $request->berkas_file[$i], ['nama' => $berkas_nama ] );
+            }
 
             $i++;
         }
-        $permohonan->berkas()->attach( $request->berkas_file, ['nama' => $berkas_nama ] );
 
         // 
         return redirect()->route('asesi.permohonan.index');

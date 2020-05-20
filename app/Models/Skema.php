@@ -34,4 +34,9 @@ class Skema extends Model
     {
         return $this->belongsToMany('App\Models\Kategori', 'skema_kategori');
     }
+
+    public function frpaap01()
+    {
+        return $this->hasOne('App\Models\FrPaap01');
+    }
 }

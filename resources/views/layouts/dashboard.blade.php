@@ -28,6 +28,9 @@
     .dataTables_wrapper .row:nth-child(3) { padding: 0 2rem; padding-bottom: 1.8rem; }
     .custom-control-label::after { cursor: pointer; }
     .form-group > label { font-weight: bold; }
+    .btn { border-radius: 0!important; }
+    .card .heading-elements .btn { margin-left: .3rem; }
+    .card .card-table tr .btn { margin-left: .3rem; }
     </style>
     @stack('css')
 </head>

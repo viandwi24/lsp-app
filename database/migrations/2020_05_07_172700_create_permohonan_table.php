@@ -16,8 +16,8 @@ class CreatePermohonanTable extends Migration
     {
         Schema::create('permohonan', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('asesi_id')->unsigned();
+            $table->foreign('asesi_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->bigInteger('skema_id')->unsigned();
             $table->foreign('skema_id')->references('id')->on('skema')->onUpdate('cascade')->onDelete('cascade');

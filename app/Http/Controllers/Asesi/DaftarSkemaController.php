@@ -13,7 +13,7 @@ class DaftarSkemaController extends Controller
     {
         if ($request->ajax())
         {
-            $skema = Skema::with('admin')->whereNotIn('id', auth()->user()->permohonan->pluck('id'))->get();
+            $skema = Skema::with('admin')->whereNotIn('id', auth()->user()->asesi_permohonan->pluck('skema_id'))->get();
             return DataTables::of($skema)->make();
         }
         

@@ -1,32 +1,22 @@
-@extends('layouts.dashboard', ['title' => 'Admin \ Skema \ ' . $skema->judul . ' \ Permohonan'])
+@extends('layouts.dashboard', ['title' => 'Asesor \ Skema'])
 
 @php
 $breadcrumb = [
     ['text' => 'Dashboard', 'link' => url('') ],
-    ['text' => 'Admin', 'link' => route('admin.home') ],
-    ['text' => 'Skema', 'link' => route('admin.skema.index') ],
-    ['text' => $skema->judul, 'link' => route('admin.skema.show', [$skema->id]) ],
+    ['text' => 'Asesor', 'link' => url()->route('asesor.home') ]
 ];
 @endphp
 
 @section('content')
     <!-- content-header -->
-    <x-dashboard-content-header title="Permohonan Asesi" :breadcrumb="$breadcrumb" type="basic-bottom" />
+    <x-dashboard-content-header title="Manajemen Skema" :breadcrumb="$breadcrumb" />
 
     <!-- content -->
     <x-dashboard-content>
         <div class="row">
             <div class="col-12">
-                <x-dashboard-card title="Permohonan" classBody="card-table">
+                <x-dashboard-card title="Skema" classBody="card-table">
                     <x-slot name="heading">
-                        <div class="dropdown" style="display: inline-block;">
-                            <button class="btn btn-sm btn-danger dropdown-toggle disable-on-bulk-check-null" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Aksi Untuk <span class="bulk_check_count"></span> Item
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" id="bulkDelete">Hapus</a>
-                            </div>
-                        </div>
                         <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                     </x-slot>
@@ -42,10 +32,9 @@ $breadcrumb = [
                                     </div>
                                 </th>
                                 <th width="8%">#</th>
-                                <th>Skema</th>
-                                <th>Asesi</th>
-                                <th>Status</th>
-                                <th>Pada</th>
+                                <th>Judul</th>
+                                <th>Kode</th>
+                                <th>Admin</th>
                                 <th width="15%" class="text-center">...</th>
                             </tr>
                         </thead>
@@ -82,10 +71,9 @@ $breadcrumb = [
                         `
                     },
                     { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
-                    { data: 'skema.judul' },
-                    { data: 'asesi.nama' },
-                    { data: 'status' },
-                    { data: 'created_at' },
+                    { data: 'judul' },
+                    { data: 'kode' },
+                    { data: 'admin.nama' },
                     { data: 'action' },
                 ]
             },
@@ -97,10 +85,10 @@ $breadcrumb = [
                     }
 
                     this.datatable = $('#table').DataTable( {
-                        ajax: "{{ route('admin.skema.permohonan.index', [$skema->id]) }}",
+                        ajax: "{{ route('asesor.skema') }}",
                         processing: true,
                         order: [[1, 'asc']],
-                        columnDefs: [ { orderable: false, targets: [0] }, ],
+                        columnDefs: [ { orderable: false, targets: [0, 5] }, ],
                         columns: this.columns
                     });
                 },
@@ -109,7 +97,7 @@ $breadcrumb = [
                 this.loadTable()
                 $('#reload').on('click', () => this.datatable.ajax.reload(null, false))
                 $('#bulkDelete').on('click', () => {
-                    var url = '{{ route("admin.skema.permohonan.index", [$skema->id]) }}/' + bulkSelectedItem
+                    var url = '{{ route("asesor.skema") }}/' + bulkSelectedItem
                     var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);
                     $('body').append(form);
                     form.submit();

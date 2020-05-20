@@ -32,13 +32,13 @@ $breadcrumb = [
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Judul :</label>
                                 <div class="col-md-6">
-                                    <input type="text" name="judul" class="form-control">
+                                    <input value="{{ old('judul') }}" type="text" name="judul" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Kode :</label>
                                 <div class="col-md-6">
-                                    <input type="text" name="kode" class="form-control">
+                                    <input value="{{ old('kode') }}" type="text" name="kode" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -72,6 +72,7 @@ $breadcrumb = [
     <script>
     $(document).ready(() => {
         $('#selectAdmin').select2({ data: @JSON($admins->array()) });
+        $('#selectAdmin').val(@JSON(old('admin_id'))).trigger('change');
         $('#selectKategori').select2({ data: @JSON($kategoris->array()) });
         $('#selectKategori').val(@JSON(old('kategori_id'))).trigger('change');
     });

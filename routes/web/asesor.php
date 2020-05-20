@@ -9,4 +9,18 @@ Route::group([
     'middleware' => ['auth', 'role:asesor']
 ], function () {
     Route::get('', 'HomeController@index')->name('home');
+    Route::get('profil', 'ProfilController@index')->name('profil');
+    Route::post('profil', 'ProfilController@update')->name('profil.update');
+
+    // skema saya
+    Route::get('skema', 'SkemaController@index')->name('skema');
+    Route::get('skema/{skema}/frpaap01', 'SkemaController@frpaap01')->name('skema.frpaap01');
+    Route::put('skema/{skema}/frpaap01', 'SkemaController@frpaap01_update')->name('skema.frpaap01.update');
+
+    // 
+    Route::resource('permohonan', 'PermohonanController', ['parameters' => ['permohonan' => 'permohonan_asesi_asesor']])
+        ->only(['index', 'edit', 'update']);
+
+    // 
+    Route::get('asesi', 'AsesiController@index')->name('asesi');
 });

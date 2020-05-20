@@ -78,7 +78,7 @@ $breadcrumb = [
                                                 <label>Kuk :</label>
                                             </div>
                                             <div class="col-12" v-for="(kuk, k) in elemen.kuk">
-                                                <textarea class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k]"></textarea>
+                                                <textarea class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k].kuk"></textarea>
                                                 <div class="text-right">
                                                     <a href="#" @click.prevent="hapusKuk(i, j, k)">Hapus</a>
                                                 </div>
@@ -109,9 +109,26 @@ $breadcrumb = [
                     this.units.push({ 
                         judul: 'Contoh Unit ' + count, 
                         kode: 'Contoh Kode ' + count, 
-                        jenis: 'SKKNI ' + count, 
+                        jenis: 'SKKNI', 
                         elemen: [
-                            { elemen: 'Contoh Elemen ' + count, kuk: ['Contoh Kuk ' + count] }
+                            {
+                                elemen: 'Contoh Elemen 1', 
+                                kuk: [
+                                    { 
+                                        kuk: 'Contoh Kuk 1',
+                                        rencana_asesmen: {
+                                            observasi: {
+                                                jenis_bukti: 'L',
+                                                metode: 'CL'
+                                            },
+                                            jawaban: {
+                                                jenis_bukti: 'L',
+                                                metode: 'CL'
+                                            },
+                                        }
+                                    }
+                                ]
+                            }
                         ]
                     })
                 },
@@ -120,7 +137,24 @@ $breadcrumb = [
                 },
                 tambahElemen(unit) {
                     let count = this.units[unit].elemen.length + 1
-                    this.units[unit].elemen.push({ elemen: 'Contoh Elemen ' + count, kuk: ['Contoh Kuk ' + count] })
+                    this.units[unit].elemen.push({
+                        elemen: 'Contoh Elemen ' + count, 
+                        kuk: [
+                            { 
+                                kuk: 'Contoh Kuk 1',
+                                rencana_asesmen: {
+                                    observasi: {
+                                        jenis_bukti: 'L',
+                                        metode: 'CL'
+                                    },
+                                    jawaban: {
+                                        jenis_bukti: 'L',
+                                        metode: 'CL'
+                                    },
+                                }
+                            }
+                        ]
+                    })
                 },
                 hapusElemen(unit, index) {
                     if (this.units[unit].elemen.length == 1) return 
@@ -128,7 +162,19 @@ $breadcrumb = [
                 },
                 tambahKuk(unit, elemen) {
                     let count = this.units[unit].elemen[elemen].kuk.length + 1
-                    this.units[unit].elemen[elemen].kuk.push('Contoh Kuk ' + count)
+                    this.units[unit].elemen[elemen].kuk.push({
+                        kuk: 'Contoh Kuk ' + count,
+                        rencana_asesmen: {
+                            observasi: {
+                                jenis_bukti: 'L',
+                                metode: 'CL'
+                            },
+                            jawaban: {
+                                jenis_bukti: 'L',
+                                metode: 'CL'
+                            },
+                        }
+                    })
                 },
                 hapusKuk(unit, elemen, index) {
                     if (this.units[unit].elemen[elemen].kuk.length == 1) return 

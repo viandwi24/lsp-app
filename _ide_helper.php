@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.6.2 on 2020-04-28 22:02:35.
+ * Generated for Laravel 7.9.2 on 2020-05-17 15:38:34.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2679,6 +2679,19 @@ namespace Illuminate\Support\Facades {
         {
                         return \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($value);
         }
+        
+        /**
+         * Compile Blade echos into valid PHP.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function compileEchos($value)
+        {
+                        /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
+                        return $instance->compileEchos($value);
+        }
          
     }
 
@@ -3957,7 +3970,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param mixed $default
          * @param string|null $path
-         * @return \Symfony\Component\HttpFoundation\Cookie 
+         * @return \Symfony\Component\HttpFoundation\Cookie|null 
          * @static 
          */ 
         public static function queued($key, $default = null, $path = null)
@@ -6667,6 +6680,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Assert how many requests have been recorded.
+         *
+         * @param $count
+         * @return void 
+         * @static 
+         */ 
+        public static function assertSentCount($count)
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        $instance->assertSentCount($count);
+        }
+        
+        /**
          * Assert that every created response sequence is empty.
          *
          * @return void 
@@ -8611,6 +8637,40 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Routing\Redirector $instance */
                         return $instance->route($route, $parameters, $status, $headers);
+        }
+        
+        /**
+         * Create a new redirect response to a signed named route.
+         *
+         * @param string $route
+         * @param mixed $parameters
+         * @param \DateTimeInterface|\DateInterval|int|null $expiration
+         * @param int $status
+         * @param array $headers
+         * @return \Illuminate\Http\RedirectResponse 
+         * @static 
+         */ 
+        public static function signedRoute($route, $parameters = [], $expiration = null, $status = 302, $headers = [])
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->signedRoute($route, $parameters, $expiration, $status, $headers);
+        }
+        
+        /**
+         * Create a new redirect response to a signed named route.
+         *
+         * @param string $route
+         * @param \DateTimeInterface|\DateInterval|int|null $expiration
+         * @param mixed $parameters
+         * @param int $status
+         * @param array $headers
+         * @return \Illuminate\Http\RedirectResponse 
+         * @static 
+         */ 
+        public static function temporarySignedRoute($route, $expiration, $parameters = [], $status = 302, $headers = [])
+        {
+                        /** @var \Illuminate\Routing\Redirector $instance */
+                        return $instance->temporarySignedRoute($route, $expiration, $parameters, $status, $headers);
         }
         
         /**
@@ -11408,6 +11468,21 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Routing\Router $instance */
                         return $instance->addRoute($methods, $uri, $action);
+        }
+        
+        /**
+         * Create a new Route object.
+         *
+         * @param array|string $methods
+         * @param string $uri
+         * @param mixed $action
+         * @return \Illuminate\Routing\Route 
+         * @static 
+         */ 
+        public static function newRoute($methods, $uri, $action)
+        {
+                        /** @var \Illuminate\Routing\Router $instance */
+                        return $instance->newRoute($methods, $uri, $action);
         }
         
         /**
@@ -15374,6 +15449,119 @@ namespace Yajra\DataTables\Facades {
  
 }
 
+namespace HTMLMin\HTMLMin\Facades { 
+
+    /**
+     * This is the htmlmin facade class.
+     *
+     * @author Graham Campbell <graham@alt-three.com>
+     */ 
+    class HTMLMin {
+        
+        /**
+         * Get the minified blade.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function blade($value)
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->blade($value);
+        }
+        
+        /**
+         * Get the minified css.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function css($value)
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->css($value);
+        }
+        
+        /**
+         * Get the minified js.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function js($value)
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->js($value);
+        }
+        
+        /**
+         * Get the minified html.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function html($value)
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->html($value);
+        }
+        
+        /**
+         * Return the blade minifier instance.
+         *
+         * @return \HTMLMin\HTMLMin\Minifiers\BladeMinifier 
+         * @static 
+         */ 
+        public static function getBladeMinifier()
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->getBladeMinifier();
+        }
+        
+        /**
+         * Return the css minifier instance.
+         *
+         * @return \HTMLMin\HTMLMin\Minifiers\CssMinifier 
+         * @static 
+         */ 
+        public static function getCssMinifier()
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->getCssMinifier();
+        }
+        
+        /**
+         * Return the js minifier instance.
+         *
+         * @return \HTMLMin\HTMLMin\Minifiers\JsMinifier 
+         * @static 
+         */ 
+        public static function getJsMinifier()
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->getJsMinifier();
+        }
+        
+        /**
+         * Return the html minifier instance.
+         *
+         * @return \HTMLMin\HTMLMin\Minifiers\HtmlMinifier 
+         * @static 
+         */ 
+        public static function getHtmlMinifier()
+        {
+                        /** @var \HTMLMin\HTMLMin\HTMLMin $instance */
+                        return $instance->getHtmlMinifier();
+        }
+         
+    }
+ 
+}
+
 namespace Facade\Ignition\Facades { 
 
     /**
@@ -18738,6 +18926,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class DataTables extends \Yajra\DataTables\Facades\DataTables {}
+
+    class HTMLMin extends \HTMLMin\HTMLMin\Facades\HTMLMin {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
 

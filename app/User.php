@@ -20,8 +20,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Berkas');
     }
 
-    public function permohonan()
+    public function asesi_permohonan()
     {
-        return $this->hasMany('App\Models\Permohonan');
+        return $this->hasMany('App\Models\Permohonan', 'asesi_id');
+    }
+
+    public function asesor_skema()
+    {
+        return $this->belongsToMany('App\Models\Skema', 'skema_asesor');
     }
 }
