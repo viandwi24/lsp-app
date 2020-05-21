@@ -25,6 +25,7 @@ class SkemaController extends Controller
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="'. route('asesor.skema.frpaap01', [$skema->id]) .'">FR-PAAP</a>
+                            <a class="dropdown-item" href="'. route('asesor.skema.frmak01', [$skema->id]) .'">FR-MAK-01</a>
                         </div>
                     </div>
                     ';
@@ -87,5 +88,27 @@ class SkemaController extends Controller
         $data['relevan_dikonfirmasi'] = ['Manajer sertifikasi LSP', 'Master Assessor / Master Trainer / Asesor Utama kompetensi', 'Manajer pelatihan Lembaga Training terakreditasi / Lembaga Training terdaftar', 'Lainnya'];
         $data['tolak_ukur'] = ['Standar kompetensi', 'Kriteria asesmen dari kurikulum pelatihan', 'Spesifikasi kinerja suatu perusahaan atau industri', 'Spesifikasi produk', 'Pedoman khusus'];
         return $data;
+    }
+
+    public function frmak01(Skema $skema)
+    {
+        return view('pages.asesor.skema.frmak01', compact('skema'));
+    }
+    
+    public function frmak01_update(Request $request, Skema $skema)
+    {
+        $data = [ 'bukti_tl' => false, 'bukti_l' => false, 'bukti_t' => false, ];
+
+        if ($request->has('bukti_tl') && $request->bukti_tl == 'on') $data['bukti_tl'] = true;
+        if ($request->has('bukti_l') && $request->bukti_l == 'on') $data['bukti_l'] = true;
+        if ($request->has('bukti_t') && $request->bukti_t == 'on') $data['bukti_t'] = true;
+
+        // 
+        $skema->frmak01()->update($data);
+
+        // /
+        return redirect()->back()
+        ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+
     }
 }

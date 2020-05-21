@@ -22,7 +22,7 @@ class Skema extends Model
     
     public function tuk()
     {
-        return $this->belongsToMany('App\Models\Tuk', 'skema_tuk');
+        return $this->belongsTo('App\Models\Tuk');
     }
     
     public function jadwal()
@@ -38,5 +38,10 @@ class Skema extends Model
     public function frpaap01()
     {
         return $this->hasOne('App\Models\FrPaap01');
+    }
+
+    public function frmak01()
+    {
+        return $this->hasOne('App\Models\FrMak01');
     }
 }

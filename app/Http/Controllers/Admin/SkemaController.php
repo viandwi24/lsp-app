@@ -41,9 +41,11 @@ class SkemaController extends Controller
     {
         $users = User::where('role', 'admin')->get();
         $kategoris = Kategori::all();
+        $tuks = Tuk::all();
         $admins = new Select2($users, ['id', 'nama']);
         $kategoris = new Select2($kategoris, ['nama']);
-        return view('pages.admin.skema.create', compact('kategoris', 'admins'));
+        $tuks = new Select2($tuks, ['id', 'nama']);
+        return view('pages.admin.skema.create', compact('kategoris', 'admins', 'tuks'));
     }
 
     /**
@@ -58,11 +60,12 @@ class SkemaController extends Controller
             'judul' => 'required',
             'kode' => 'required',
             'admin_id' => 'required|numeric',
+            'tuk_id' => 'required|numeric',
             'kategori_id' => 'required|array',
         ]);
 
         // create
-        $store = Skema::create($request->only('judul', 'kode', 'admin_id'));
+        $store = Skema::create($request->only('judul', 'kode', 'admin_id', 'tuk_id'));
 
         // add relation table
         $store->frpaap01()->create([
@@ -75,6 +78,7 @@ class SkemaController extends Controller
             'relevan_dikonfirmasi' => 'Manajer sertifikasi LSP',
             'tolak_ukur' => 'Standar kompetensi',
         ]);
+        $store->frmak01()->create([]);
 
         // kategori
         $store->kategori()->sync($request->kategori_id);
@@ -116,13 +120,6 @@ class SkemaController extends Controller
             $users = User::where('role', 'asesor')->get();
             $asesors = new Select2($users, ['id', 'nama']);
             return view('pages.admin.skema.edit_asesor', compact('skema', 'asesors'));
-
-        // tuk
-        } elseif ($request->get('tab') == 'tuk')
-        {
-            $tuks = Tuk::all();
-            $tuks = new Select2($tuks, ['id', 'nama']);
-            return view('pages.admin.skema.edit_tuk', compact('skema', 'tuks'));
         
         // jadwal
         } elseif ($request->get('tab') == 'jadwal')
@@ -142,7 +139,9 @@ class SkemaController extends Controller
             $kategoris = Kategori::all();
             $admins = new Select2($users, ['id', 'nama']);
             $kategoris = new Select2($kategoris, ['nama']);
-            return view('pages.admin.skema.edit', compact('skema', 'admins', 'kategoris'));
+            $tuks = Tuk::all();
+            $tuks = new Select2($tuks, ['id', 'nama']);
+            return view('pages.admin.skema.edit', compact('skema', 'admins', 'kategoris', 'tuks'));
         }
     }
 
@@ -172,14 +171,6 @@ class SkemaController extends Controller
             return redirect()->route('admin.skema.show', [$skema->id])
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
 
-        // tuk
-        } elseif ($request->get('tab') == 'tuk')
-        {
-            $request->validate([ 'tuk' => 'required|array' ]);
-            $update = $skema->tuk()->sync($request->tuk);
-            return redirect()->route('admin.skema.show', [$skema->id])
-                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
-        
         // jadwal
         } elseif ($request->get('tab') == 'jadwal')
         {
@@ -206,9 +197,10 @@ class SkemaController extends Controller
                 'judul' => 'required',
                 'kode' => 'required',
                 'admin_id' => 'required|numeric',
+                'tuk_id' => 'required|numeric',
                 'kategori_id' => 'required|array',
             ]);
-            $update = $skema->update($request->only('judul', 'kode', 'admin_id'));
+            $update = $skema->update($request->only('judul', 'kode', 'admin_id', 'tuk_id'));
             $skema->kategori()->sync($request->kategori_id);
             return redirect()->route('admin.skema.show', [$skema->id])
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
