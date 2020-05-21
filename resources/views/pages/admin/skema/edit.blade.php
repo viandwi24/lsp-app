@@ -50,6 +50,12 @@ $breadcrumb = [
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-md-right">TUK :</label>
+                                <div class="col-md-6">
+                                    <select name="tuk_id" class="select2 form-control" id="selectTuk"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Kategori :</label>
                                 <div class="col-md-6">
                                     <select name="kategori_id[]" class="select2 form-control" id="selectKategori" multiple="multiple"></select>
@@ -80,6 +86,8 @@ $breadcrumb = [
         $('#selectAdmin').val({{ $skema->admin_id }}).trigger('change');
         $('#selectKategori').select2({ data: @JSON($kategoris->array()) });
         $('#selectKategori').val(@JSON($skema->kategori->pluck('id'))).trigger('change');
+        $('#selectTuk').select2({ data: @JSON($tuks->array()) });
+        $('#selectTuk').val({{ $skema->tuk_id }}).trigger('change');
     });
     </script>
 @endpush

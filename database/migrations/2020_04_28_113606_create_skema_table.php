@@ -17,6 +17,7 @@ class CreateSkemaTable extends Migration
         Schema::create('skema', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('admin_id')->unsigned();
+            $table->bigInteger('tuk_id')->unsigned();
             $table->string('judul');
             $table->string('kode');
             $table->json('unit')->default(new Expression('(JSON_ARRAY())'));
@@ -24,7 +25,8 @@ class CreateSkemaTable extends Migration
             $table->boolean('aktif')->default(true);
             $table->timestamps();
 
-            $table->foreign('admin_id')->references('id')->on('users');
+            $table->foreign('admin_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('tuk_id')->references('id')->on('tuk')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
