@@ -97,11 +97,38 @@ class SkemaController extends Controller
     
     public function frmak01_update(Request $request, Skema $skema)
     {
-        $data = [ 'bukti_tl' => false, 'bukti_l' => false, 'bukti_t' => false, ];
+        $buktis = [
+            [
+                "judul" => "Bukti TL",
+                "items" => ["vp", "dpw"],
+            ],
+            [
+                "judul" => "Bukti L",
+                "items" => ["clo", "ppo", "dit"],
+            ],
+            [
+                "judul" => "Bukti T",
+                "items" => ["dpt", "dpl"],
+            ],
+        ];
+        $data = [
+            'bukti_tl' => [],
+            'bukti_l' => [],
+            'bukti_t' => [],
+        ];
 
-        if ($request->has('bukti_tl') && $request->bukti_tl == 'on') $data['bukti_tl'] = true;
-        if ($request->has('bukti_l') && $request->bukti_l == 'on') $data['bukti_l'] = true;
-        if ($request->has('bukti_t') && $request->bukti_t == 'on') $data['bukti_t'] = true;
+        // forea
+        foreach($buktis as $bukti)
+        {
+            foreach($bukti['items'] as $item) {
+                $item = strtoupper($item);
+                $key  = str_replace(" ", "_", strtolower($bukti['judul']));
+                if ($request->has($item) && $request->input($item)) 
+                {
+                    $data[$key][] = $item;
+                }
+            }
+        }
 
         // 
         $skema->frmak01()->update($data);

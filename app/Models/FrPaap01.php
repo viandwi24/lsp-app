@@ -8,9 +8,6 @@ class FrPaap01 extends Model
 {
     protected $table = 'fr_paap_01';
     protected $guarded = [];
-    protected $casts = [
-        'skema' => 'rencana_asesmen',
-    ];
 
     public function skema()
     {

@@ -39,6 +39,6 @@ class CreateAsesiSkemaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skema_asesi');
+        Schema::dropIfExists('asesi_skema');
     }
 }

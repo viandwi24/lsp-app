@@ -8,6 +8,11 @@ class FrMak01 extends Model
 {
     protected $table = 'fr_mak_01';
     protected $guarded = [];
+    protected $casts = [
+        'bukti_tl' => 'object',
+        'bukti_l' => 'object',
+        'bukti_t' => 'object',
+    ];
 
     public function skema()
     {

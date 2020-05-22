@@ -31,6 +31,6 @@ class CreatePermohonanBerkasPersyaratanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permohonan_berkas_persyaratan');
+        Schema::dropIfExists('permohonan_berkas');
     }
 }

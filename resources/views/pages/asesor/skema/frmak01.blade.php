@@ -28,22 +28,47 @@ $breadcrumb = [
                         @csrf
                         @method('put')
                         <input type="hidden" class="hidden" value="" name="unit">
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-md-right">Bukti Yang Akan Dikumpulkan:</label>
-                            <div class="col-md-6">
-                                <div class="custom-control custom-checkbox">
-                                    <input name="bukti_tl" type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">Bukti TL (Bukti Tidak Langsung) : VP, DPW</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input name="bukti_l" type="checkbox" class="custom-control-input" id="customCheck2">
-                                    <label class="custom-control-label" for="customCheck2">Bukti L (Bukti Tidak) : CLO, PPO, DIT</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input name="bukti_t" type="checkbox" class="custom-control-input" id="customCheck3">
-                                    <label class="custom-control-label" for="customCheck3">Bukti T (Bukti Tidak) : DPT, DPL</label>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label text-md-right">
+                                <b>Bukti Yang Akan Dikumpulkan:</b>
+                            </label>
+                        </div>
+
+                            @php
+                                $buktis = [
+                                    [
+                                        "judul" => "Bukti TL",
+                                        "items" => ["vp", "dpw"],
+                                    ],
+                                    [
+                                        "judul" => "Bukti L",
+                                        "items" => ["clo", "ppo", "dit"],
+                                    ],
+                                    [
+                                        "judul" => "Bukti T",
+                                        "items" => ["dpt", "dpl"],
+                                    ],
+                                ];
+                            @endphp
+                            
+                            @foreach ($buktis as $bukti)
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-md-right">{{ $bukti['judul'] }} :</label>
+                                    <div class="col-md-6">
+                                        @foreach ($bukti['items'] as $item)
+                                            @php
+                                                $item = strtoupper($item);
+                                                $key  = str_replace(" ", "_", strtolower($bukti['judul']));
+                                            @endphp
+                                            <div class="custom-control custom-checkbox">
+                                                <input name="{{ $item }}" type="checkbox" class="custom-control-input" id="customCheck{{ $key }}{{ $item }}" {{ (in_array($item, $skema->frmak01->{$key}) ? 'checked' : '') }}>
+                                                <label class="custom-control-label" for="customCheck{{ $key }}{{ $item }}">{{ $item }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>                                
+                            @endforeach
+
                         </div>
                     </form>
                 </x-dashboard-card>
