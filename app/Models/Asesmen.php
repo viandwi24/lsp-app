@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AsesiSkema extends Model
+class Asesmen extends Model
 {
 
-    protected $table = 'asesi_skema';
+    protected $table = 'asesmen';
     protected $guarded = [];
     protected $appends = ['status'];
 
@@ -36,5 +36,15 @@ class AsesiSkema extends Model
         $keputusan = $this->keputusan;
         if ($keputusan == null) return 'Proses';
         return 'Selesai';
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo('App\Models\Jadwal');
+    }
+
+    public function frmak01()
+    {
+        return $this->hasOne('App\Models\AsesmenFrmak01');
     }
 }
