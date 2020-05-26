@@ -30,9 +30,9 @@ class Permohonan extends Model
         return $this->belongsTo('App\Models\Skema');
     }
     
-    public function asesi_skema()
+    public function asesmen()
     {
-        return $this->hasOne('App\Models\AsesiSkema');
+        return $this->hasOne('App\Models\Asesmen');
     }
 
 

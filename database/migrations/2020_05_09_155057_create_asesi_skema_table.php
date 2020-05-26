@@ -13,7 +13,7 @@ class CreateAsesiSkemaTable extends Migration
      */
     public function up()
     {
-        Schema::create('asesi_skema', function (Blueprint $table) {
+        Schema::create('asesmen', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('permohonan_id')->unsigned();
             $table->foreign('permohonan_id')->references('id')->on('permohonan')->onUpdate('cascade')->onDelete('cascade');
@@ -27,6 +27,9 @@ class CreateAsesiSkemaTable extends Migration
             $table->bigInteger('asesor_id')->unsigned();
             $table->foreign('asesor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
+            $table->bigInteger('jadwal_id')->unsigned();
+            $table->foreign('jadwal_id')->references('id')->on('jadwal')->onUpdate('cascade')->onDelete('cascade');
+
             $table->enum('keputusan', ['kompeten', 'belum_kompeten'])->nullable()->default(null);
             $table->timestamps();
         });
@@ -39,6 +42,6 @@ class CreateAsesiSkemaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asesi_skema');
+        Schema::dropIfExists('asesmen');
     }
 }

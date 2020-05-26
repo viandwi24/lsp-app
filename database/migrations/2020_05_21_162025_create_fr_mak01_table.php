@@ -14,7 +14,7 @@ class CreateFrMak01Table extends Migration
      */
     public function up()
     {
-        Schema::create('fr_mak_01', function (Blueprint $table) {
+        Schema::create('frmak01', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('skema_id')->unsigned();
             $table->json('bukti_tl')->default(new Expression('(JSON_ARRAY())'));
@@ -33,6 +33,6 @@ class CreateFrMak01Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fr_mak_01');
+        Schema::dropIfExists('frmak01');
     }
 }

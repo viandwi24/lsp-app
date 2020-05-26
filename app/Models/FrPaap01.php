@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FrPaap01 extends Model
 {
-    protected $table = 'fr_paap_01';
+    protected $table = 'frpaap01';
     protected $guarded = [];
 
     public function skema()

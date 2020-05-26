@@ -33,6 +33,29 @@ $breadcrumb = [
                                 <label>Nama</label>
                                 <input type="text" name="nama" class="form-control">
                             </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Pelaksanaan :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <span class="la la-calendar-o"></span>
+                                                </span>
+                                            </div>
+                                            <input value="" name="tanggal" type='text' class="form-control pickadate" placeholder="Tanggal Pelaksanaan" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Waktu Pelaksanaan :</label>
+                                        <input type="text" name="jam" class="form-control timepicki" placeholder="Waktu Pelaksanaan" required/>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label>Pengumuman</label>
                                 <textarea id="summernote" type="text" name="pengumuman" class="summernote"></textarea>
@@ -78,11 +101,25 @@ $breadcrumb = [
 @endsection
 
 @push('css-library')
-    <link rel="stylesheet" type="text/css" href="{{ assets('vendors/css/editors/summernote.css') }}">    
+    <link rel="stylesheet" type="text/css" href="{{ assets('vendors/css/editors/summernote.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ assets('vendors/timepicki/css/timepicki.css') }}">
+    <link rel="stylesheet" href="{{ assets('vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ assets('vendors/css/pickers/pickadate/pickadate.css') }}">
+    <link rel="stylesheet" href="{{ assets('css/core/colors/palette-callout.css') }}">
+    <link rel="stylesheet" href="{{ assets('css/plugins/pickers/daterange/daterange.css') }}">
+    <link rel="stylesheet" href="{{ assets('vendors/css/forms/selects/select2.min.css') }}">
 @endpush
 
 @push('js-library')
     <script src="{{ assets('vendors/js/editors/summernote/summernote.js') }}"></script>
+    <script src="{{ assets('vendors/timepicki/js/timepicki.js') }}"></script>
+    <script src="{{ assets('vendors/js/pickers/pickadate/picker.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/pickers/pickadate/picker.date.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/pickers/pickadate/picker.time.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/pickers/pickadate/legacy.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/pickers/daterange/daterangepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ assets('vendors/js/forms/select/select2.full.min.js') }}"></script>
 @endpush
 
 @push('js')
@@ -107,6 +144,17 @@ $breadcrumb = [
                 $('input[name=acara]').val(JSON.stringify(this.acara))
                 $('form#form').submit()
             }
+        },
+        mounted() {
+            $('.pickadate').pickadate({
+                format: 'dd-mm-yyyy',
+                formatSubmit: 'yyyy-mm-dd',
+                hiddenPrefix: 'prefix__',
+                hiddenSuffix: '__suffix',
+                selectMonths: true,
+                selectYears: true
+            });
+            $(".timepicki").timepicki();
         }
     })
     </script>

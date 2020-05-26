@@ -37,4 +37,9 @@ class PermohonanAsesiAsesor extends Model
     {
         return ($this->approved_at == null) ? 'Belum Disetujui' : 'Disetujui';
     }
+
+    public function jadwal()
+    {
+        return $this->belongsTo('App\Models\Jadwal');
+    }
 }

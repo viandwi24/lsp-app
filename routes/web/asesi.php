@@ -17,6 +17,12 @@ Route::group([
     Route::get('permohonan/create/{skema}', 'PermohonanController@create')->name('permohonan.create');
     Route::post('permohonan/create/{skema}', 'PermohonanController@store')->name('permohonan.store');
     Route::resource('permohonan', 'PermohonanController')->except(['create', 'store']);
+
+    // asesmen
+    Route::get('asesmen', 'AsesmenController@index')->name('asesmen');
+    Route::get('asesmen/{asesmen}', 'AsesmenController@show')->name('asesmen.show');
+    Route::get('asesmen/{asesmen}/frmak01', 'AsesmenController@frmak01')->name('asesmen.show.frmak01');
+    Route::post('asesmen/{asesmen}/frmak01', 'AsesmenController@frmak01_post')->name('asesmen.show.frmak01');
     
     Route::resource('berkas', 'BerkasController');
 });

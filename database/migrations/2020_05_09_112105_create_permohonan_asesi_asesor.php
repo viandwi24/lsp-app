@@ -20,6 +20,9 @@ class CreatePermohonanAsesiAsesor extends Migration
 
             $table->bigInteger('asesor_id')->unsigned();
             $table->foreign('asesor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            
+            $table->bigInteger('jadwal_id')->unsigned();
+            $table->foreign('jadwal_id')->references('id')->on('jadwal')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamp('approved_at')->nullable()->default(null);
             $table->timestamps();

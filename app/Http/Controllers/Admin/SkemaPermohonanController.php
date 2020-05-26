@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use App\Models\Permohonan;
 use App\Models\Skema;
@@ -93,7 +94,9 @@ class SkemaPermohonanController extends Controller
         {
             $users = User::where('role', 'asesor')->get();
             $asesors = new Select2($users, ['id', 'nama']);
-            return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors'));
+            $skema_jadwal = $skema->jadwal;
+            $jadwals = new Select2($skema_jadwal, ['id', 'nama']);
+            return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors', 'jadwals'));
         }
 
         return redirect()->back();
@@ -110,13 +113,15 @@ class SkemaPermohonanController extends Controller
     {
         if ($permohonan->approved_at == null)
         {
-            $request->validate(['asesor' => 'required']);
+            $request->validate(['asesor' => 'required', 'jadwal' => 'required']);
             $asesor = User::findOrFail($request->asesor);
+            $jadwal = Jadwal::findOrFail($request->jadwal);
 
-            DB::transaction(function () use ($permohonan, $asesor) {
+            DB::transaction(function () use ($permohonan, $asesor, $jadwal) {
                 $permohonan->update(['approved_at' => Carbon::now()]);
                 $permohonan->permohonan_asesi_asesor()->create([
                     'asesor_id' => $asesor->id,
+                    'jadwal_id' => $jadwal->id,
                 ]);
             });
             return redirect()->route('admin.skema.permohonan.index', [$skema->id])

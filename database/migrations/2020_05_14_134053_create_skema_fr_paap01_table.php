@@ -14,7 +14,7 @@ class CreateSkemaFrPaap01Table extends Migration
      */
     public function up()
     {
-        Schema::create('fr_paap_01', function (Blueprint $table) {
+        Schema::create('frpaap01', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('skema_id')->unsigned();
             $table->foreign('skema_id')->references('id')->on('skema')->onUpdate('cascade')->onDelete('cascade');
@@ -39,6 +39,6 @@ class CreateSkemaFrPaap01Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fr_paap_01');
+        Schema::dropIfExists('frpaap01');
     }
 }

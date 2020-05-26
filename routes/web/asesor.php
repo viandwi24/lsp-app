@@ -25,4 +25,7 @@ Route::group([
 
     // 
     Route::get('asesi', 'AsesiController@index')->name('asesi');
+    Route::get('asesi/{asesmen}', 'AsesiController@show')->name('asesi.show');
+    Route::get('asesi/{asesmen}/frmak01', 'AsesiController@frmak01')->name('asesi.show.frmak01');
+    Route::post('asesi/{asesmen}/frmak01', 'AsesiController@frmak01_post')->name('asesi.show.frmak01.post');
 });

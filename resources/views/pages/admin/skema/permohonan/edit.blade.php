@@ -55,6 +55,12 @@ $breadcrumb = [
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-md-right">Jadwal :</label>
+                                <div class="col-md-6">
+                                    <select name="jadwal" class="select2 form-control" id="selectJadwal"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <a href="{{ route('admin.skema.permohonan.index', [$skema->id, $permohonan->id]) }}" class="btn btn-warning">
                                         <i class="ft-chevron-left"></i> Kembali
@@ -77,6 +83,7 @@ $breadcrumb = [
     <script>
     $(document).ready(() => {
         $('#selectAsesor').select2({ data: @JSON($asesors->array()) });
+        $('#selectJadwal').select2({ data: @JSON($jadwals->array()) });
     });
     </script>
 @endpush

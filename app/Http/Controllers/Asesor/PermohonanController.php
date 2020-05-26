@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Asesor;
 
 use App\Http\Controllers\Controller;
-use App\Models\AsesiSkema;
 use App\Models\Permohonan;
 use App\Models\PermohonanAsesiAsesor;
 use Carbon\Carbon;
@@ -56,10 +55,11 @@ class PermohonanController extends Controller
             $permohonan = Permohonan::findOrFail($permohonanAsesiAsesor->permohonan->id);
             DB::transaction(function () use ($permohonanAsesiAsesor, $permohonan) {
                 $permohonanAsesiAsesor->update(['approved_at' => Carbon::now()]);
-                $permohonan->asesi_skema()->updateOrCreate([
+                $permohonan->asesmen()->updateOrCreate([
                     'asesor_id' => $permohonanAsesiAsesor->asesor_id,
                     'asesi_id' => $permohonan->asesi_id,
                     'skema_id' => $permohonan->skema_id,
+                    'jadwal_id' => $permohonanAsesiAsesor->jadwal_id,
                 ]);
             });
             return redirect()->route('asesor.permohonan.index')
@@ -70,7 +70,7 @@ class PermohonanController extends Controller
             $permohonan = Permohonan::findOrFail($permohonanAsesiAsesor->permohonan->id);
             DB::transaction(function () use ($permohonanAsesiAsesor, $permohonan) {
                 $permohonanAsesiAsesor->update(['approved_at' => null]);
-                $permohonan->asesi_skema()->delete();
+                $permohonan->asesmen()->delete();
             });
             return redirect()->route('asesor.permohonan.index')
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Dibatalkan.']);

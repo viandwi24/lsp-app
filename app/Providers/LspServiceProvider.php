@@ -72,7 +72,9 @@ class LspServiceProvider extends ServiceProvider
             ->add('asesi', [ 'type' => 'header', 'text' => 'Skema' ])
             ->add('asesi', [ 'type' => 'item', 'text' => 'Daftar Skema', 'icon' => 'la la-book', 'link' => route('asesi.skema') ])
             ->add('asesi', [ 'type' => 'header', 'text' => 'Pra Asesmen' ])
-            ->add('asesi', [ 'type' => 'item', 'text' => 'Permohonan', 'icon' => 'la la-book', 'link' => route('asesi.permohonan.index') ]);
+            ->add('asesi', [ 'type' => 'item', 'text' => 'Permohonan', 'icon' => 'la la-book', 'link' => route('asesi.permohonan.index') ])
+            ->add('asesi', [ 'type' => 'header', 'text' => 'Asesmen' ])
+            ->add('asesi', [ 'type' => 'item', 'text' => 'Asesmen Saya', 'icon' => 'la la-book', 'link' => route('asesi.asesmen') ]);
 
         
         // 

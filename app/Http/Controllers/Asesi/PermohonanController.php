@@ -9,7 +9,6 @@ use App\Services\Select2;
 use App\User;
 use DataTables;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class PermohonanController extends Controller
 {
@@ -24,7 +23,19 @@ class PermohonanController extends Controller
         {
             $user = auth()->user();
             $permohonan = Permohonan::with('asesi', 'skema')->whereAsesiId($user->id)->get();
-            return DataTables::of($permohonan)->make();
+            return DataTables::of($permohonan)
+                ->addColumn('status', function (Permohonan $permohonan) {
+                    if ($permohonan->approved_at != null) {
+                        if ($permohonan->permohonan_asesi_asesor->approved_at == null) {
+                            return "Menunggu Asesor";
+                        } else {
+                            return "Disetujui";
+                        }
+                    } else {
+                        return "Menunggu Admin";
+                    }
+                })
+                ->make();
         }
 
         return view('pages.asesi.permohonan.index');
