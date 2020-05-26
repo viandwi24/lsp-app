@@ -137,5 +137,7 @@ class SkemaController extends Controller
         return redirect()->back()
         ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
 
-    }
+    
+    
+    }   
 }

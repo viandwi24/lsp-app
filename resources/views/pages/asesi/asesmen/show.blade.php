@@ -50,6 +50,7 @@ $breadcrumb = [
                     <div class="item">
                         @php
                             $status = '';
+                            $style = 'danger';
                             if ($asesmen->frmak01 == null)
                             {
                                 $status = 'Belum ditandatangani';
@@ -57,13 +58,18 @@ $breadcrumb = [
                                 if ($asesmen->frmak01->signed_asesor_at == null)
                                 {
                                     $status = 'Sudah ditandatangani, Menunggu Asesor.';
+                                    $style = 'warning';
                                 } else {
                                     $status = 'Sudah ditandatangani Asesi dan Asesor.';
+                                    $style = 'success';
                                 }
                             }
                         @endphp
                         <div class="title">FR-MAK-01 : PERSETUJUAN ASESMEN DAN KERAHASIAN</div>
-                        <div class="text-muted">Status : {{ $status }}</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
                         <div class="mt-2">
                             @if ($asesmen->frmak01 == null)
                                 <a href="{{ route('asesi.asesmen.show.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda tangani</a>
@@ -74,12 +80,26 @@ $breadcrumb = [
 
                     <!-- item mak-03 -->
                     <div class="item">
-                        <div class="title">FR-MAK-03 : FORMULIR BANDING ASESMEN</div>
-                        <div class="text-muted">Status : Belum saatnya diisi.</div>
+                        @php
+                            $status = 'Belum diisi.';
+                            $style = 'danger';
+                            if ($asesmen->frai01 == null) {
+                                $status = 'Belum diisi.';
+                            } else {
+                                $status = 'Sudah diisi asesor.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-01 : CEKLIS OBSERVASI UNTUK AKTIVITAS DI TEMPAT KERJA ATAU TEMPAT KERJA SIMULASI</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
                         <div class="mt-2">
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

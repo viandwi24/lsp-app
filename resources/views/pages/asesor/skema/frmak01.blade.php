@@ -71,23 +71,19 @@ $breadcrumb = [
 
                         </div>
                     </form>
-                </x-dashboard-card>
-
-
-
-
-                <div class="row mb-4">
-                    <div class="col-lg-6 col-sm-12">
-                        <a href="{{ route('asesor.skema', [$skema->id]) }}" class="btn btn-block btn-warning">
-                            <i class="ft-chevron-left"></i> Kembali
-                        </a>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                        <button onclick="$('form#form').submit();" class="btn btn-block btn-primary">
-                            <i class="ft-save"></i> Simpan
-                        </button>
-                    </div>
-                </div>
+                </x-dashboard-card>                
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-lg-6">
+                <a href="{{ route('asesor.skema', [$skema->id]) }}" class="btn btn-block btn-warning">
+                    <i class="ft-chevron-left"></i> Kembali
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <button onclick="$('form#form').submit();" class="btn btn-block btn-primary">
+                    <i class="ft-save"></i> Simpan
+                </button>
             </div>
         </div>
     </x-dashboard-content>
