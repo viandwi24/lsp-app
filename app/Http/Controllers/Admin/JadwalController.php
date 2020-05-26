@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DataTables;
 
 use App\Models\Jadwal;
+use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
@@ -48,13 +49,21 @@ class JadwalController extends Controller
             'nama' => 'required',
             'pengumuman' => 'required',
             'acara' => 'required|json',
+            'jam' => 'required',
+            'tanggal' => 'required|date'
         ]);
+
+        // convert
+        $result = date('Y-m-d H:i:s', strtotime("$request->tanggal $request->jam"));
+        $waktu_pelaksanaan = Carbon::parse($result);
 
         $store = Jadwal::create([
             'nama' => $request->nama, 
             'pengumuman' => $request->pengumuman, 
-            'acara' => json_decode($request->acara)
+            'acara' => json_decode($request->acara),
+            'waktu_pelaksanaan' => $waktu_pelaksanaan,
         ]);
+
         return redirect()->route('admin.jadwal.index')
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Tambah Data Berhasil.']);
     }
@@ -94,13 +103,21 @@ class JadwalController extends Controller
             'nama' => 'required',
             'pengumuman' => 'required',
             'acara' => 'required|json',
+            'jam' => 'required',
+            'tanggal' => 'required|date'
         ]);
+
+        // convert
+        $result = date('Y-m-d H:i:s', strtotime("$request->tanggal $request->jam"));
+        $waktu_pelaksanaan = Carbon::parse($result);
 
         $update = $jadwal->update([
             'nama' => $request->nama, 
             'pengumuman' => $request->pengumuman, 
-            'acara' => json_decode($request->acara)
+            'acara' => json_decode($request->acara),
+            'waktu_pelaksanaan' => $waktu_pelaksanaan,
         ]);
+        
         return redirect()->route('admin.jadwal.index')
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
     }

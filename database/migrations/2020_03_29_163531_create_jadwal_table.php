@@ -19,6 +19,7 @@ class CreateJadwalTable extends Migration
             $table->string('nama');
             $table->longText('pengumuman')->nullable();
             $table->json('acara')->default(new Expression('(JSON_ARRAY())'));
+            $table->timestamp('waktu_pelaksanaan');
             $table->timestamps();
         });
     }
