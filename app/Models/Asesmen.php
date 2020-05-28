@@ -52,4 +52,9 @@ class Asesmen extends Model
     {
         return $this->hasOne('App\Models\AsesmenFrai01');
     }
+
+    public function frai02()
+    {
+        return $this->hasOne('App\Models\AsesmenFrai02');
+    }
 }
