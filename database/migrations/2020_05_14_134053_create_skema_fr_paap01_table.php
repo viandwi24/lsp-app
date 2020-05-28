@@ -27,7 +27,7 @@ class CreateSkemaFrPaap01Table extends Migration
             $table->enum('konteks_asesmen_pelaku_asesmen', ['Lembaga Sertifikasi', 'Organisasi Pelatihan', 'Asesor Perusahaan']);
             $table->enum('relevan_dikonfirmasi', ['Manajer sertifikasi LSP', 'Master Assessor / Master Trainer / Asesor Utama kompetensi', 'Manajer pelatihan Lembaga Training terakreditasi / Lembaga Training terdaftar', 'Lainnya']);
             $table->enum('tolak_ukur', ['Standar kompetensi', 'Kriteria asesmen dari kurikulum pelatihan', 'Spesifikasi kinerja suatu perusahaan atau industri', 'Spesifikasi produk', 'Pedoman khusus']);
-            $table->longText('rencana_asesmen')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('rencana_asesmen')->default(new Expression('(JSON_ARRAY())'));
             $table->timestamps();
         });
     }
