@@ -238,9 +238,6 @@ $breadcrumb = [
             data: {
                 units: @JSON($skema->unit)
             },
-            mounted() {
-                console.log( this.units )
-            },
             methods: {
                 tambahUnit() {
                     let count = this.units.length + 1

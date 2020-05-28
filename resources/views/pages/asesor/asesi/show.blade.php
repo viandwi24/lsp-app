@@ -79,7 +79,7 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <!-- item mak-03 -->
+                    <!-- item ai-01 -->
                     <div class="item">
                         @php
                             $status = 'Belum diisi.';
@@ -98,6 +98,34 @@ $breadcrumb = [
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('asesor.asesi.frai01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            <button class="btn btn-sm btn-success">Download</button>
+                            @if ($asesmen->frai01 != null)
+                                <a href="{{ route('asesor.asesi.frai01', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- item ai-02 -->
+                    <div class="item">
+                        @php
+                            $status = 'Belum diisi.';
+                            $style = 'danger';
+                            if ($asesmen->frai02 == null) {
+                                $status = 'Belum diisi asesi.';
+                            } else {
+                                $status = 'Sudah diisi asesi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-02 : PERTANYAAN UNTUK MENDUKUNG OBSERVASI</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->frai02 != null)
+                                <a href="{{ route('asesor.asesi.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>                                
+                            @endif
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
                     </div>

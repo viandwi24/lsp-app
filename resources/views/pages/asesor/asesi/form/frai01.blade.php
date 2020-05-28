@@ -54,7 +54,7 @@ $breadcrumb = [
                                 <table class="table table-hover m-0">
                                     <thead>
                                         <tr style="background: #e0e0e0;">
-                                            <th colspan="6">{{ $unit->judul }}</th>
+                                            <th colspan="7">{{ $unit->judul }}</th>
                                         </tr>
                                         <tr>
                                             <th>#</th>
@@ -63,6 +63,7 @@ $breadcrumb = [
                                             <th width="10%">Benchmark (SOP / spesifikasi produk industri)</th>
                                             <th>K</th>
                                             <th>BK</th>
+                                            <th width="10%">Penilaian Lanjut</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -95,6 +96,10 @@ $breadcrumb = [
                                                             >
                                                             <label class="custom-control-label" for="pilihanFalse[{{ $unit_k }}][{{ $elemen_k }}][{{ $kuk_k }}]"></label>
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="penilaian[{{ $unit_k }}][{{ $elemen_k }}][{{ $kuk_k }}]" class="form-control form-control-sm"
+                                                        value="{{ $kuk->penilaian }}">
                                                     </td>
                                                 </tr>                                                
                                             @endforeach

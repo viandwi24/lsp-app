@@ -78,7 +78,7 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <!-- item mak-03 -->
+                    <!-- item ai-01 -->
                     <div class="item">
                         @php
                             $status = 'Belum diisi.';
@@ -98,6 +98,42 @@ $breadcrumb = [
                         <div class="mt-2">
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
+                    </div>
+
+                    <!-- item ai-02 -->
+                    <div class="item">
+                        @php
+                            $status = 'Belum diisi.';
+                            $style = 'danger';
+                            if ($asesmen->frai02 == null) {
+                                $status = 'Belum diisi.';
+                            } else {
+                                $status = 'Sudah diisi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-02 : PERTANYAAN UNTUK MENDUKUNG OBSERVASI</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            <button class="btn btn-sm btn-success">Download</button>
+                            @if ($asesmen->frai02 != null)
+                                <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
                     </div>
 
                 </div>
@@ -115,6 +151,15 @@ $breadcrumb = [
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
             transition: all 0.3s cubic-bezier(.25,.8,.25,1);
             margin-bottom: 1.8rem;
+            position: relative;
+        }
+        .item .overlay { z-index: 10;position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8) }
+        .item .overlay div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
         }
         .item:hover {
             box-shadow: 0 5px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
