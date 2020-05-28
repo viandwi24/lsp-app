@@ -26,6 +26,7 @@ class SkemaController extends Controller
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="'. route('asesor.skema.frpaap01', [$skema->id]) .'">FR-PAAP</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.frmak01', [$skema->id]) .'">FR-MAK-01</a>
+                            <a class="dropdown-item" href="'. route('asesor.skema.frai02', [$skema->id]) .'">FR-AI-02</a>
                         </div>
                     </div>
                     ';
@@ -135,9 +136,23 @@ class SkemaController extends Controller
 
         // /
         return redirect()->back()
-        ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+        ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);    
+    
+    }
 
-    
-    
-    }   
+    public function frai02(Skema $skema)
+    {   
+        return view('pages.asesor.skema.frai02', compact('skema'));
+    }
+
+    public function frai02_update(Request $request, Skema $skema)
+    {
+        $request->validate([
+            'pertanyaan' => 'required|json'
+        ]);
+        $update = $skema->frai02()->update([ 'pertanyaan' => $request->pertanyaan ]);
+        
+        return redirect()->back()
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+    }
 }

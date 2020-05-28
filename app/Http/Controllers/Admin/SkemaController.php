@@ -13,6 +13,7 @@ use App\User;
 use App\Models\Skema;
 use App\Models\Tuk;
 use App\Services\Select2;
+use Illuminate\Support\Facades\DB;
 
 class SkemaController extends Controller
 {
@@ -64,24 +65,27 @@ class SkemaController extends Controller
             'kategori_id' => 'required|array',
         ]);
 
-        // create
-        $store = Skema::create($request->only('judul', 'kode', 'admin_id', 'tuk_id'));
+        DB::transaction(function () use ($request) {
+            // create
+            $store = Skema::create($request->only('judul', 'kode', 'admin_id', 'tuk_id'));
 
-        // add relation table
-        $store->frpaap01()->create([
-            'asesi' => 'Hasil pelatihan dan / atau pendidikan',
-            'tujuan_asesmen' => 'Sertifikasi',
-            'konteks_asesmen_lingkungan' => 'Tempat kerja nyata',
-            'konteks_asesmen_peluang_mengumpulan_bukti' => 'Tersedia',
-            'konteks_asesmen_hubungan_standar_kompetensi' => 'Bukti untuk mendukung asesmen / RPL',
-            'konteks_asesmen_pelaku_asesmen' => 'Lembaga Sertifikasi',
-            'relevan_dikonfirmasi' => 'Manajer sertifikasi LSP',
-            'tolak_ukur' => 'Standar kompetensi',
-        ]);
-        $store->frmak01()->create([]);
+            // add relation table
+            $store->frpaap01()->create([
+                'asesi' => 'Hasil pelatihan dan / atau pendidikan',
+                'tujuan_asesmen' => 'Sertifikasi',
+                'konteks_asesmen_lingkungan' => 'Tempat kerja nyata',
+                'konteks_asesmen_peluang_mengumpulan_bukti' => 'Tersedia',
+                'konteks_asesmen_hubungan_standar_kompetensi' => 'Bukti untuk mendukung asesmen / RPL',
+                'konteks_asesmen_pelaku_asesmen' => 'Lembaga Sertifikasi',
+                'relevan_dikonfirmasi' => 'Manajer sertifikasi LSP',
+                'tolak_ukur' => 'Standar kompetensi',
+            ]);
+            $store->frmak01()->create([]);
+            $store->frai02()->create([]);
 
-        // kategori
-        $store->kategori()->sync($request->kategori_id);
+            // kategori
+            $store->kategori()->sync($request->kategori_id);
+        });
 
 
         return redirect()->route('admin.skema.index')

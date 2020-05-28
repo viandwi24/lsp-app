@@ -7,6 +7,7 @@ use App\Models\Asesmen;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AsesmenController extends Controller
 {
@@ -54,6 +55,51 @@ class AsesmenController extends Controller
             ]);
             return redirect()->route('asesi.asesmen.show', $asesmen->id)
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menandatangani formulir Berhasil.']);
+        }
+
+        // 
+        return redirect()->route('asesi.asesmen.show', $asesmen->id);
+    }
+
+    public function frai02(Asesmen $asesmen)
+    {
+        if (isset($_GET['reset']))
+        {
+            DB::transaction(function () use ($asesmen) {
+                $asesmen->frai02()->delete();
+            });
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
+        }
+
+        // 
+        if ($asesmen->frai02 == null) 
+        {
+            $pertanyaans = $asesmen->skema->frai02->pertanyaan;
+            $data = [];
+            foreach($pertanyaans as $pertanyaan)
+            {
+                $data[] = ['pertanyaan' => $pertanyaan, 'jawaban' => '', 'memuaskan' => false];
+            }
+            $asesmen->frai02()->create(['data' => $data]);
+            return redirect()->route('asesi.asesmen.frai02', [$asesmen->id]);
+        }
+
+        return view('pages.asesi.asesmen.form.frai02', compact('asesmen'));
+    }
+
+    public function frai02_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->frai02 != null) 
+        {
+            $request->validate([
+                'data' => 'required|json'
+            ]);
+            $asesmen->frai02()->update([
+                'data' => $request->data,
+            ]);
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
         }
 
         // 
