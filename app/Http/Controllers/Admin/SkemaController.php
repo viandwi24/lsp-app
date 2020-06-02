@@ -82,6 +82,8 @@ class SkemaController extends Controller
             ]);
             $store->frmak01()->create([]);
             $store->frai02()->create([]);
+            $store->fraiae01()->create([]);
+            $skema->fraiae03()->create([]);
 
             // kategori
             $store->kategori()->sync($request->kategori_id);

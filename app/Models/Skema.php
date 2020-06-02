@@ -49,4 +49,14 @@ class Skema extends Model
     {
         return $this->hasOne('App\Models\FrAi02');
     }
+
+    public function fraiae01()
+    {
+        return $this->hasOne('App\Models\FrAiAe01');
+    }
+
+    public function fraiae03()
+    {
+        return $this->hasOne('App\Models\FrAiAe03');
+    }
 }

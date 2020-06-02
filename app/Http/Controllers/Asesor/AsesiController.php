@@ -20,7 +20,7 @@ class AsesiController extends Controller
             return DataTables::of($asesmen)
                 ->addColumn('keputusan', function (Asesmen $asesmen) {
                     $keputusan = $asesmen->keputusan;
-                    return ($keputusan == null) ? 'Belum ditentukan' : $keputusan;
+                    return ($keputusan == null) ? 'Belum ditentukan' : ($keputusan == 'kompeten' ? 'Kompeten' : 'Belum Kompeten');
                 })
                 ->addColumn('action', function (Asesmen $asesmen) {
                     return '
@@ -38,6 +38,15 @@ class AsesiController extends Controller
     public function show(Asesmen $asesmen)
     {
         return view('pages.asesor.asesi.show', compact('asesmen'));
+    }
+
+    public function update(Request $request, Asesmen $asesmen)
+    {
+        $request->validate(['keputusan' => 'required|in:belum_kompeten,kompeten,null']);
+        $keputusan = ($request->keputusan == "null") ? null : $request->keputusan;
+        $asesmen->update(['keputusan' => $keputusan]);
+        return redirect()->route('asesor.asesi.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Berhasil merubah keputusan.']);
     }
 
     public function frmak01(Asesmen $asesmen)
@@ -150,7 +159,7 @@ class AsesiController extends Controller
 
     public function frai02_post(Request $request, Asesmen $asesmen)
     {
-        if ($asesmen->frai01 != null)
+        if ($asesmen->frai02 != null)
         {
             $request->validate([
                 'pengetahuan' => 'required|in:memuaskan,tidak_memuaskan',
@@ -177,6 +186,43 @@ class AsesiController extends Controller
                 'data' => $data,
                 'pengetahuan' => $request->pengetahuan,
                 'catatan' => $request->catatan
+            ]);
+
+            return redirect()->route('asesor.asesi.show', $asesmen->id)
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Mengisi formulir Berhasil.']);
+        }
+
+        return redirect()->back();
+    }
+
+    public function fraiae01(Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae01 == null) return abort(404);
+        return view('pages.asesor.asesi.form.fraiae01', compact('asesmen'));
+    }
+
+    public function fraiae01_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae01 != null)
+        {
+            if ($request->has('pilihan'))
+            {
+                $request->validate(['pilihan' => 'required|array']);
+            }
+
+            $data = $asesmen->fraiae01->data;
+            foreach($asesmen->fraiae01->data as $index => $pertanyaan)
+            {
+                if (isset($request->pilihan[$index]) && $request->pilihan[$index] == "true")
+                {
+                    $data[$index]->memuaskan = true;
+                } else {
+                    $data[$index]->memuaskan = false;
+                }
+            }
+
+            $asesmen->fraiae01()->update([
+                'data' => $data
             ]);
 
             return redirect()->route('asesor.asesi.show', $asesmen->id)

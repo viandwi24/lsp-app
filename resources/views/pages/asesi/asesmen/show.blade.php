@@ -40,6 +40,16 @@ $breadcrumb = [
                                 <th>Jadwal</th>
                                 <td>: {{ $asesmen->jadwal->waktu_pelaksanaan }}</td>
                             </tr>
+                            <tr>
+                                <th>Keputusan</th>
+                                <td>
+                                    :
+                                    @if ($asesmen->keputusan == 'kompeten') <span class="badge badge-success">Kompeten</span>
+                                    @elseif ($asesmen->keputusan == 'belum_kompeten') <span class="badge badge-danger">Belum Kompeten</span>
+                                    @else <span class="badge badge-warning">Belum ditetapkan</span>
+                                    @endif
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -72,7 +82,7 @@ $breadcrumb = [
                         </div>
                         <div class="mt-2">
                             @if ($asesmen->frmak01 == null)
-                                <a href="{{ route('asesi.asesmen.show.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda tangani</a>
+                                <a href="{{ route('asesi.asesmen.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda tangani</a>
                             @endif
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
@@ -81,10 +91,10 @@ $breadcrumb = [
                     <!-- item ai-01 -->
                     <div class="item">
                         @php
-                            $status = 'Belum diisi.';
+                            $status = 'Belum diisi asesor.';
                             $style = 'danger';
                             if ($asesmen->frai01 == null) {
-                                $status = 'Belum diisi.';
+                                $status = 'Belum diisi asesor.';
                             } else {
                                 $status = 'Sudah diisi asesor.';
                                 $style = 'success';
@@ -127,6 +137,37 @@ $breadcrumb = [
                             <button class="btn btn-sm btn-success">Download</button>
                             @if ($asesmen->frai02 != null)
                                 <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
+                    </div>
+
+                    <!-- item ai-ae-01 -->
+                    <div class="item">
+                        @php
+                            $status = 'Belum diisi.';
+                            $style = 'danger';
+                            if ($asesmen->fraiae01 == null) {
+                                $status = 'Belum diisi.';
+                            } else {
+                                $status = 'Sudah diisi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-AE-01 : PERTANYAAN TERTULIS</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ route('asesi.asesmen.fraiae01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            <button class="btn btn-sm btn-success">Download</button>
+                            @if ($asesmen->fraiae01 != null)
+                                <a href="{{ route('asesi.asesmen.fraiae01', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
                             @endif
                         </div>
                         @if ($asesmen->frmak01 == null)

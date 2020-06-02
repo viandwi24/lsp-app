@@ -30,6 +30,7 @@ $breadcrumb = [
                                     <th width="8%">#</th>
                                     <th>Skema</th>
                                     <th>Asesi</th>
+                                    <th>Keputusan</th>
                                     <th width="8%" class="text-center">...</th>
                                 </tr>
                             </thead>
@@ -73,6 +74,7 @@ $breadcrumb = [
                             { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
                             { data: 'skema.judul' },
                             { data: 'asesi.nama' },
+                            { data: 'keputusan' },
                             { data: 'action' }
                         ]
                     });

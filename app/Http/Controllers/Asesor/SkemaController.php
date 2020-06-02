@@ -27,6 +27,8 @@ class SkemaController extends Controller
                             <a class="dropdown-item" href="'. route('asesor.skema.frpaap01', [$skema->id]) .'">FR-PAAP</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.frmak01', [$skema->id]) .'">FR-MAK-01</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.frai02', [$skema->id]) .'">FR-AI-02</a>
+                            <a class="dropdown-item" href="'. route('asesor.skema.fraiae01', [$skema->id]) .'">FR-AI-AE-01</a>
+                            <a class="dropdown-item" href="'. route('asesor.skema.fraiae03', [$skema->id]) .'">FR-AI-AE-03</a>
                         </div>
                     </div>
                     ';
@@ -151,6 +153,38 @@ class SkemaController extends Controller
             'pertanyaan' => 'required|json'
         ]);
         $update = $skema->frai02()->update([ 'pertanyaan' => $request->pertanyaan ]);
+        
+        return redirect()->back()
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+    }
+
+    public function fraiae01(Skema $skema)
+    {   
+        return view('pages.asesor.skema.fraiae01', compact('skema'));
+    }
+
+    public function fraiae01_update(Request $request, Skema $skema)
+    {
+        $request->validate([
+            'pertanyaan' => 'required|json'
+        ]);
+        $update = $skema->fraiae01()->update([ 'pertanyaan' => $request->pertanyaan ]);
+        
+        return redirect()->back()
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+    }
+
+    public function fraiae03(Skema $skema)
+    {   
+        return view('pages.asesor.skema.fraiae03', compact('skema'));
+    }
+
+    public function fraiae03_update(Request $request, Skema $skema)
+    {
+        $request->validate([
+            'pertanyaan' => 'required|json'
+        ]);
+        $update = $skema->fraiae03()->update([ 'pertanyaan' => $request->pertanyaan ]);
         
         return redirect()->back()
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);

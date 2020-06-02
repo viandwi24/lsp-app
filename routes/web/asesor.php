@@ -20,6 +20,10 @@ Route::group([
     Route::put('skema/{skema}/frmak01', 'SkemaController@frmak01_update')->name('skema.frmak01.update');
     Route::get('skema/{skema}/frai02', 'SkemaController@frai02')->name('skema.frai02');
     Route::put('skema/{skema}/frai02', 'SkemaController@frai02_update')->name('skema.frai02.update');
+    Route::get('skema/{skema}/fraiae01', 'SkemaController@fraiae01')->name('skema.fraiae01');
+    Route::put('skema/{skema}/fraiae01', 'SkemaController@fraiae01_update')->name('skema.fraiae01.update');
+    Route::get('skema/{skema}/fraiae03', 'SkemaController@fraiae03')->name('skema.fraiae03');
+    Route::put('skema/{skema}/fraiae03', 'SkemaController@fraiae03_update')->name('skema.fraiae03.update');
     // 
     Route::resource('permohonan', 'PermohonanController', ['parameters' => ['permohonan' => 'permohonan_asesi_asesor']])
         ->only(['index', 'edit', 'update']);
@@ -27,10 +31,13 @@ Route::group([
     // 
     Route::get('asesi', 'AsesiController@index')->name('asesi');
     Route::get('asesi/{asesmen}', 'AsesiController@show')->name('asesi.show');
+    Route::put('asesi/{asesmen}', 'AsesiController@update')->name('asesi.update');
     Route::get('asesi/{asesmen}/frmak01', 'AsesiController@frmak01')->name('asesi.frmak01');
     Route::post('asesi/{asesmen}/frmak01', 'AsesiController@frmak01_post')->name('asesi.frmak01.post');
     Route::get('asesi/{asesmen}/frai01', 'AsesiController@frai01')->name('asesi.frai01');
     Route::post('asesi/{asesmen}/frai01', 'AsesiController@frai01_post')->name('asesi.frai01.post');
     Route::get('asesi/{asesmen}/frai02', 'AsesiController@frai02')->name('asesi.frai02');
     Route::post('asesi/{asesmen}/frai02', 'AsesiController@frai02_post')->name('asesi.frai02.post');
+    Route::get('asesi/{asesmen}/fraiae01', 'AsesiController@fraiae01')->name('asesi.fraiae01');
+    Route::post('asesi/{asesmen}/fraiae01', 'AsesiController@fraiae01_post')->name('asesi.fraiae01.post');
 });

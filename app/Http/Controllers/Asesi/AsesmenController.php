@@ -21,7 +21,7 @@ class AsesmenController extends Controller
             return DataTables::of($permohonan)
                 ->addColumn('keputusan', function (Asesmen $asesi_skema) {
                     $keputusan = $asesi_skema->keputusan;
-                    return ($keputusan == null) ? 'Belum ditentukan' : $keputusan;
+                    return ($keputusan == null) ? 'Belum ditentukan' : ($keputusan == 'kompeten' ? 'Kompeten' : 'Belum Kompeten');
                 })
                 ->addColumn('action', function (Asesmen $asesi_skema) {
                     return '
@@ -96,6 +96,51 @@ class AsesmenController extends Controller
                 'data' => 'required|json'
             ]);
             $asesmen->frai02()->update([
+                'data' => $request->data,
+            ]);
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
+        }
+
+        // 
+        return redirect()->route('asesi.asesmen.show', $asesmen->id);
+    }
+
+    public function fraiae01(Asesmen $asesmen)
+    {
+        if (isset($_GET['reset']))
+        {
+            DB::transaction(function () use ($asesmen) {
+                $asesmen->fraiae01()->delete();
+            });
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
+        }
+
+        // 
+        if ($asesmen->fraiae01 == null) 
+        {
+            $pertanyaans = $asesmen->skema->fraiae01->pertanyaan;
+            $data = [];
+            foreach($pertanyaans as $pertanyaan)
+            {
+                $data[] = ['pertanyaan' => $pertanyaan, 'jawaban' => '', 'memuaskan' => false];
+            }
+            $asesmen->fraiae01()->create(['data' => $data]);
+            return redirect()->route('asesi.asesmen.fraiae01', [$asesmen->id]);
+        }
+
+        return view('pages.asesi.asesmen.form.fraiae01', compact('asesmen'));
+    }
+
+    public function fraiae01_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae01 != null) 
+        {
+            $request->validate([
+                'data' => 'required|json'
+            ]);
+            $asesmen->fraiae01()->update([
                 'data' => $request->data,
             ]);
             return redirect()->route('asesi.asesmen.show', $asesmen->id)
