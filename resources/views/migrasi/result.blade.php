@@ -10,7 +10,7 @@
         <div id="app" class="container pt-4 pb-4">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-sm-12">
-                    <h1>RESULT MIGRATION</h1>
+                    <h1>MIGRATION RESULT</h1>
                     <form action="{{ url('migrasi/user/rollback') }}" method="POST">
                         @csrf
                         <div class="form-group">

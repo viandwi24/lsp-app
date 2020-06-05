@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Fraiae03 extends Model
+class FrAiAe03 extends Model
 {
     protected $table = 'fraiae03';
     protected $guarded = [];
