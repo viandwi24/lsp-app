@@ -73,6 +73,36 @@ $breadcrumb = [
                         </form>
                     </div>
                 </div>
+                @php
+                    $data = $permohonan->data;
+                @endphp
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Data {{ $data->data_diri->nama }}</h4>
+                    </div>
+                    <div class="card-body card-dashboard">
+                        <div class="form">
+                            <div class="form-group row">
+                                <label class="col-sm-2  col-form-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $data->data_diri->nama }}" type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2  col-form-label">Tempat Lahir</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $data->data_diri->tempat_lahir }}" type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2  col-form-label">Tanggal Lahir</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $data->data_diri->tanggal_lahir }}" type="text" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </x-dashboard-content>

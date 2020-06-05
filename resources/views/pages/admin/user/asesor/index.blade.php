@@ -42,6 +42,7 @@ $breadcrumb = [
                                     </div>
                                 </th>
                                 <th width="8%">#</th>
+                                <th>User Id</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th width="15%" class="text-center">...</th>
@@ -93,6 +94,7 @@ $breadcrumb = [
                                 `
                             },
                             { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+                            { data: 'id' },
                             { data: 'nama' },
                             { data: 'email' },
                             {

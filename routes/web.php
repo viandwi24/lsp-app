@@ -1,7 +1,12 @@
 <?php
 
 use App\Models\Berkas;
+use App\Models\Permohonan;
+use App\Models\Skema;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Services\User;
 
 Route::get('berkas/{path?}', function ($path) {
     // role
@@ -37,3 +42,9 @@ Route::get('berkas/{path?}', function ($path) {
  
     return $response;
 })->name('berkas.download');
+
+
+Route::get('/migrasi/user', 'MigrationController@index');
+Route::post('migrasi/user/prepare', 'MigrationController@prepare');
+Route::post('migrasi/user/submit', 'MigrationController@migrate');
+Route::post('migrasi/user/rollback', 'MigrationController@rollback');
