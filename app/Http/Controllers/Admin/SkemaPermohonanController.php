@@ -34,6 +34,7 @@ class SkemaPermohonanController extends Controller
                     } else {
                         $result .= '<a href="'. route('admin.skema.permohonan.edit', [$skema->id, $permohonan->id]) .'?batal" class="btn btn-sm btn-danger"><i class="ft-x"></i></a>';
                     }
+                    $result .= '<form method="post" action="'. route('admin.skema.permohonan.destroy', [$skema->id, $permohonan->id]) .'" style="display:inline;">'.csrf_field().method_field('delete').'<button class="btn btn-sm btn-danger"><i class="ft-trash"></i></button>';
                     $result .= '<div>';
                     return $result;
 
@@ -92,6 +93,7 @@ class SkemaPermohonanController extends Controller
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Dibatalkan.']);
         } else if ($permohonan->approved_at == null || isset($_GET['setujui']))
         {
+            // dd($permohonan->data->data_diri);
             $users = User::where('role', 'asesor')->get();
             $asesors = new Select2($users, ['id', 'nama']);
             $skema_jadwal = $skema->jadwal;
@@ -137,8 +139,10 @@ class SkemaPermohonanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Skema $skema, Permohonan $permohonan)
     {
-        //
+        $permohonan->delete();
+        return redirect()->route('admin.skema.permohonan.index', [$skema->id])
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan dihapus.']);
     }
 }
