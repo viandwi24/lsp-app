@@ -11,7 +11,7 @@ $breadcrumb = [
 
 @section('content')
     <!-- content-header -->
-    <x-dashboard-content-header title="FR-AI-02 : PERTANYAAN UNTUK MENDUKUNG OBSERVASI" :breadcrumb="$breadcrumb" :autoBread="false" type="basic-bottom" />
+    <x-dashboard-content-header title="FR-AI-AE-03 : PERTANYAAN LISAN" :breadcrumb="$breadcrumb" :autoBread="false" type="basic-bottom" />
     
     <!-- content -->
     <x-dashboard-content>
@@ -58,7 +58,7 @@ $breadcrumb = [
                                 </thead>
                                 <tbody>
                                     @php $i = 1; @endphp
-                                    @foreach ($asesmen->frai02->data as $data)
+                                    @foreach ($asesmen->fraiae03->data as $data)
                                         <tr style="background: #e0e0e0;">
                                             <td>{{ $i++ }}</td>
                                             <td>
@@ -73,32 +73,13 @@ $breadcrumb = [
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <b>Tanggapan :</b>
+                                                <b>Jawaban :</b>
                                                 {{ $data->jawaban }}
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-
-                    <!-- other -->
-                    <div class="card shadow-lg">
-                        <div class="card-header">Lainnya</div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Pengethuan Kandidat</label>
-                                <select name="pengetahuan" class="form-control">
-                                    <option value="memuaskan" {{ $asesmen->frai02->pengetahuan == 'memuaskan' ? 'selected' : '' }}>Memuaskan</option>
-                                    <option value="tidak_memuaskan" {{ $asesmen->frai02->pengetahuan == 'tidak_memuaskan' ? 'selected' : '' }}>Tidak Memuaskan</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Catatan Umpan Balik</label>
-                                <input type="text" name="catatan" class="form-control" value="{{ $asesmen->frai02->catatan }}">
-                            </div>
                         </div>
                     </div>
 

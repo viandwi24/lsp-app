@@ -183,6 +183,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
         Recca0120\Terminal\TerminalServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -238,6 +239,7 @@ return [
         // vendor
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

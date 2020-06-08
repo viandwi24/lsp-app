@@ -37,7 +37,7 @@ $breadcrumb = [
                                 </tr>
                                 <tr>
                                     <th>Tuk</th>
-                                    <td>: {{ $asesmen->skema->tuk->nama }}</td>
+                                    <td>: {{ $asesmen->tuk->nama }}</td>
                                 </tr>
                                 <tr>
                                     <th>Jadwal</th>
@@ -49,7 +49,7 @@ $breadcrumb = [
 
                     <!-- form -->
                     <div class="card shadow-lg">
-                        <div class="card-body card-table">
+                        <div class="card-body card-table table-responsive">
                             @foreach ($asesmen->frai01->data as $unit_k => $unit)  
                                 <table class="table table-hover m-0">
                                     <thead>
@@ -63,7 +63,7 @@ $breadcrumb = [
                                             <th width="10%">Benchmark (SOP / spesifikasi produk industri)</th>
                                             <th>K</th>
                                             <th>BK</th>
-                                            <th width="10%">Penilaian Lanjut</th>
+                                            <th width="20%">Penilaian Lanjut</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -60,6 +60,7 @@ class PermohonanController extends Controller
                     'asesi_id' => $permohonan->asesi_id,
                     'skema_id' => $permohonan->skema_id,
                     'jadwal_id' => $permohonanAsesiAsesor->jadwal_id,
+                    'tuk_id' => $permohonanAsesiAsesor->tuk_id,
                 ]);
             });
             return redirect()->route('asesor.permohonan.index')

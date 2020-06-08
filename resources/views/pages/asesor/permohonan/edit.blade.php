@@ -43,6 +43,14 @@ $breadcrumb = [
                                     <th>{{ $permohonanAsesiAsesor->permohonan->skema->judul }}</th>
                                 </tr>
                                 <tr>
+                                    <th class="text-right" width="15%">Jadwal :</th>
+                                    <th>{{ $permohonanAsesiAsesor->jadwal->nama }}</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="15%">Tuk :</th>
+                                    <th>{{ $permohonanAsesiAsesor->tuk->nama }}</th>
+                                </tr>
+                                <tr>
                                     <th class="text-right" width="15%">Dibuat :</th>
                                     <th>{{ $permohonanAsesiAsesor->permohonan->created_at }}</th>
                                 </tr>

@@ -75,6 +75,7 @@ class AsesmenController extends Controller
         // 
         if ($asesmen->frai02 == null) 
         {
+            if ($asesmen->skema->frai02 == null) dd("FRAI02 kosong, belum di set asesor");
             $pertanyaans = $asesmen->skema->frai02->pertanyaan;
             $data = [];
             foreach($pertanyaans as $pertanyaan)
@@ -120,6 +121,7 @@ class AsesmenController extends Controller
         // 
         if ($asesmen->fraiae01 == null) 
         {
+            if ($asesmen->skema->fraiae01 == null) dd("fraiae01 kosong, belum di set asesor");
             $pertanyaans = $asesmen->skema->fraiae01->pertanyaan;
             $data = [];
             foreach($pertanyaans as $pertanyaan)
@@ -141,6 +143,54 @@ class AsesmenController extends Controller
                 'data' => 'required|json'
             ]);
             $asesmen->fraiae01()->update([
+                'data' => $request->data,
+            ]);
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
+        }
+
+        // 
+        return redirect()->route('asesi.asesmen.show', $asesmen->id);
+    }
+
+
+
+    public function fraiae03(Asesmen $asesmen)
+    {
+        if (isset($_GET['reset']))
+        {
+            DB::transaction(function () use ($asesmen) {
+                $asesmen->fraiae03()->delete();
+            });
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
+        }
+
+        // 
+        if ($asesmen->fraiae03 == null) 
+        {
+            if ($asesmen->skema->fraiae03 == null) dd("fraiae03 kosong, belum di set asesor");
+            $pertanyaans = $asesmen->skema->fraiae03->pertanyaan;
+            $data = [];
+            foreach($pertanyaans as $pertanyaan)
+            {
+                $data[] = ['pertanyaan' => $pertanyaan, 'jawaban' => '', 'memuaskan' => false];
+            }
+            $asesmen->fraiae03()->create(['data' => $data]);
+            return redirect()->route('asesi.asesmen.fraiae03', [$asesmen->id]);
+        }
+
+        return view('pages.asesi.asesmen.form.fraiae03', compact('asesmen'));
+    }
+
+    public function fraiae03_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae03 != null) 
+        {
+            $request->validate([
+                'data' => 'required|json'
+            ]);
+            $asesmen->fraiae03()->update([
                 'data' => $request->data,
             ]);
             return redirect()->route('asesi.asesmen.show', $asesmen->id)

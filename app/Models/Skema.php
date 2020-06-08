@@ -22,7 +22,7 @@ class Skema extends Model
     
     public function tuk()
     {
-        return $this->belongsTo('App\Models\Tuk');
+        return $this->belongsToMany('App\Models\Tuk', 'skema_tuk');
     }
     
     public function jadwal()

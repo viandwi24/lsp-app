@@ -31,6 +31,13 @@
     .btn { border-radius: 0!important; }
     .card .heading-elements .btn { margin-left: .3rem; }
     .card .card-table tr .btn { margin-left: .3rem; }
+    table {
+        width: 100%;
+    }
+    td, th {
+        /* text-overflow: ellipsis; */
+        white-space: normal;
+    }
     </style>
     @stack('css')
 </head>

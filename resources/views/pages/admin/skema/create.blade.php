@@ -42,12 +42,6 @@ $breadcrumb = [
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label text-md-right">TUK :</label>
-                                <div class="col-md-6">
-                                    <select name="tuk_id" class="select2 form-control" id="selectTuk"></select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Admin :</label>
                                 <div class="col-md-6">
                                     <select name="admin_id" class="select2 form-control" id="selectAdmin"></select>
@@ -81,8 +75,6 @@ $breadcrumb = [
         $('#selectAdmin').val(@JSON(old('admin_id'))).trigger('change');
         $('#selectKategori').select2({ data: @JSON($kategoris->array()) });
         $('#selectKategori').val(@JSON(old('kategori_id'))).trigger('change');
-        $('#selectTuk').select2({ data: @JSON($tuks->array()) });
-        $('#selectTuk').val(@JSON(old('tuk_id'))).trigger('change');
     });
     </script>
 @endpush

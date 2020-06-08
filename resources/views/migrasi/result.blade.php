@@ -21,6 +21,14 @@
                             <label>Asesor</label>
                             <input type="text" class="form-control" value="{{ $asesor->id }} - {{ $asesor->nama }}" readonly>
                         </div>
+                        <div class="form-group">
+                            <label>Tuk</label>
+                            <input type="text" class="form-control" value="{{ $tuk->id }} - {{ $tuk->nama }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Jadwal</label>
+                            <input type="text" class="form-control" value="{{ $jadwal->id }} - {{ $jadwal->nama }}" readonly>
+                        </div>
                         <hr>
                         @foreach ($result as $item)
                             <h5>{{ $item->user->nama }} :</h5>

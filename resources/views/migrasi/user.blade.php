@@ -40,6 +40,10 @@
                             <input type="number" value="1" name="jadwal" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label>Id Tuk :</label>
+                            <input type="number" value="1" name="tuk" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-success">Submit</button>
                         </div>
                     </form>

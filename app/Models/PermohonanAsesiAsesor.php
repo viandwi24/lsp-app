@@ -42,4 +42,9 @@ class PermohonanAsesiAsesor extends Model
     {
         return $this->belongsTo('App\Models\Jadwal');
     }
+
+    public function tuk()
+    {
+        return $this->belongsTo('App\Models\Tuk');
+    }
 }

@@ -17,15 +17,14 @@ $breadcrumb = [
     <x-dashboard-content>
         <div class="row">
             <div class="col-12">
+                <div class="alert alert-info">
+                    Persetujuan Asesmen ini untuk menjamin bahwa Peserta telah 
+                    diberi arahan secara rinci tentang perencanaan dan proses asesmen
+                </div>
+                
                 <div class="card shadow">
                     <div class="card-body card-table">
                         <table class="table m-0">
-                            <tr>
-                                <th colspan="4">
-                                    Persetujuan Asesmen ini untuk menjamin bahwa Peserta telah 
-                                    diberi arahan secara rinci tentang perencanaan dan proses asesmen
-                                </th>
-                            </tr>
                             <tr style="background: #e0e0e0;">
                                 <th rowspan="2" class="text-center">Skema</th>
                                 <th>Judul</th>
@@ -40,7 +39,7 @@ $breadcrumb = [
                             <tr>
                                 <th colspan="2">Tuk</th>
                                 <th class="text-right">:</th>
-                                <td>{{ $asesmen->skema->tuk->nama }}</td>
+                                <td>: {{ $asesmen->tuk->nama }}</td>
                             </tr>
                             <tr>
                                 <th colspan="2">Asesor</th>
@@ -55,15 +54,15 @@ $breadcrumb = [
                             <tr>
                                 <th colspan="2" rowspan="3">Bukti Yang Dikumpulkan</th>
                                 <th class="text-right">:</th>
-                                <td>Bukti TL : {{ implode(', ', $asesmen->skema->frmak01->bukti_tl) }}</td>
+                                <td>Bukti TL : {{ ( $asesmen->skema->frmak01 == null) ? "-" : implode(', ', $asesmen->skema->frmak01->bukti_tl) }}</td>
                             </tr>
                             <tr>
                                 <th class="text-right">:</th>
-                                <td>Bukti L : {{ implode(', ', $asesmen->skema->frmak01->bukti_l) }}</td>
+                                <td>Bukti L : {{ ( $asesmen->skema->frmak01 == null) ? "-" : implode(', ', $asesmen->skema->frmak01->bukti_l) }}</td>
                             </tr>
                             <tr>
                                 <th class="text-right">:</th>
-                                <td>Bukti T : {{ implode(', ', $asesmen->skema->frmak01->bukti_t) }}</td>
+                                <td>Bukti T : {{ ( $asesmen->skema->frmak01 == null) ? "-" : implode(', ', $asesmen->skema->frmak01->bukti_t) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="4">
@@ -74,7 +73,7 @@ $breadcrumb = [
                                     </div>
                                     <div class="row">
                                         <div class="col-2"><b>Tempat</b></div>
-                                        <div class="col">: {{ $asesmen->skema->tuk->nama }}</div>
+                                        <div class="col">: {{ $asesmen->tuk->nama }}</div>
                                     </div>
                                 </td>
                             </tr>

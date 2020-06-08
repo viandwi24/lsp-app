@@ -11,7 +11,7 @@ $breadcrumb = [
 
 @section('content')
     <!-- content-header -->
-    <x-dashboard-content-header type="basic-bottom" title="FR-AI-AE-01 : PERTANYAAN TERTULIS" :breadcrumb="$breadcrumb" :autoBread="false" />
+    <x-dashboard-content-header type="basic-bottom" title="FR-AI-AE-03 : PERTANYAAN LISAN" :breadcrumb="$breadcrumb" :autoBread="false" />
     
     <!-- content -->
     <x-dashboard-content>
@@ -47,7 +47,7 @@ $breadcrumb = [
                 </div>
 
                 <!-- main -->
-                <x-dashboard-card title="Edit Formulir FR-AI-AE-01" classBody="card-table">
+                <x-dashboard-card title="Edit Formulir FR-AI-AE-03" classBody="card-table">
                     <x-slot name="heading">
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                     </x-slot>
@@ -103,7 +103,7 @@ $breadcrumb = [
         var vm = new Vue({
             el: '#app',
             data: {
-                datas: @JSON($asesmen->fraiae01->data)
+                datas: @JSON($asesmen->fraiae03->data)
             },
             mounted() {
                 console.log( this.datas );

@@ -37,6 +37,11 @@
                             <input type="hidden" name="jadwal" value="{{ $jadwal->id }}">
                         </div>
                         <div class="form-group">
+                            <label>Tuk :</label>
+                            <input type="text" class="form-control" value="{{ $tuk->nama }}" readonly>
+                            <input type="hidden" name="tuk" value="{{ $tuk->id }}">
+                        </div>
+                        <div class="form-group">
                             <p class="text-danger">* This process cannt be undo!</p>
                             <button class="btn btn-success">Submit</button>
                         </div>

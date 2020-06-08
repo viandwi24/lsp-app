@@ -34,7 +34,7 @@ $breadcrumb = [
                             </tr>
                             <tr>
                                 <th>Tuk</th>
-                                <td>: {{ $asesmen->skema->tuk->nama }}</td>
+                                <td>: {{ $asesmen->tuk->nama }}</td>
                             </tr>
                             <tr>
                                 <th>Jadwal</th>
@@ -173,6 +173,37 @@ $breadcrumb = [
                         @if ($asesmen->frmak01 == null)
                             <div class="overlay">
                                 <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
+                    </div>
+
+                    <!-- item ai-ae-03 -->
+                    <div class="item">
+                        @php
+                            $status = 'Belum diisi.';
+                            $style = 'danger';
+                            if ($asesmen->fraiae03 == null) {
+                                $status = 'Belum diisi.';
+                            } else {
+                                $status = 'Sudah diisi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-AE-03 : PERTANYAAN LISAN</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ route('asesi.asesmen.fraiae03', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            <button class="btn btn-sm btn-success">Download</button>
+                            @if ($asesmen->fraiae03 != null)
+                                <a href="{{ route('asesi.asesmen.fraiae03', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-03</div>
                             </div>                            
                         @endif
                     </div>

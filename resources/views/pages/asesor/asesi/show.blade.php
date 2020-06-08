@@ -34,7 +34,7 @@ $breadcrumb = [
                             </tr>
                             <tr>
                                 <th>Tuk</th>
-                                <td>: {{ $asesmen->skema->tuk->nama }}</td>
+                                <td>: {{ $asesmen->tuk->nama }}</td>
                             </tr>
                             <tr>
                                 <th>Jadwal</th>
@@ -147,7 +147,7 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <!-- item ai-02 -->
+                    <!-- item ai-ae-01 -->
                     <div class="item">
                         @php
                             $status = 'Belum diisi asesi.';
@@ -170,7 +170,32 @@ $breadcrumb = [
                             @endif
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
-                    </div>
+                    </div> 
+
+                    <!-- item ai-ae-03 -->
+                    <div class="item">
+                        @php
+                            $status = 'Belum diisi asesi.';
+                            $style = 'danger';
+                            if ($asesmen->fraiae03 == null) {
+                                $status = 'Belum diisi asesi.';
+                            } else {
+                                $status = 'Sudah diisi asesi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-AI-AE-03 : PERTANYAAN TERTULIS</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->fraiae03 != null)
+                                <a href="{{ route('asesor.asesi.fraiae03', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>                                
+                            @endif
+                            <button class="btn btn-sm btn-success">Download</button>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>

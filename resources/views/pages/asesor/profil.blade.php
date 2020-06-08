@@ -98,8 +98,9 @@ $breadcrumb = [
                                     <div class="col-lg-12 text-center">
                                         <button type="button" id="btn-clear" class="btn btn-danger">Hapus</button>
                                         <button type="button" id="btn-undo" class="btn btn-warning">Undo</button>
-                                        <button type="button" class="btn btn-primary">Load Dari Gambar</button>
-                                        <button type="button" class="btn btn-success">Download</button>
+                                        <button type="button" id="btn-load" class="btn btn-primary">Load Dari Gambar</button>
+                                        <button type="button" id="btn-save" class="btn btn-success">Download</button>
+                                        <input type="file" id="fileimage" style="display: none;">
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +125,8 @@ $breadcrumb = [
 @push('js')
     <script>
         $(document).ready(() => {
-                var canvas = document.querySelector("canvas#signature");
-                var signaturePad = new SignaturePad(canvas);
+            var canvas = document.querySelector("canvas#signature");
+            var signaturePad = new SignaturePad(canvas);
 
             setTimeout(() => {
                 var parentWidth = $(canvas).parent().outerWidth();
@@ -158,6 +159,33 @@ $breadcrumb = [
 
             $('form').on('submit', (e) => {
                 $('input[name="data[ttd]"]').val(signaturePad.toDataURL());
+            });
+
+
+            $('#btn-save').on('click', () => {
+                var image = signaturePad.toDataURL().replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+                let link = document.createElement('a');
+                link.download = '{{ auth()->user()->nama }}_signature.png';
+                link.href = image;
+                link.click();
+            });
+
+            $('#btn-load').on('click', () => {
+                $('#fileimage').trigger('click');
+            });
+            $('#fileimage').on('change', function (e) {
+                if (!e.target.files || !e.target.files[0]) return;
+                const FR = new FileReader();
+                FR.addEventListener("load", (evt) => {
+                    let ctx = canvas.getContext("2d");
+                    const img = new Image();
+                    img.addEventListener("load", () => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                    });
+                    img.src = evt.target.result;
+                });
+                FR.readAsDataURL(e.target.files[0]); 
             });
         });
     </script>

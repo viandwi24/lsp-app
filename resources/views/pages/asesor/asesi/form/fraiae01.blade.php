@@ -37,7 +37,7 @@ $breadcrumb = [
                                 </tr>
                                 <tr>
                                     <th>Tuk</th>
-                                    <td>: {{ $asesmen->skema->tuk->nama }}</td>
+                                    <td>: {{ $asesmen->tuk->nama }}</td>
                                 </tr>
                                 <tr>
                                     <th>Jadwal</th>

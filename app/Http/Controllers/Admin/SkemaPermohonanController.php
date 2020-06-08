@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use App\Models\Permohonan;
 use App\Models\Skema;
+use App\Models\Tuk;
 use App\User;
 use Carbon\Carbon;
 use DataTables;
@@ -98,7 +99,9 @@ class SkemaPermohonanController extends Controller
             $asesors = new Select2($users, ['id', 'nama']);
             $skema_jadwal = $skema->jadwal;
             $jadwals = new Select2($skema_jadwal, ['id', 'nama']);
-            return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors', 'jadwals'));
+            $skema_tuk = $skema->tuk;
+            $tuks = new Select2($skema_tuk, ['id', 'nama']);
+            return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors', 'jadwals', 'tuks'));
         }
 
         return redirect()->back();
@@ -115,15 +118,17 @@ class SkemaPermohonanController extends Controller
     {
         if ($permohonan->approved_at == null)
         {
-            $request->validate(['asesor' => 'required', 'jadwal' => 'required']);
+            $request->validate(['asesor' => 'required', 'jadwal' => 'required', 'tuk' => 'required']);
             $asesor = User::findOrFail($request->asesor);
             $jadwal = Jadwal::findOrFail($request->jadwal);
+            $tuk = Tuk::findOrFail($request->tuk);
 
-            DB::transaction(function () use ($permohonan, $asesor, $jadwal) {
+            DB::transaction(function () use ($permohonan, $asesor, $jadwal, $tuk) {
                 $permohonan->update(['approved_at' => Carbon::now()]);
                 $permohonan->permohonan_asesi_asesor()->create([
                     'asesor_id' => $asesor->id,
                     'jadwal_id' => $jadwal->id,
+                    'tuk_id' => $tuk->id,
                 ]);
             });
             return redirect()->route('admin.skema.permohonan.index', [$skema->id])

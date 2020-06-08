@@ -43,6 +43,11 @@ class Asesmen extends Model
         return $this->belongsTo('App\Models\Jadwal');
     }
 
+    public function tuk()
+    {
+        return $this->belongsTo('App\Models\Tuk');
+    }
+
     public function frmak01()
     {
         return $this->hasOne('App\Models\AsesmenFrmak01');
@@ -61,5 +66,10 @@ class Asesmen extends Model
     public function fraiae01()
     {
         return $this->hasOne('App\Models\AsesmenFraiae01');
+    }
+
+    public function fraiae03()
+    {
+        return $this->hasOne('App\Models\AsesmenFraiae03');
     }
 }

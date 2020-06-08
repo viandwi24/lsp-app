@@ -20,7 +20,7 @@ $breadcrumb = [
                 <div class="row">
                     <x-statistic-card col="xl-4,12" title="Unit" :value="count($skema->unit)" bg="bg-info" icon="ft-list" fg="text-primary" />
                     <x-statistic-card col="xl-4,12" title="Asesor" :value="$skema->asesor()->count()" bg="bg-success" icon="ft-users" fg="text-success" />
-                    {{-- <x-statistic-card col="xl-4,12" title="Tempat Uji" :value="$skema->tuk()->count()" bg="bg-danger" icon="ft-map-pin" fg="text-danger" /> --}}
+                    <x-statistic-card col="xl-4,12" title="Tempat Uji" :value="$skema->tuk()->count()" bg="bg-danger" icon="ft-map-pin" fg="text-danger" />
                     <x-statistic-card col="xl-4,12" title="Jadwal" :value="$skema->jadwal()->count()" bg="bg-warning" icon="ft-calendar" fg="text-warning" />
                 </div>
                 @foreach ($dashboardWidget as $item)
@@ -38,6 +38,7 @@ $breadcrumb = [
                     <a href="{{ route('admin.skema.edit', [$skema->id]) . '?tab=berkas' }}" class="btn btn-sm btn-block btn-outline-info"><i class="ft-folder"></i> Edit Berkas</a>
                     <a href="{{ route('admin.skema.edit', [$skema->id]) . '?tab=asesor' }}" class="btn btn-sm btn-block btn-outline-info"><i class="ft-users"></i> Edit Asesor</a>
                     <a href="{{ route('admin.skema.edit', [$skema->id]) . '?tab=jadwal' }}" class="btn btn-sm btn-block btn-outline-info"><i class="ft-calendar"></i> Edit Jadwal</a>
+                    <a href="{{ route('admin.skema.edit', [$skema->id]) . '?tab=tuk' }}" class="btn btn-sm btn-block btn-outline-info"><i class="ft-calendar"></i> Edit Tuk</a>
                 </div>
                 <div class="card-body" style="border-top: 1px solid #F9FAFD;">
                     <div class="card-title">Tambahan</div>

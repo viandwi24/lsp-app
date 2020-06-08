@@ -28,11 +28,13 @@ class MigrationController extends Controller
             'skema' => 'required|integer',
             'asesor' => 'required|integer',
             'jadwal' => 'required|integer',
+            'tuk' => 'required|integer',
         ]);
     
         $skema = DB::table("skema")->find($request->skema);
         $asesor = DB::table("users")->whereId($request->asesor)->where("role", "asesor")->first();
         $jadwal = DB::table("jadwal")->find($request->jadwal);
+        $tuk = DB::table("tuk")->find($request->tuk);
     
         $users = [];
         foreach ($request->user as $key => $user) {
@@ -49,6 +51,7 @@ class MigrationController extends Controller
             'skema' => $skema,
             'asesor' => $asesor,
             'jadwal' => $jadwal,
+            'tuk' => $tuk,
         ];
         return view("migrasi.prepare", $result);
     }
@@ -60,11 +63,13 @@ class MigrationController extends Controller
             'skema' => 'required|integer',
             'asesor' => 'required|integer',
             'jadwal' => 'required|integer',
+            'tuk' => 'required|integer',
         ]);
 
         $skema = Skema::find($request->skema);
         $asesor = DB::table("users")->find($request->asesor);
         $jadwal = DB::table("jadwal")->find($request->jadwal);
+        $tuk = DB::table("tuk")->find($request->tuk);
 
         $users = [];
         foreach ($request->user as $key => $user) {
@@ -77,7 +82,7 @@ class MigrationController extends Controller
         }
         
         $result = [];
-        DB::transaction(function () use ($users, $skema, $asesor, $jadwal, &$result) {
+        DB::transaction(function () use ($users, $skema, $asesor, $jadwal, $tuk, &$result) {
             // insert user
             foreach ($users as $user) {
                 $search_user = DB::table("users")->where("role", "asesi")->where("nama", $user->data->nama)->first();
@@ -131,6 +136,7 @@ class MigrationController extends Controller
                 $permohonan->permohonan_asesi_asesor()->create([
                     'asesor_id' => $asesor->id,
                     'jadwal_id' => $jadwal->id,
+                    'tuk_id' => $tuk->id,
                 ]);
 
                 $result[] = (object) [
@@ -143,7 +149,7 @@ class MigrationController extends Controller
         
 
         // 
-        return view("migrasi.result", compact('result', 'skema', 'asesor', 'jadwal'));
+        return view("migrasi.result", compact('result', 'skema', 'asesor', 'jadwal', 'tuk'));
     }
 
     public function rollback(Request $request) 

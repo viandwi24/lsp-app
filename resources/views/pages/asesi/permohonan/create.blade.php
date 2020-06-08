@@ -378,10 +378,10 @@ $breadcrumb = [
                                                 <td width="5%">{{ $unit_index }}.{{ $elemen_index }}</td>
                                                 <td>{{ $kuk->kuk }}</td>
                                                 <td>
-                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="true" checked>
+                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="true">
                                                 </td>
                                                 <td>
-                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="false">
+                                                    <input type="radio" name="kuk[{{ $unit_index }}][{{ $elemen_index }}][{{ $kuk_index }}]" value="false" checked>
                                                 </td>
                                             </tr>
                                         @endforeach

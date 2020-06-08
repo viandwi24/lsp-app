@@ -100,6 +100,71 @@ class UserSeeder extends Seeder
                 "username" => "xccn0u7lpe", 
                 "password" => "q6536o7h1o"
             ],
+            [
+                "nama" => "Drs. AMIR SUBAGYO",
+                "username" => "d8gqcr5ghla",
+                "password" => "10ak2kyqr6p"
+            ],
+            [
+                "nama" => "ULIN NUHA, S.Pd.",
+                "username" => "11tn524i4anm",
+                "password" => "cmv7k308o5"
+            ],
+            [
+                "nama" => "BAGIONO, ST.",
+                "username" => "kyausankg1",
+                "password" => "w4don0rtil"
+            ],
+            [
+                "nama" => "SUGIARTI, S.Pd",
+                "username" => "2i9pdytgd8y",
+                "password" => "w0n6ma82mnm"
+            ],
+            [
+                "nama" => "Drs. DJARWO BASKORO, M.Pd.",
+                "username" => "8tsebe47n5a",
+                "password" => "lqa3r8oomv"
+            ],
+            [
+                "nama" => "ACHMAD ISWAHYUDI, M.Pd.",
+                "username" => "ut7h3szhbqm",
+                "password" => "jejjrj1upu"
+            ],
+            [
+                "nama" => "YUNAN IRMANTONO, M.Pd.",
+                "username" => "589gawh86o7",
+                "password" => "1thu0how2s"
+            ],
+            [
+                "nama" => "SUCOKO, S.Pd.",
+                "username" => "4wy3bsc1go3",
+                "password" => "1scmilpkafi"
+            ],
+            [
+                "nama" => "ARIF MAKSANI, S.Pd.",
+                "username" => "y7udyh0twrh",
+                "password" => "vifjcailvdk"
+            ],
+            [
+                "nama" => "Drs. SUPA'I, M.Pd.",
+                "username" => "w6bfvqch9c9",
+                "password" => "in4ly9spmy"
+            ],
+            [
+                "nama" => "M. ABDULLAH KAMALUDDIN, S.Pd.",
+                "username" => "gqz2piibzkj",
+                "password" => "u1xh8p2mvd"
+            ],
+            [
+                "nama" => "WISNU PRAMBUDI, S.Pd.",
+                "username" => "mz3dgc1et89",
+                "password" => "fw24ljswji"
+            ],
+            [
+                "nama" => "SUSILO, M.Pd.",
+                "username" => "254uhcc7ixg",
+                "password" => "cygndouzyge"
+            ],
         ];
     }
 }

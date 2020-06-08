@@ -231,4 +231,41 @@ class AsesiController extends Controller
 
         return redirect()->back();
     }
+
+    public function fraiae03(Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae03 == null) return abort(404);
+        return view('pages.asesor.asesi.form.fraiae03', compact('asesmen'));
+    }
+
+    public function fraiae03_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->fraiae03 != null)
+        {
+            if ($request->has('pilihan'))
+            {
+                $request->validate(['pilihan' => 'required|array']);
+            }
+
+            $data = $asesmen->fraiae03->data;
+            foreach($asesmen->fraiae03->data as $index => $pertanyaan)
+            {
+                if (isset($request->pilihan[$index]) && $request->pilihan[$index] == "true")
+                {
+                    $data[$index]->memuaskan = true;
+                } else {
+                    $data[$index]->memuaskan = false;
+                }
+            }
+
+            $asesmen->fraiae03()->update([
+                'data' => $data
+            ]);
+
+            return redirect()->route('asesor.asesi.show', $asesmen->id)
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Mengisi formulir Berhasil.']);
+        }
+
+        return redirect()->back();
+    }
 }
