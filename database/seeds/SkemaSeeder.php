@@ -39,5 +39,19 @@ class SkemaSeeder extends Seeder
             "berkas" => json_decode('[{"jenis":"syarat","tipe":"ditentukan","nama":"Rapot Semester 1 - 5","format":["pdf"]},{"jenis":"syarat","tipe":"ditentukan","nama":"KTP","format":["pdf"]},{"jenis":"syarat","tipe":"ditentukan","nama":"Sertifikat PKL","format":["pdf"]}]')
         ]);
         $skema->kategori()->attach(1);
+        $skema->frpaap01()->create([
+            'asesi' => 'Hasil pelatihan dan / atau pendidikan',
+            'tujuan_asesmen' => 'Sertifikasi',
+            'konteks_asesmen_lingkungan' => 'Tempat kerja nyata',
+            'konteks_asesmen_peluang_mengumpulan_bukti' => 'Tersedia',
+            'konteks_asesmen_hubungan_standar_kompetensi' => 'Bukti untuk mendukung asesmen / RPL',
+            'konteks_asesmen_pelaku_asesmen' => 'Lembaga Sertifikasi',
+            'relevan_dikonfirmasi' => 'Manajer sertifikasi LSP',
+            'tolak_ukur' => 'Standar kompetensi',
+        ]);
+        $skema->frmak01()->create([]);
+        $skema->frai02()->create([]);
+        $skema->fraiae01()->create([]);
+        $skema->fraiae03()->create([]);
     }
 }
