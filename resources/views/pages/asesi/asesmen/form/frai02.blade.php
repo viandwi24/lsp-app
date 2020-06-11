@@ -46,41 +46,54 @@ $breadcrumb = [
                     </div>
                 </div>
 
-                <!-- main -->
-                <x-dashboard-card title="Edit Formulir FR-AI-02" classBody="card-table">
-                    <x-slot name="heading">
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                    </x-slot>
 
-                    <!-- Body -->
-                    <form method="POST" action="" class="form" id="form">
-                        @csrf
-                        <input type="hidden" name="data">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <th width="10%">#</th>
-                                <th>Pertanyaan - Jawaban</th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, i) in datas" :key="i">
-                                    <td>@{{ i+1 }}</td>
-                                    <td>
-                                        <div class="row mb-3">
-                                            <b>@{{ item.pertanyaan }}</b>
-                                        </div>
-                                        <div class="row">
-                                            <span>Jawaban anda :</span>
-                                            <input type="text" v-model="datas[i].jawaban" class="form-control form-control-sm">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-if="datas.length == 0">
-                                    <td colspan="3" class="text-center">Tidak ada pertanyaan.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                </x-dashboard-card>
+
+                <form method="POST" action="" class="form" id="form">
+                    @csrf
+                    <input type="hidden" name="data">
+                
+                    <div class="card" v-for="(unit, i) in units" :key="i">
+                        <div class="card-header pb-2">
+                            <h4 class="card-title">@{{ unit.kode }} / @{{ unit.judul }}</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body card-dashboard pt-0 card-table">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <th width="10%">#</th>
+                                        <th>Pertanyaan - Jawaban</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, j) in unit.pertanyaan" :key="j">
+                                            <td>@{{ j+1 }}</td>
+                                            <td>
+                                                <div class="row mb-3">
+                                                    <b>@{{ item.pertanyaan }}</b>
+                                                </div>
+                                                <div class="row">
+                                                    <span>Jawaban anda :</span>
+                                                    <input type="text" v-model="units[i].pertanyaan[j].jawaban" class="form-control form-control-sm">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="units[i].pertanyaan.length == 0">
+                                            <td colspan="3" class="text-center">Tidak ada pertanyaan.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
             </div>
         </div>
         <div class="row mb-4">
@@ -103,14 +116,14 @@ $breadcrumb = [
         var vm = new Vue({
             el: '#app',
             data: {
-                datas: @JSON($asesmen->frai02->data)
+                units: @JSON($asesmen->frai02->data)
             },
             mounted() {
-                console.log( this.datas );
+                console.log( this.units );
             },
             methods: {
                 submit() {
-                    $('input[name=data]').val( JSON.stringify(this.datas) )
+                    $('input[name=data]').val( JSON.stringify(this.units) )
                     $('form#form').submit()
                 }
             },

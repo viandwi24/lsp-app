@@ -110,6 +110,7 @@ $breadcrumb = [
                         judul: 'Contoh Unit ' + count, 
                         kode: 'Contoh Kode ' + count, 
                         jenis: 'SKKNI', 
+                        pertanyaan: [],
                         elemen: [
                             {
                                 elemen: 'Contoh Elemen 1', 

@@ -56,6 +56,7 @@ $breadcrumb = [
 
                 <!-- items -->
                 <div class="mb-4">
+
                     <!-- item mak-01 -->
                     <div class="item">
                         @php
@@ -84,7 +85,8 @@ $breadcrumb = [
                             @if ($asesmen->frmak01 == null)
                                 <a href="{{ route('asesi.asesmen.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda tangani</a>
                             @endif
-                            <button class="btn btn-sm btn-success">Download</button>
+                            
+                            <a target="_blank" href="{{ route('pdf.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                     </div>
 
@@ -106,7 +108,8 @@ $breadcrumb = [
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
                         </div>
                         <div class="mt-2">
-                            <button class="btn btn-sm btn-success">Download</button>
+                            
+                            <a target="_blank" href="{{ route('pdf.frai01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                         @if ($asesmen->frmak01 == null)
                             <div class="overlay">
@@ -134,7 +137,8 @@ $breadcrumb = [
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
-                            <button class="btn btn-sm btn-success">Download</button>
+                            
+                            <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                             @if ($asesmen->frai02 != null)
                                 <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
                             @endif

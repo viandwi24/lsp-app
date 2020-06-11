@@ -47,41 +47,45 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <div class="card shadow">
-                        <div class="card-header">Pertanyaan yang harus dijawab oleh kandidat</div>
-                        <div class="card-body card-table">
-                            <table class="table table-hover mb-0">
-                                <thead>
-                                    <th width="10%">#</th>
-                                    <th>Pertanyaan - Jawaban</th>
-                                    <th width="5%">Memuaskan ?</th>
-                                </thead>
-                                <tbody>
-                                    @php $i = 1; @endphp
-                                    @foreach ($asesmen->frai02->data as $data)
-                                        <tr style="background: #e0e0e0;">
-                                            <td>{{ $i++ }}</td>
-                                            <td>
-                                                {{ $data->pertanyaan }}
-                                            </td>
-                                            <td rowspan="2">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="pilihan{{ $i-2 }}" name="pilihan[{{ $i-2 }}]" value="true" {{ ($data->memuaskan) ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="pilihan{{ $i-2 }}">Ya</label>
-                                                </div>                                                  
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <b>Tanggapan :</b>
-                                                {{ $data->jawaban }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    @php $j = 1; @endphp
+                    @foreach ($asesmen->frai02->data as $unit)
+                        @php $j++; @endphp
+                        <div class="card shadow">
+                            <div class="card-header">{{ $unit->kode }} / {{ $unit->judul }}</div>
+                            <div class="card-body card-table">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Pertanyaan - Jawaban</th>
+                                        <th width="15%">Memuaskan ?</th>
+                                    </thead>
+                                    <tbody>
+                                        @php $i = 1; @endphp
+                                        @foreach ($unit->pertanyaan as $data)
+                                            <tr style="background: #e0e0e0;">
+                                                <td>{{ $i++ }}</td>
+                                                <td>
+                                                    {{ $data->pertanyaan }}
+                                                </td>
+                                                <td rowspan="2" style="vertical-align: middle;" class="text-center">
+                                                    <div class="custom-control custom-checkbox text-left" style="display: inline-block;">
+                                                        <input type="checkbox" class="custom-control-input" id="pilihan{{ $j-2 }}{{ $i-2 }}" name="pilihan[{{ $j-2 }}][{{ $i-2 }}]" value="true" {{ ($data->memuaskan) ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="pilihan{{ $j-2 }}{{ $i-2 }}">Ya</label>
+                                                    </div>                                                  
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <b>Tanggapan :</b>
+                                                    {{ $data->jawaban }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
 
 
                     <!-- other -->

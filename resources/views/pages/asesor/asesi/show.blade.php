@@ -92,7 +92,7 @@ $breadcrumb = [
                             @if ($asesmen->frmak01 != null && $asesmen->frmak01->signed_asesor_at == null)
                                 <a href="{{ route('asesor.asesi.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda tangani</a>
                             @endif
-                            <button class="btn btn-sm btn-success">Download</button>
+                            <a target="_blank" href="{{ route('pdf.frmak01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                     </div>
 
@@ -115,7 +115,8 @@ $breadcrumb = [
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('asesor.asesi.frai01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
-                            <button class="btn btn-sm btn-success">Download</button>
+                            
+                            <a target="_blank" href="{{ route('pdf.frai01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                             @if ($asesmen->frai01 != null)
                                 <a href="{{ route('asesor.asesi.frai01', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
                             @endif
@@ -143,7 +144,8 @@ $breadcrumb = [
                             @if ($asesmen->frai02 != null)
                                 <a href="{{ route('asesor.asesi.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>                                
                             @endif
-                            <button class="btn btn-sm btn-success">Download</button>
+                            
+                            <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                     </div>
 
