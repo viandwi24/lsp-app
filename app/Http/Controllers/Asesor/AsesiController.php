@@ -172,13 +172,16 @@ class AsesiController extends Controller
             }
 
             $data = $asesmen->frai02->data;
-            foreach($asesmen->frai02->data as $index => $pertanyaan)
+            foreach($asesmen->frai02->data as $index_unit => $unit)
             {
-                if (isset($request->pilihan[$index]) && $request->pilihan[$index] == "true")
+                foreach($unit->pertanyaan as $index => $pertanyaan)
                 {
-                    $data[$index]->memuaskan = true;
-                } else {
-                    $data[$index]->memuaskan = false;
+                    if (isset($request->pilihan[$index_unit][$index]) && $request->pilihan[$index_unit][$index] == "true")
+                    {
+                        $data[$index_unit]->pertanyaan[$index]->memuaskan = true;
+                    } else {
+                        $data[$index_unit]->pertanyaan[$index]->memuaskan = false;
+                    }
                 }
             }
 

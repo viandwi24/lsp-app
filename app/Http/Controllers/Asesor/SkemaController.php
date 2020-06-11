@@ -152,7 +152,7 @@ class SkemaController extends Controller
         $request->validate([
             'pertanyaan' => 'required|json'
         ]);
-        $update = $skema->frai02()->update([ 'pertanyaan' => $request->pertanyaan ]);
+        $update = $skema->update([ 'unit' => json_decode($request->pertanyaan) ]);
         
         return redirect()->back()
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);

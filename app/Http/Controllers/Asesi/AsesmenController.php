@@ -75,12 +75,16 @@ class AsesmenController extends Controller
         // 
         if ($asesmen->frai02 == null) 
         {
-            if ($asesmen->skema->frai02 == null) dd("FRAI02 kosong, belum di set asesor");
-            $pertanyaans = $asesmen->skema->frai02->pertanyaan;
+            $units = $asesmen->skema->unit;
             $data = [];
-            foreach($pertanyaans as $pertanyaan)
+            foreach($units as $unit_index => $unit)
             {
-                $data[] = ['pertanyaan' => $pertanyaan, 'jawaban' => '', 'memuaskan' => false];
+                $data[$unit_index] = clone $unit;
+                $data[$unit_index]->pertanyaan = [];
+                foreach($unit->pertanyaan as $index => $pertanyaan)
+                {
+                    $data[$unit_index]->pertanyaan[] = (object) ['pertanyaan' => $units[$unit_index]->pertanyaan[$index], 'jawaban' => '', 'memuaskan' => false];
+                }
             }
             $asesmen->frai02()->create(['data' => $data]);
             return redirect()->route('asesi.asesmen.frai02', [$asesmen->id]);
