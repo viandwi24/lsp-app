@@ -158,7 +158,6 @@ class AsesmenController extends Controller
     }
 
 
-
     public function fraiae03(Asesmen $asesmen)
     {
         if (isset($_GET['reset']))
@@ -203,5 +202,57 @@ class AsesmenController extends Controller
 
         // 
         return redirect()->route('asesi.asesmen.show', $asesmen->id);
+    }
+
+
+    public function frac01(Asesmen $asesmen)
+    {
+        return view('pages.asesi.asesmen.form.frac01', compact('asesmen'));
+    }
+
+    public function frac01_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->frac01->signed_asesi_at == null) 
+        {
+            $asesmen->frac01()->update([ 'signed_asesi_at' => Carbon::now() ]);
+            return redirect()->route('asesi.asesmen.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
+        }
+
+        // 
+        return redirect()->route('asesi.asesmen.show', $asesmen->id);
+    }
+
+    public function frmak03(Asesmen $asesmen)
+    {
+        return view('pages.asesi.asesmen.form.frmak03', compact('asesmen'));
+    }
+
+    public function frmak03_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->frmak03 != null) return redirect()->back();
+
+        $request->validate([
+            'unit' => 'required|json',
+            'alasan' => 'required',
+            'dijelaskan' => 'required|in:true,false',
+            'diskusi' => 'required|in:true,false',
+            'orang_lain' => 'required|in:true,false',
+        ]);
+
+        $dijelaskan = ($request->dijelaskan == "true") ? true : false;
+        $diskusi = ($request->diskusi == "true") ? true : false;
+        $orang_lain = ($request->orang_lain == "true") ? true : false;
+        
+        $store = $asesmen->frmak03()->create([
+            'dijelaskan' => $dijelaskan,
+            'diskusi' => $diskusi,
+            'orang_lain' => $orang_lain,
+            'alasan' => $request->alasan,
+            'unit' => json_decode($request->unit),
+        ]);
+
+        return redirect()->route('asesi.asesmen.show', $asesmen->id)
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'formulir banding berhasil dibuat.']);
     }
 }

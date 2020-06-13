@@ -171,6 +171,11 @@ class AsesiController extends Controller
                 $request->validate(['pilihan' => 'required|array']);
             }
 
+            if ($request->has('jawaban'))
+            {
+                $request->validate(['jawaban' => 'required|array']);
+            }
+
             $data = $asesmen->frai02->data;
             foreach($asesmen->frai02->data as $index_unit => $unit)
             {
@@ -182,6 +187,9 @@ class AsesiController extends Controller
                     } else {
                         $data[$index_unit]->pertanyaan[$index]->memuaskan = false;
                     }
+
+
+                    @$data[$index_unit]->pertanyaan[$index]->jawaban = @$request->jawaban[$index_unit][$index];
                 }
             }
 
@@ -263,6 +271,102 @@ class AsesiController extends Controller
 
             $asesmen->fraiae03()->update([
                 'data' => $data
+            ]);
+
+            return redirect()->route('asesor.asesi.show', $asesmen->id)
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Mengisi formulir Berhasil.']);
+        }
+
+        return redirect()->back();
+    }
+
+
+    public function frac01(Asesmen $asesmen)
+    {
+        if (isset($_GET['reset']))
+        {
+            DB::transaction(function () use ($asesmen) {
+                $asesmen->frac01()->delete();
+            });
+            return redirect()->route('asesor.asesi.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
+        }
+
+        if ($asesmen->frac01 == null) 
+        {
+            $bukti = [];
+            foreach($asesmen->skema->unit as $unit)
+            {
+                $ada_apa = [
+                    'unit' => $unit,
+                    'observasi' => false,
+                    'portofolio' => false,
+                    'pernyataan_pihak_ketiga' => false,
+                    'pertanyaan_lisan' => false,
+                    'pertanyaan_tertulis' => false,
+                    'proyek_kerja' => false,
+                    'lainnya' => false
+                ];
+
+                foreach ($unit->elemen as $elemen) {
+                    foreach ($elemen->kuk as $kuk) {
+                        $jawaban_metode = $kuk->rencana_asesmen->jawaban->metode;
+                        $jawaban_jenis_bukti = $kuk->rencana_asesmen->jawaban->jenis_bukti;
+                        $observasi_metode = $kuk->rencana_asesmen->observasi->metode;
+                        $observasi_jenis_bukti = $kuk->rencana_asesmen->observasi->jenis_bukti;
+
+                        if ($jawaban_metode == "CL" || $observasi_metode == "CL") {
+                            $ada_apa['observasi'] = true;
+                        }
+
+                        if ($jawaban_metode == "DPT" || $observasi_metode == "DPT") {
+                            $ada_apa['pertanyaan_tertulis'] = true;
+                        }
+
+                        if ($jawaban_metode == "DPL" || $observasi_metode == "DPL") {
+                            $ada_apa['pertanyaan_lisan'] = true;
+                        }
+
+                        if ($jawaban_metode == "VP" || $observasi_metode == "VP") {
+                            $ada_apa['portofolio'] = true;
+                        }
+                    }
+                }
+
+                $bukti[] = (object) $ada_apa;
+            }
+
+            $asesmen->frac01()->create([
+                'bukti' => $bukti,
+                'keputusan' => 'kompeten',
+                'skema' => $asesmen->skema,
+                'mulai' => $asesmen->jadwal->waktu_pelaksanaan,
+                'selesai' => $asesmen->jadwal->waktu_pelaksanaan,
+                'signed_asesor_at' => Carbon::now()
+            ]);
+
+            return redirect()->route('asesor.asesi.frac01', [$asesmen->id]);
+        }
+
+        return view('pages.asesor.asesi.form.frac01', compact('asesmen'));
+    }
+
+    public function frac01_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->frac01 != null)
+        {
+            $request->validate([
+                'bukti' => 'required',
+                'keputusan' => 'required|in:kompeten,belum_kompeten',
+                'tindak_lanjut' => 'required',
+                'komentar' => 'required',
+            ]);
+
+            $update = $asesmen->frac01()->update([
+                'bukti' => json_decode($request->bukti),
+                'keputusan' => $request->keputusan,
+                'tindak_lanjut' => $request->tindak_lanjut,
+                'komentar' => $request->komentar
             ]);
 
             return redirect()->route('asesor.asesi.show', $asesmen->id)
