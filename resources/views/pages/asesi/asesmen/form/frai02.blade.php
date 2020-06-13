@@ -78,7 +78,7 @@ $breadcrumb = [
                                                 </div>
                                                 <div class="row">
                                                     <span>Jawaban anda :</span>
-                                                    <input type="text" v-model="units[i].pertanyaan[j].jawaban" class="form-control form-control-sm">
+                                                    <input readonly type="text" v-model="units[i].pertanyaan[j].jawaban" class="form-control form-control-sm">
                                                 </div>
                                             </td>
                                         </tr>
@@ -97,15 +97,10 @@ $breadcrumb = [
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <a href="{{ route('asesi.asesmen.show', [$asesmen->id]) }}" class="btn btn-block btn-warning">
                     <i class="ft-chevron-left"></i> Kembali
                 </a>
-            </div>
-            <div class="col-lg-6">
-                <button @click="submit" class="btn btn-block btn-primary">
-                    <i class="ft-save"></i> Simpan
-                </button>
             </div>
         </div>
     </x-dashboard-content>

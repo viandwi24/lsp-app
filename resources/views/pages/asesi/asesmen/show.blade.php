@@ -207,11 +207,77 @@ $breadcrumb = [
                         </div>
                         @if ($asesmen->frmak01 == null)
                             <div class="overlay">
-                                <div>Anda Belum Menyetujui FR-MAK-03</div>
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
                             </div>                            
                         @endif
                     </div>
 
+
+                    <!-- item ac-03 -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->frac01 == null) {
+                                $status = 'Belum diisi asesor.';
+                                $style = 'danger';
+                            } else {
+                                if ($asesmen->frac01->signed_asesi_at == null)
+                                {
+                                    $status = 'Sudah diisi asesor dan belum anda tandatangani.';
+                                    $style = 'warning';
+                                } else {
+                                    $status = 'Sudah diisi asesor dan sudah anda tandatangani.';
+                                    $style = 'success';
+                                }
+                            }
+                        @endphp
+                        <div class="title">FR-AC-01 : Rekaman Asesmen Kompetensi</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->frac01 != null && $asesmen->frac01->signed_asesi_at == null)
+                                <a href="{{ route('asesi.asesmen.frac01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Tanda Tangani</a>
+                            @endif
+                            <a target="_blank" href="{{ route('pdf.frac01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
+                    </div>  
+
+
+                    <!-- item mak-03 -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->frmak03 == null) {
+                                $status = 'Belum pernah dibuat';
+                                $style = 'danger';
+                            } else {
+                                $status = 'Sudah dibuat.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-MAK-03 : Formulir Banding Asesmen</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->frmak03 == null)
+                                <a href="{{ route('asesi.asesmen.frmak03', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buat Banding</a>
+                            @else
+                                <a target="_blank" href="{{ route('pdf.frmak03', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                            @endif
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>                            
+                        @endif
+                    </div>  
                 </div>
             </div>
         </div>
