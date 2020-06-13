@@ -161,7 +161,7 @@ $breadcrumb = [
                                 $style = 'success';
                             }
                         @endphp
-                        <div class="title">FR-AI-AE-01 : PERTANYAAN TERTULIS</div>
+                        <div class="title">FR-AI-AE-01 : PERTANYAAN LISAN</div>
                         <div class="text-muted">
                             Status : 
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
@@ -196,6 +196,60 @@ $breadcrumb = [
                                 <a href="{{ route('asesor.asesi.fraiae03', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>                                
                             @endif
                             <button class="btn btn-sm btn-success">Download</button>
+                        </div>
+                    </div>
+
+                    <!-- item ac-03 -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->frac01 == null) {
+                                $status = 'Belum diisi.';
+                                $style = 'danger';
+                            } else {
+                                if ($asesmen->frac01->signed_asesi_at == null)
+                                {
+                                    $status = 'Sudah diisi dan belum ditandatangi asesi.';
+                                    $style = 'warning';
+                                } else {
+                                    $status = 'Sudah diisi dan sudah ditandatangani asesi.';
+                                    $style = 'success';
+                                }
+                            }
+                        @endphp
+                        <div class="title">FR-AC-01 : Rekaman Asesmen Kompetensi</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ route('asesor.asesi.frac01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            <a target="_blank" href="{{ route('pdf.frac01', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                            @if ($asesmen->frac01 != null)
+                                <a href="{{ route('asesor.asesi.frac01', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
+                        </div>
+                    </div>  
+
+                    <!-- item mak-03 -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->frmak03 == null) {
+                                $status = 'Tidak dibuat asesi.';
+                                $style = 'danger';
+                            } else {
+                                $status = 'Sudah dibuat asesi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FR-MAK-03 : Formulir Banding Asesmen</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->frmak03 != null)
+                                <a target="_blank" href="{{ route('pdf.frmak03', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                            @endif
                         </div>
                     </div>  
                 </div>

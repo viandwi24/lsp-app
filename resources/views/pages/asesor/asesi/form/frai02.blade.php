@@ -53,7 +53,7 @@ $breadcrumb = [
                         <div class="card shadow">
                             <div class="card-header">{{ $unit->kode }} / {{ $unit->judul }}</div>
                             <div class="card-body card-table">
-                                <table class="table table-hover mb-0">
+                                <table class="table table-bordered table-hover mb-0">
                                     <thead>
                                         <th>#</th>
                                         <th>Pertanyaan - Jawaban</th>
@@ -62,10 +62,10 @@ $breadcrumb = [
                                     <tbody>
                                         @php $i = 1; @endphp
                                         @foreach ($unit->pertanyaan as $data)
-                                            <tr style="background: #e0e0e0;">
+                                            <tr>
                                                 <td>{{ $i++ }}</td>
                                                 <td>
-                                                    {{ $data->pertanyaan }}
+                                                    <b>{{ $data->pertanyaan }}</b>
                                                 </td>
                                                 <td rowspan="2" style="vertical-align: middle;" class="text-center">
                                                     <div class="custom-control custom-checkbox text-left" style="display: inline-block;">
@@ -77,7 +77,7 @@ $breadcrumb = [
                                             <tr>
                                                 <td colspan="2">
                                                     <b>Tanggapan :</b>
-                                                    {{ $data->jawaban }}
+                                                    <input type="text" name="jawaban[{{ $j-2 }}][{{ $i-2 }}]" value="{{ old('jawaban.' . ($j-2) . '.' . ($i-2), $data->jawaban) }}" class="form-control form-control-sm">
                                                 </td>
                                             </tr>
                                         @endforeach
