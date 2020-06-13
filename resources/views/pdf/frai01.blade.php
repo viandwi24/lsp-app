@@ -48,13 +48,13 @@
                         <td colspan="7">{{ @$unit->kode }} {{ @$unit->judul }}</td>
                     </tr>
                     <tr>
-                        <th>No</th>
-                        <th>Elemen</th>
-                        <th>Kriteria Unjuk Kerja</th>
-                        <th>Benchmark (SOP / spesifikasi produk industri)</th>
-                        <th>K</th>
-                        <th>BK</th>
-                        <th>Penilaian Lanjut</th>
+                        <th class="highlight">No</th>
+                        <th class="highlight">Elemen</th>
+                        <th class="highlight">Kriteria Unjuk Kerja</th>
+                        <th class="highlight">Benchmark (SOP / spesifikasi produk industri)</th>
+                        <th class="highlight">K</th>
+                        <th class="highlight">BK</th>
+                        <th class="highlight">Penilaian Lanjut</th>
                     </tr>
                 </thead>
                 <tbody>
