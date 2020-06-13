@@ -29,6 +29,10 @@ Route::group([
     Route::post('asesmen/{asesmen}/fraiae01', 'AsesmenController@fraiae01_post')->name('asesmen.fraiae01');
     Route::get('asesmen/{asesmen}/fraiae03', 'AsesmenController@fraiae03')->name('asesmen.fraiae03');
     Route::post('asesmen/{asesmen}/fraiae03', 'AsesmenController@fraiae03_post')->name('asesmen.fraiae03');
+    Route::get('asesmen/{asesmen}/frac01', 'AsesmenController@frac01')->name('asesmen.frac01');
+    Route::post('asesmen/{asesmen}/frac01', 'AsesmenController@frac01_post')->name('asesmen.frac01');
+    Route::get('asesmen/{asesmen}/frmak03', 'AsesmenController@frmak03')->name('asesmen.frmak03');
+    Route::post('asesmen/{asesmen}/frmak03', 'AsesmenController@frmak03_post')->name('asesmen.frmak03');
     
     Route::resource('berkas', 'BerkasController');
 });

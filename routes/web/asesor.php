@@ -42,4 +42,6 @@ Route::group([
     Route::post('asesi/{asesmen}/fraiae01', 'AsesiController@fraiae01_post')->name('asesi.fraiae01.post');
     Route::get('asesi/{asesmen}/fraiae03', 'AsesiController@fraiae03')->name('asesi.fraiae03');
     Route::post('asesi/{asesmen}/fraiae03', 'AsesiController@fraiae03_post')->name('asesi.fraiae03.post');
+    Route::get('asesi/{asesmen}/frac01', 'AsesiController@frac01')->name('asesi.frac01');
+    Route::post('asesi/{asesmen}/frac01', 'AsesiController@frac01_post')->name('asesi.frac01.post');
 });
