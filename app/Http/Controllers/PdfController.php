@@ -50,4 +50,18 @@ class PdfController extends Controller
         if ($asesmen->frai02 == null) return dd("asesi belum mengisi.");
         return $this->pdf('pdf.frai02', compact('asesmen'), "frai02");
     }
+
+    public function frac01($id)
+    {
+        $asesmen = Asesmen::findOrFail($id);
+        if ($asesmen->frac01 == null) return dd("asesor belum mengisi.");
+        return $this->pdf('pdf.frac01', compact('asesmen'), "frac01");
+    }
+
+    public function frmak03($id)
+    {
+        $asesmen = Asesmen::findOrFail($id);
+        if ($asesmen->frmak03 == null) return dd("asesi belum mengisi.");
+        return $this->pdf('pdf.frmak03', compact('asesmen'), "frmak03");
+    }
 }
