@@ -18,6 +18,7 @@
                             <div class="card-content text-center">
                                 <a href="{{ url()->previous() }}" class="btn btn-secondary"><i class="ft-arrow-left"></i> Back</a>
                                 <a href="{{ url('') }}" class="btn btn-primary"><i class="ft-home"></i> Home</a>
+                                <a href="{{ route('login') }}" class="btn btn-info"><i class="ft-user"></i> login</a>
                             </div>
                         </div>
                     </div>
