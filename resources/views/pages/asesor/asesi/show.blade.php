@@ -141,11 +141,11 @@ $breadcrumb = [
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
                         </div>
                         <div class="mt-2">
-                            @if ($asesmen->frai02 != null)
-                                <a href="{{ route('asesor.asesi.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>                                
-                            @endif
-                            
+                            <a href="{{ route('asesor.asesi.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
                             <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                            @if ($asesmen->frai02 != null)
+                                <a href="{{ route('asesor.asesi.frai02', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            @endif
                         </div>
                     </div>
 

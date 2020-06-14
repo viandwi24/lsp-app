@@ -60,6 +60,14 @@ $breadcrumb = [
                                         <th width="15%">Memuaskan ?</th>
                                     </thead>
                                     <tbody>
+                                        @if (count($unit->pertanyaan) == 0)
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    Tidak ada pertanyaan.
+                                                </td>
+                                            </tr>
+                                        @endif
+
                                         @php $i = 1; @endphp
                                         @foreach ($unit->pertanyaan as $data)
                                             <tr>

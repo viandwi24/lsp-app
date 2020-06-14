@@ -124,9 +124,9 @@ $breadcrumb = [
                             $status = 'Belum diisi.';
                             $style = 'danger';
                             if ($asesmen->frai02 == null) {
-                                $status = 'Belum diisi.';
+                                $status = 'Belum diisi aseor.';
                             } else {
-                                $status = 'Sudah diisi.';
+                                $status = 'Sudah diisi asesor.';
                                 $style = 'success';
                             }
                         @endphp
@@ -136,12 +136,10 @@ $breadcrumb = [
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
                         </div>
                         <div class="mt-2">
-                            <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
-                            
-                            <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                             @if ($asesmen->frai02 != null)
-                                <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
+                            <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
                             @endif
+                            <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                         @if ($asesmen->frmak01 == null)
                             <div class="overlay">
