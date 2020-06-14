@@ -57,10 +57,9 @@ $breadcrumb = [
                                             <th colspan="7">{{ $unit->judul }}</th>
                                         </tr>
                                         <tr>
-                                            <th>#</th>
-                                            <th width="30%">Elemen</th>
-                                            <th width="40%">KUK</th>
-                                            <th width="10%">Benchmark (SOP / spesifikasi produk industri)</th>
+                                            <th width="20%">Elemen</th>
+                                            <th width="20%">KUK</th>
+                                            <th width="30%">Benchmark (SOP / spesifikasi produk industri)</th>
                                             <th>K</th>
                                             <th>BK</th>
                                             <th width="20%">Penilaian Lanjut</th>
@@ -70,7 +69,6 @@ $breadcrumb = [
                                         @php $i = 1; @endphp
                                         @foreach ($unit->elemen as $elemen_k => $elemen)
                                             <tr>
-                                                <td rowspan="{{ count($elemen->kuk) + 1 }}">{{ $i++ }}</td>
                                                 <td rowspan="{{ count($elemen->kuk) + 1 }}">{{ $elemen->elemen }}</td>
                                             </tr>
                                             
