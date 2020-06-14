@@ -92,7 +92,7 @@ class AsesiController extends Controller
                     foreach($elemen->kuk as $kuk_k => $kuk)
                     {
                         if (!isset($kuk->benchmark)) {
-                            $data[$unit_k]->elemen[$elemen_k]->kuk[$kuk_k]->benchmark = '';
+                            $data[$unit_k]->elemen[$elemen_k]->kuk[$kuk_k]->benchmark = 'SOP . ' . $unit->judul;
                         }
                         if (!isset($kuk->penilaian)) {
                             $data[$unit_k]->elemen[$elemen_k]->kuk[$kuk_k]->penilaian = '';
@@ -103,7 +103,10 @@ class AsesiController extends Controller
                     }
                 }
             }
-            $asesmen->frai01()->create(['data' => $data]);
+            $asesmen->frai01()->create([
+                'data' => $data,
+                'catatan' => "Semua KUK sudah terpenuhi."
+            ]);
             return redirect()->route('asesor.asesi.frai01', [$asesmen->id]);
         }
         return view('pages.asesor.asesi.form.frai01', compact('asesmen'));
@@ -153,7 +156,35 @@ class AsesiController extends Controller
 
     public function frai02(Asesmen $asesmen)
     {
-        if ($asesmen->frai02 == null) return abort(404);
+        if (isset($_GET['reset']))
+        {
+            DB::transaction(function () use ($asesmen) {
+                $asesmen->frai02()->delete();
+            });
+            return redirect()->route('asesor.asesi.show', $asesmen->id)
+                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
+        }
+
+        // 
+        if ($asesmen->frai02 == null) 
+        {
+            $units = $asesmen->skema->unit;
+            $data = [];
+            foreach($units as $unit_index => $unit)
+            {
+                $data[$unit_index] = clone $unit;
+                $data[$unit_index]->pertanyaan = [];
+                foreach($unit->pertanyaan as $index => $pertanyaan)
+                {
+                    $data[$unit_index]->pertanyaan[] = (object) ['pertanyaan' => $units[$unit_index]->pertanyaan[$index], 'jawaban' => '', 'memuaskan' => false];
+                }
+            }
+            $asesmen->frai02()->create([
+                'data' => $data,
+                'catatan' => "Semua pertanyaan sudah terjawab dengan baik."
+            ]);
+            return redirect()->route('asesor.asesi.frai02', [$asesmen->id]);
+        }
         return view('pages.asesor.asesi.form.frai02', compact('asesmen'));
     }
 

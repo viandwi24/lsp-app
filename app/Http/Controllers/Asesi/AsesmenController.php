@@ -63,52 +63,26 @@ class AsesmenController extends Controller
 
     public function frai02(Asesmen $asesmen)
     {
-        if (isset($_GET['reset']))
-        {
-            DB::transaction(function () use ($asesmen) {
-                $asesmen->frai02()->delete();
-            });
-            return redirect()->route('asesi.asesmen.show', $asesmen->id)
-                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Reset formulir Berhasil.']);
-        }
-
-        // 
-        if ($asesmen->frai02 == null) 
-        {
-            $units = $asesmen->skema->unit;
-            $data = [];
-            foreach($units as $unit_index => $unit)
-            {
-                $data[$unit_index] = clone $unit;
-                $data[$unit_index]->pertanyaan = [];
-                foreach($unit->pertanyaan as $index => $pertanyaan)
-                {
-                    $data[$unit_index]->pertanyaan[] = (object) ['pertanyaan' => $units[$unit_index]->pertanyaan[$index], 'jawaban' => '', 'memuaskan' => false];
-                }
-            }
-            $asesmen->frai02()->create(['data' => $data]);
-            return redirect()->route('asesi.asesmen.frai02', [$asesmen->id]);
-        }
-
+        if ($asesmen->frai02 == null) return dd("asesir belum mengisi.");
         return view('pages.asesi.asesmen.form.frai02', compact('asesmen'));
     }
 
     public function frai02_post(Request $request, Asesmen $asesmen)
     {
-        if ($asesmen->frai02 != null) 
-        {
-            $request->validate([
-                'data' => 'required|json'
-            ]);
-            $asesmen->frai02()->update([
-                'data' => $request->data,
-            ]);
-            return redirect()->route('asesi.asesmen.show', $asesmen->id)
-                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
-        }
+        // if ($asesmen->frai02 != null) 
+        // {
+        //     $request->validate([
+        //         'data' => 'required|json'
+        //     ]);
+        //     $asesmen->frai02()->update([
+        //         'data' => $request->data,
+        //     ]);
+        //     return redirect()->route('asesi.asesmen.show', $asesmen->id)
+        //         ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Menyimpan formulir Berhasil.']);
+        // }
 
-        // 
-        return redirect()->route('asesi.asesmen.show', $asesmen->id);
+        // // 
+        // return redirect()->route('asesi.asesmen.show', $asesmen->id);
     }
 
     public function fraiae01(Asesmen $asesmen)
