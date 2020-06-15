@@ -18,78 +18,87 @@ $breadcrumb = [
     <x-dashboard-content>
         <div class="row">
             <div class="col-12">
-                <x-dashboard-card title="Edit Unit" classBody="card-table">
-                    <x-slot name="heading">
-                        <li><a class="btn btn-sm btn-success" href="#" @click.prevent="tambahUnit"><i class="ft-plus"></i> Tambah Unit</a></li>
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                    </x-slot>
+                <div class="mb-2">
+                    <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahUnit"><i class="ft-plus"></i> Tambah Unit</a>
+                </div>
 
-                    <x-slot name="footer">
-                        <div class="text-right mt-2">
-                            <a href="{{ route('admin.skema.show', [$skema->id]) }}" class="btn btn-warning">
-                                <i class="ft-chevron-left"></i> Kembali
-                            </a>
-                            <button @click.prevent="submit" class="btn btn-primary">
-                                <i class="ft-save"></i> Simpan
-                            </button>
+                <form id="form-unit" method="POST" action="{{ url()->route('admin.skema.update', [$skema->id]) . '?tab=unit' }}" class="form">
+                    @method('put')
+                    @csrf
+                    <input type="hidden" name="unit">
+                </form>
+
+                <div class="card shadow" v-for="(unit, i) in units">
+                    <div class="card-header pb-2">
+                        <h4 class="card-title">Unit #@{{ i+1 }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusUnit(i)"><i class="ft-times"></i> Hapus Unit</a></li>
+                                <li><a class="btn btn-sm btn-success" href="#" @click.prevent="tambahElemen(i)"><i class="ft-plus"></i> Tambah Elemen</a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            </ul>
                         </div>
-                    </x-slot>
-
-                    <!-- Body -->
-                    <form id="form-unit" method="POST" action="{{ url()->route('admin.skema.update', [$skema->id]) . '?tab=unit' }}" class="form">
-                        @method('put')
-                        @csrf
-                        <input type="hidden" name="unit">
-                        <table class="table table-bordered table-responsive">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" width="5%">#</th>
-                                    <th class="text-center" width="30%">Kode</th>
-                                    <th class="text-center">Judul Unit / Elemen Kompetensi / Kuk</th>
-                                </tr>
-                            </thead>
-                            <tbody v-for="(unit, i) in units">
-                                <tr>
-                                    <td :rowspan="unit.elemen.length + 1" class="text-center">@{{ i+1 }}</td>
-                                    <td :rowspan="unit.elemen.length + 1" class="text-center">
-                                        <input type="text" class="form-control form-control-sm w-100" v-model="units[i].kode">
-                                    </td>
-                                    <td style="background: #EEE;">
-                                        <label>Unit :</label>
-                                        <input type="text" class="form-control form-control-sm" v-model="units[i].judul">
-                                        <div class="mt-2">
-                                            <a href="#" @click.prevent="hapusUnit(i)">Hapus</a> -
-                                            <a href="#" @click.prevent="tambahElemen(i)">Tambah Elemen</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" placeholder="Kode Unit" v-model="units[i].kode">
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" placeholder="Judul Unit" v-model="units[i].judul">
+                            </div>
+                        </div>
+                        <hr>
+                        <table class="table table-bordered" v-for="(elemen, j) in unit.elemen">
+                            <tr>
+                                <th colspan="3">
+                                    <div class="row">
+                                        <div class="col-2">Elemen #@{{ j+1 }}</div>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].elemen">
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="(elemen, j) in unit.elemen">
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <label>[@{{ j+1 }}] Elemen :</label>
-                                                <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].elemen">
-                                                <div class="mt-2">
-                                                    <a href="#" @click.prevent="hapusElemen(i, j)">Hapus</a> -
-                                                    <a href="#" @click.prevent="tambahKuk(i, j)">Tambah Kuk</a>
-                                                </div>
-                                                
-                                                <hr>
-                                                <label>Kuk :</label>
-                                            </div>
-                                            <div class="col-12" v-for="(kuk, k) in elemen.kuk">
-                                                <textarea class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k].kuk"></textarea>
-                                                <div class="text-right">
-                                                    <a href="#" @click.prevent="hapusKuk(i, j, k)">Hapus</a>
-                                                </div>
-                                            </div>
+                                        <div class="col-2">
+                                            <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahKuk(i, j)"><i class="ft-plus"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusElemen(i, j)"><i class="ft-x"></i></a>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="5%">#</th>
+                                <th>Kuk</th>
+                                <th width="10%">...</th>
+                            </tr>
+                            <tr v-for="(kuk, k) in elemen.kuk">
+                                <td>@{{ k+1 }}</td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k].kuk">
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-danger" @click.prevent="hapusKuk(i, j, k)">
+                                        <i class="ft-x"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         </table>
-                    </form>
-                </x-dashboard-card>
+                    </div>
+                </div>
+
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <a href="{{ route('admin.skema.show', [$skema->id]) }}" class="btn btn-block btn-warning">
+                            <i class="ft-chevron-left"></i> Kembali
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <button @click.prevent="submit" class="btn btn-block btn-primary">
+                            <i class="ft-save"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </x-dashboard-content>
