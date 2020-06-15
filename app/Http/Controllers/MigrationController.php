@@ -82,12 +82,14 @@ class MigrationController extends Controller
         }
         
         $result = [];
-        DB::transaction(function () use ($users, $skema, $asesor, $jadwal, $tuk, &$result) {
+        DB::transaction(function () use ($users, $skema, $asesor, $jadwal, $tuk, $frapl1, &$result) {
             // insert user
             foreach ($users as $user) {
                 $search_user = DB::table("users")->where("role", "asesi")->where("nama", $user->data->nama)->first();
                 if ($search_user == null) {
-                    $search_user = User::make('asesi', $user->data->nama, $user->data->email, $user->data->password, [], true);
+                    $search_user = User::make('asesi', $user->data->nama, $user->data->email, $user->data->password, [
+                        'ttd' => $frapl1->ttd
+                    ], true);
                 }
 
                 // convert permohonan
