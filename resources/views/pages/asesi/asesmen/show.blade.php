@@ -276,6 +276,40 @@ $breadcrumb = [
                             </div>                            
                         @endif
                     </div>  
+
+                    <!-- item umpanbalik -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->umpanbalik == null) {
+                                $status = 'Belum diisi';
+                                $style = 'danger';
+                            } else {
+                                $status = 'Sudah diisi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FORMULIR UMPAN BALIK</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if ($asesmen->umpanbalik == null)
+                                <a href="{{ route('asesi.asesmen.umpanbalik', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Isi Umpan Balik</a>
+                            @else
+                                <a target="_blank" href="{{ route('pdf.umpanbalik', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                            @endif
+                        </div>
+                        @if ($asesmen->frmak01 == null)
+                            <div class="overlay">
+                                <div>Anda Belum Menyetujui FR-MAK-01</div>
+                            </div>
+                        @elseif ($asesmen->keputusan == null)   
+                            <div class="overlay">
+                                <div>Anda bisa mengisi umpan balik ketika asesor sudah menentukan keputusan.</div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ $breadcrumb = [
     <x-dashboard-content>
         <div class="row">
             <div class="col-12">
-                <x-dashboard-card title="Skema" classBody="card-table">
+                <x-dashboard-card title="Skema" classBody="card-table pb-4">
                     <x-slot name="heading">
                         <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>

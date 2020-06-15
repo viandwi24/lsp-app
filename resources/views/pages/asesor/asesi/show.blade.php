@@ -252,6 +252,27 @@ $breadcrumb = [
                             @endif
                         </div>
                     </div>  
+
+                    <!-- item umpanbalik -->
+                    <div class="item">
+                        @php
+                            if ($asesmen->umpanbalik == null) {
+                                $status = 'Belum diisi asesi.';
+                                $style = 'danger';
+                            } else {
+                                $status = 'Sudah diisi asesi.';
+                                $style = 'success';
+                            }
+                        @endphp
+                        <div class="title">FORMULIR UMPAN BALIK</div>
+                        <div class="text-muted">
+                            Status : 
+                            <span class="badge badge-{{ $style }}">{{ $status }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <a target="_blank" href="{{ route('pdf.umpanbalik', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
