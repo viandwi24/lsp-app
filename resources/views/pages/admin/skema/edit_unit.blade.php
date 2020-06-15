@@ -51,7 +51,7 @@ $breadcrumb = [
                         </div>
                         <hr>
                         <table class="table table-bordered" v-for="(elemen, j) in unit.elemen">
-                            <tr>
+                            <tr style="background: greenyellow;">
                                 <th colspan="3">
                                     <div class="row">
                                         <div class="col-2">Elemen #@{{ j+1 }}</div>
@@ -143,6 +143,7 @@ $breadcrumb = [
                     })
                 },
                 hapusUnit(index) {
+                    if (!confirm("Yakin ingin menghapus unit ini ?")) return ;
                     this.units.splice(index, 1)
                 },
                 tambahElemen(unit) {
@@ -167,6 +168,7 @@ $breadcrumb = [
                     })
                 },
                 hapusElemen(unit, index) {
+                    if (!confirm("Yakin ingin menghapus elemen ini ?")) return ;
                     if (this.units[unit].elemen.length == 1) return 
                     this.units[unit].elemen.splice(index, 1)
                 },
@@ -187,6 +189,7 @@ $breadcrumb = [
                     })
                 },
                 hapusKuk(unit, elemen, index) {
+                    if (!confirm("Yakin ingin menghapus kuk ini ?")) return ;
                     if (this.units[unit].elemen[elemen].kuk.length == 1) return 
                     this.units[unit].elemen[elemen].kuk.splice(index, 1)
                 },
