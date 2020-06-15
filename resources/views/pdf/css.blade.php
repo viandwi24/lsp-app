@@ -1,6 +1,6 @@
 <style type="text/css">
     body { background: white; }
-    table {
+    table:not(.normal) {
         border-collapse: collapse !important;
         page-break-inside: avoid !important;
         /* table-layout: fixed; */
