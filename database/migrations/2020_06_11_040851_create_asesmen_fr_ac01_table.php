@@ -23,7 +23,7 @@ class CreateAsesmenFrAc01Table extends Migration
             $table->json('skema')->default(new Expression('(JSON_OBJECT())'));
             $table->longText('tindak_lanjut')->nullable();
             $table->longText('komentar')->nullable();
-            $table->enum('keputusan', ['kompeten', 'belum_kompeten'])->nullable()->default(null);
+            $table->enum('keputusan', ['kompeten', 'belum_kompeten'])->nullable();
 
             $table->timestamp('signed_asesi_at')->nullable();
             $table->timestamp('signed_asesor_at')->nullable();
