@@ -50,7 +50,6 @@ class SkemaSeeder extends Seeder
             'tolak_ukur' => 'Standar kompetensi',
         ]);
         $skema->frmak01()->create([]);
-        $skema->frai02()->create([]);
         $skema->fraiae01()->create([]);
         $skema->fraiae03()->create([]);
     }
