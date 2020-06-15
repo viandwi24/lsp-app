@@ -36,53 +36,57 @@ $breadcrumb = [
                             <ul class="list-inline mb-0">
                                 <li><a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusUnit(i)"><i class="ft-times"></i> Hapus Unit</a></li>
                                 <li><a class="btn btn-sm btn-success" href="#" @click.prevent="tambahElemen(i)"><i class="ft-plus"></i> Tambah Elemen</a></li>
+                                <li><a data-action="collapse"><i class="ft-plus"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <input type="text" class="form-control" placeholder="Kode Unit" v-model="units[i].kode">
+
+				    <div class="card-content collpase collapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control" placeholder="Kode Unit" v-model="units[i].kode">
+                                </div>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Judul Unit" v-model="units[i].judul">
+                                </div>
                             </div>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" placeholder="Judul Unit" v-model="units[i].judul">
-                            </div>
+                            <hr>
+                            <table class="table table-bordered" v-for="(elemen, j) in unit.elemen">
+                                <tr style="background: greenyellow;">
+                                    <th colspan="3">
+                                        <div class="row">
+                                            <div class="col-2">Elemen #@{{ j+1 }}</div>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].elemen">
+                                            </div>
+                                            <div class="col-2">
+                                                <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahKuk(i, j)"><i class="ft-plus"></i></a>
+                                                <a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusElemen(i, j)"><i class="ft-x"></i></a>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th width="5%">#</th>
+                                    <th>Kuk</th>
+                                    <th width="10%">...</th>
+                                </tr>
+                                <tr v-for="(kuk, k) in elemen.kuk">
+                                    <td>@{{ k+1 }}</td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k].kuk">
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-danger" @click.prevent="hapusKuk(i, j, k)">
+                                            <i class="ft-x"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <hr>
-                        <table class="table table-bordered" v-for="(elemen, j) in unit.elemen">
-                            <tr style="background: greenyellow;">
-                                <th colspan="3">
-                                    <div class="row">
-                                        <div class="col-2">Elemen #@{{ j+1 }}</div>
-                                        <div class="col-8">
-                                            <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].elemen">
-                                        </div>
-                                        <div class="col-2">
-                                            <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahKuk(i, j)"><i class="ft-plus"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusElemen(i, j)"><i class="ft-x"></i></a>
-                                        </div>
-                                    </div>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th width="5%">#</th>
-                                <th>Kuk</th>
-                                <th width="10%">...</th>
-                            </tr>
-                            <tr v-for="(kuk, k) in elemen.kuk">
-                                <td>@{{ k+1 }}</td>
-                                <td>
-                                    <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].kuk[k].kuk">
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-danger" @click.prevent="hapusKuk(i, j, k)">
-                                        <i class="ft-x"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+				    </div>
                 </div>
 
 
