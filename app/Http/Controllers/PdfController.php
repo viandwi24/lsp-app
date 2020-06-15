@@ -64,4 +64,11 @@ class PdfController extends Controller
         if ($asesmen->frmak03 == null) return dd("asesi belum mengisi.");
         return $this->pdf('pdf.frmak03', compact('asesmen'), "frmak03");
     }
+
+    public function umpanbalik($id)
+    {
+        $asesmen = Asesmen::findOrFail($id);
+        if ($asesmen->umpanbalik == null) return dd("asesi belum mengisi.");
+        return $this->pdf('pdf.umpanbalik', compact('asesmen'), "umpanbalik");
+    }
 }

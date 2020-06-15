@@ -23,12 +23,13 @@ class SkemaController extends Controller
                         <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Pilih
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                        <div class="dropdown-menu" style="z-index: 100;" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="'. route('asesor.skema.frpaap01', [$skema->id]) .'">FR-PAAP</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.frmak01', [$skema->id]) .'">FR-MAK-01</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.frai02', [$skema->id]) .'">FR-AI-02</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.fraiae01', [$skema->id]) .'">FR-AI-AE-01</a>
                             <a class="dropdown-item" href="'. route('asesor.skema.fraiae03', [$skema->id]) .'">FR-AI-AE-03</a>
+                            <a class="dropdown-item" href="'. route('asesor.skema.umpanbalik', [$skema->id]) .'">Umpan Balik</a>
                         </div>
                     </div>
                     ';
@@ -185,6 +186,22 @@ class SkemaController extends Controller
             'pertanyaan' => 'required|json'
         ]);
         $update = $skema->fraiae03()->update([ 'pertanyaan' => $request->pertanyaan ]);
+        
+        return redirect()->back()
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);
+    }
+
+    public function umpanbalik(Skema $skema)
+    { 
+        return view('pages.asesor.skema.umpanbalik', compact('skema'));
+    }
+
+    public function umpanbalik_update(Request $request, Skema $skema)
+    {
+        $request->validate([
+            'pertanyaan' => 'required|json'
+        ]);
+        $update = $skema->umpanbalik()->update([ 'pertanyaan' => $request->pertanyaan ]);
         
         return redirect()->back()
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Data berhasil diperbarui.']);

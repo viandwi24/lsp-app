@@ -78,9 +78,22 @@ class SkemaController extends Controller
                 'tolak_ukur' => 'Standar kompetensi',
             ]);
             $store->frmak01()->create([]);
-            $store->frai02()->create([]);
             $store->fraiae01()->create([]);
             $store->fraiae03()->create([]);
+            $store->umpanbalik()->create([
+                'pertanyaan' => [
+                    'Saya mendapatkan penjelasan yang cukup memadai mengenai proses asesmen/ uji kompetensi',
+                    'Saya diberikan kesempatan untuk mempelajari standar kompetensi yang akan diujikan dan menilai diri sendiri terhadap pencapaiannya',
+                    'Asesor memberikan kesempatan untuk mendiskusikan/  menegosiasikan metoda, instrument dan sumber asesmen serta jadwal asesmen',
+                    'Asesor berusaha menggali seluruh bukti pendukung yang sesuai dengan latar belakang pelatihan dan pengalaman yang saya miliki',
+                    'Saya mendapatkan jaminan kerahasiaan hasil asesmen serta penjelasan penanganan dokumen asesmen',
+                    'Saya sepenuhnya diberikan kesempatan untuk mendemonstrasikan kompetensi yang saya miliki selama asesmen',
+                    'Saya mendapatkan penjelasan yang memadai mengenai keputusan asesmen',
+                    'Asesor memberikan umpan balik yang  mendukung setelah asesmen serta tindak lanjutnya',
+                    'Asesor menggunakan keterampilan komunikasi yang  efektif selamaasesmen',
+                    'Asesor bersama saya menandatangani semua dokumen hasil asesmen'
+                ]
+            ]);
 
             // kategori
             $store->kategori()->sync($request->kategori_id);

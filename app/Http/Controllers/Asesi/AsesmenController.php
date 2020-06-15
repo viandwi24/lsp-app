@@ -229,4 +229,35 @@ class AsesmenController extends Controller
         return redirect()->route('asesi.asesmen.show', $asesmen->id)
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'formulir banding berhasil dibuat.']);
     }
+
+
+
+    public function umpanbalik(Asesmen $asesmen)
+    {
+        if ($asesmen->umpanbalik == null)
+        {
+            $data = [];
+            foreach($asesmen->skema->umpanbalik->pertanyaan as $pertanyaan)
+            {
+                $data[] = [ 'pertanyaan' => $pertanyaan, 'hasil' => true, 'komentar' => '' ];
+            }
+            $asesmen->umpanbalik()->create(['data' => $data]);
+            return redirect()->route('asesi.asesmen.umpanbalik', [$asesmen->id]);
+        }
+
+        return view('pages.asesi.asesmen.form.umpanbalik', compact('asesmen'));
+    }
+
+    public function umpanbalik_post(Request $request, Asesmen $asesmen)
+    {
+        if ($asesmen->umpanbalik == null) return redirect()->back();
+
+        $request->validate([ 'data' => 'required|json' ]);
+        
+        $store = $asesmen->umpanbalik()->create([ 'data' => $request->data ]);
+
+        return redirect()->route('asesi.asesmen.show', $asesmen->id)
+            ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'formulir banding berhasil dibuat.']);
+    }
+    
 }
