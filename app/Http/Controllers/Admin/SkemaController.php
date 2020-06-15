@@ -185,7 +185,7 @@ class SkemaController extends Controller
             $request->validate([ 'unit' => 'required|json' ]);
             $unit = json_decode($request->unit);
             $update = $skema->update([ 'unit' => $unit ]);
-            return redirect()->route('admin.skema.show', [$skema->id])
+            return redirect(route('admin.skema.edit', [$skema->id]). '?tab=unit')
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Memperbarui Data Berhasil.']);
 
         // asesor

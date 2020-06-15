@@ -28,6 +28,21 @@ $breadcrumb = [
                     <input type="hidden" name="unit">
                 </form>
 
+
+
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <a href="{{ route('admin.skema.show', [$skema->id]) }}" class="btn btn-block btn-warning">
+                            <i class="ft-chevron-left"></i> Kembali
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <button @click.prevent="submit" class="btn btn-block btn-primary">
+                            <i class="ft-save"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+
                 <div class="card shadow" v-for="(unit, i) in units">
                     <div class="card-header pb-2">
                         <h4 class="card-title">Unit #@{{ i+1 }}</h4>
