@@ -11,4 +11,5 @@ Route::group([
     Route::get('frai02/{id}', "PdfController@frai02")->name("frai02");
     Route::get('frac01/{id}', "PdfController@frac01")->name("frac01");
     Route::get('frmak03/{id}', "PdfController@frmak03")->name("frmak03");
+    Route::get('umpanbalik/{id}', "PdfController@umpanbalik")->name("umpanbalik");
 });

@@ -24,6 +24,8 @@ Route::group([
     Route::put('skema/{skema}/fraiae01', 'SkemaController@fraiae01_update')->name('skema.fraiae01.update');
     Route::get('skema/{skema}/fraiae03', 'SkemaController@fraiae03')->name('skema.fraiae03');
     Route::put('skema/{skema}/fraiae03', 'SkemaController@fraiae03_update')->name('skema.fraiae03.update');
+    Route::get('skema/{skema}/umpanbalik', 'SkemaController@umpanbalik')->name('skema.umpanbalik');
+    Route::put('skema/{skema}/umpanbalik', 'SkemaController@umpanbalik_update')->name('skema.umpanbalik.update');
     // 
     Route::resource('permohonan', 'PermohonanController', ['parameters' => ['permohonan' => 'permohonan_asesi_asesor']])
         ->only(['index', 'edit', 'update']);

@@ -33,6 +33,8 @@ Route::group([
     Route::post('asesmen/{asesmen}/frac01', 'AsesmenController@frac01_post')->name('asesmen.frac01');
     Route::get('asesmen/{asesmen}/frmak03', 'AsesmenController@frmak03')->name('asesmen.frmak03');
     Route::post('asesmen/{asesmen}/frmak03', 'AsesmenController@frmak03_post')->name('asesmen.frmak03');
+    Route::get('asesmen/{asesmen}/umpanbalik', 'AsesmenController@umpanbalik')->name('asesmen.umpanbalik');
+    Route::post('asesmen/{asesmen}/umpanbalik', 'AsesmenController@umpanbalik_post')->name('asesmen.umpanbalik');
     
     Route::resource('berkas', 'BerkasController');
 });
