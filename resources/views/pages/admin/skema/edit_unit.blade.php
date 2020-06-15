@@ -77,8 +77,7 @@ $breadcrumb = [
                                                 <input type="text" class="form-control form-control-sm" v-model="units[i].elemen[j].elemen">
                                             </div>
                                             <div class="col-2">
-                                                <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahKuk(i, j)"><i class="ft-plus"></i></a>
-                                                <a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusElemen(i, j)"><i class="ft-x"></i></a>
+                                                <a class="btn btn-sm btn-danger" href="#" @click.prevent="hapusElemen(i, j)"><i class="ft-x"></i> Hapus Elemen</a>
                                             </div>
                                         </div>
                                     </th>
@@ -86,7 +85,9 @@ $breadcrumb = [
                                 <tr>
                                     <th width="5%">#</th>
                                     <th>Kuk</th>
-                                    <th width="10%">...</th>
+                                    <th width="10%">
+                                        <a class="btn btn-sm btn-success" href="#" @click.prevent="tambahKuk(i, j)"><i class="ft-plus"></i></a>
+                                    </th>
                                 </tr>
                                 <tr v-for="(kuk, k) in elemen.kuk">
                                     <td>@{{ k+1 }}</td>
