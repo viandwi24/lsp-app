@@ -59,4 +59,9 @@ class Skema extends Model
     {
         return $this->hasOne('App\Models\FrAc01');
     }
+
+    public function umpanbalik()
+    {
+        return $this->hasOne('App\Models\FrUmpanBalik');
+    }
 }

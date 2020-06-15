@@ -82,4 +82,9 @@ class Asesmen extends Model
     {
         return $this->hasOne('App\Models\AsesmenFrac01');
     }
+
+    public function umpanbalik()
+    {
+        return $this->hasOne('App\Models\AsesmenFrUmpanBalik');
+    }
 }
