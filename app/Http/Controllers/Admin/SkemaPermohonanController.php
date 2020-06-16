@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use DataTables;
 use DB;
 use App\Services\Select2;
+use Illuminate\Database\Eloquent\Builder;
 
 class SkemaPermohonanController extends Controller
 {
@@ -25,7 +26,13 @@ class SkemaPermohonanController extends Controller
     {
         if ($request->ajax())
         {
-            $permohonan = Permohonan::with('asesi', 'skema')->whereSkemaId($skema->id)->get();
+            $permohonan = Permohonan::with(['asesi' => function ($query) {
+                return $query->select('id', 'nama');
+            }, 'skema' => function ($query) {
+                return $query->select('id', 'judul', 'kode');
+            }])
+                ->select('id', 'created_at', 'asesi_id', 'skema_id')
+                ->whereSkemaId($skema->id)->get();
             return DataTables::of($permohonan)
                 ->addColumn('action', function (Permohonan $permohonan) use ($skema) {
                     $result = '<div>';
