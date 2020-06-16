@@ -31,7 +31,7 @@ class SkemaPermohonanController extends Controller
             }, 'skema' => function ($query) {
                 return $query->select('id', 'judul', 'kode');
             }])
-                ->select('id', 'created_at', 'asesi_id', 'skema_id')
+                ->select('id', 'created_at', 'asesi_id', 'skema_id', 'approved_at')
                 ->whereSkemaId($skema->id)->get();
             return DataTables::of($permohonan)
                 ->addColumn('action', function (Permohonan $permohonan) use ($skema) {
