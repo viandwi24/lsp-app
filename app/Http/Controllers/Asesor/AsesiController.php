@@ -397,12 +397,15 @@ class AsesiController extends Controller
                 'komentar' => 'required',
             ]);
 
-            $update = $asesmen->frac01()->update([
-                'bukti' => json_decode($request->bukti),
-                'keputusan' => $request->keputusan,
-                'tindak_lanjut' => $request->tindak_lanjut,
-                'komentar' => $request->komentar
-            ]);
+            DB::transaction(function () use ($asesmen, $request) {
+                $update = $asesmen->frac01()->update([
+                    'bukti' => json_decode($request->bukti),
+                    'keputusan' => $request->keputusan,
+                    'tindak_lanjut' => $request->tindak_lanjut,
+                    'komentar' => $request->komentar
+                ]);
+                $asesmen->update([ 'keputusan' => $request->keputusan ]);
+            });
 
             return redirect()->route('asesor.asesi.show', $asesmen->id)
             ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Mengisi formulir Berhasil.']);
