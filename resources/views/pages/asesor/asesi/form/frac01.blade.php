@@ -120,10 +120,14 @@ $breadcrumb = [
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Keputusan</label>
-                                <select name="keputusan" class="form-control">
-                                    <option value="kompeten" {{ $asesmen->frac01->keputusan == 'kompeten' ? 'selected' : '' }}>kompeten</option>
-                                    <option value="belum_kompeten" {{ $asesmen->frac01->keputusan == 'belum_kompeten' ? 'selected' : '' }}>Belum Kompeten</option>
-                                </select>
+                                <div class="custom-control custom-radio">
+                                    <input value="kompeten" type="radio" id="r1" name="keputusan" class="custom-control-input" {{ $asesmen->frac01->keputusan == 'kompeten' ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="r1">Kompeten</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input value="belum_kompeten" type="radio" id="r2" name="keputusan" class="custom-control-input" {{ $asesmen->frac01->keputusan == 'belum_kompeten' ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="r2">Belum Kompeten</label>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Tindak Lanjut</label>

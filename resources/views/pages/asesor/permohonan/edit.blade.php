@@ -81,8 +81,8 @@ $breadcrumb = [
                                 <tbody>
                                     <tr>
                                         <th colspan="2">Dapatkan saya ?</th>
-                                        <th width="7%">BK</th>
                                         <th width="7%">K</th>
+                                        <th width="7%">BK</th>
                                     </tr>
                                 </tbody>
                                 <tbody>
@@ -90,12 +90,11 @@ $breadcrumb = [
                                         <tr>
                                             <td colspan="4">{{ $elemen->elemen }}</td>
                                         </tr>
-
                                         @foreach ($elemen->kuk as $kuk_index => $kuk)
                                             <tr>
                                                 <td width="5%">{{ $unit_index }}.{{ $elemen_index }}</td>
                                                 <td>{{ $kuk->kuk }}</td>
-                                                @if ($permohonanAsesiAsesor->permohonan->data->kuk[$unit_index][$elemen_index][$kuk_index] == false)
+                                                @if (!$permohonanAsesiAsesor->permohonan->data->kuk[$unit_index][$elemen_index][$kuk_index])
                                                     <td></td>
                                                     <td><i class="ft-check"></i></td>
                                                 @else
