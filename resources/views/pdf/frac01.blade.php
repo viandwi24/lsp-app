@@ -40,6 +40,18 @@
                     <td>{{ @(\Carbon\Carbon::parse($asesmen->jadwal->waktu_pelaksanaan))->format('d-m-Y') }}</td>
                 </tr>
                 <tr>
+                    <th class="highlight" width="25%">Hasil Keputusan</th>
+                    <td>
+                        @if (@$asesmen->frac01->keputusan == "belum_kompeten")
+                            <strike>Kompeten</strike> /
+                            <b>Tidak Kompeten</b>
+                        @else
+                            <b>Kompeten</b>
+                            <strike>Tidak Kompeten</strike>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <td class="highlight" width="25%">
                         <b>Tindak lanjut yang dibutuhkan</b><br>
                         <span>
