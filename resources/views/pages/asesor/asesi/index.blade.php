@@ -69,7 +69,7 @@ $breadcrumb = [
                         ajax: "{{ url()->route('asesor.asesi') }}",
                         processing: true,
                         order: [[0, 'asc']],
-                        columnDefs: [ { orderable: false, targets: [2] }, ],
+                        columnDefs: [ { orderable: false, targets: [4] }, ],
                         columns: [
                             { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
                             { data: 'skema.judul' },

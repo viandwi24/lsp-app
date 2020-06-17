@@ -16,7 +16,11 @@ class AsesiController extends Controller
     {
         if ($request->ajax())
         {
-            $asesmen = Asesmen::with('asesi', 'skema')->where('asesor_id', auth()->user()->id)->get();
+            $asesmen = Asesmen::with(['asesi' => function ($query) {
+                return $query->select('id', 'nama');
+            }, 'skema'  => function ($query) {
+                return $query->select('id', 'judul', 'kode');
+            }])->where('asesor_id', auth()->user()->id)->get();
             return DataTables::of($asesmen)
                 ->addColumn('keputusan', function (Asesmen $asesmen) {
                     $keputusan = $asesmen->keputusan;

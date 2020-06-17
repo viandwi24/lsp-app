@@ -16,7 +16,7 @@ class PermohonanController extends Controller
     {
         if ($request->ajax())
         {
-            $permohonan = PermohonanAsesiAsesor::with('permohonan', 'permohonan.skema', 'permohonan.asesi')
+            $permohonan = PermohonanAsesiAsesor::with(['permohonan', 'permohonan.skema' => function ($query) { return $query->select('id', 'judul', 'kode'); }, 'permohonan.asesi' => function ($query) { return $query->select('id', 'nama'); }])
                 ->where('asesor_id', auth()->user()->id)->get();
             return DataTables::of($permohonan)
                 ->addColumn('action', function (PermohonanAsesiAsesor $permohonan) {

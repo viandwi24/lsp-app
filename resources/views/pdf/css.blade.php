@@ -2,8 +2,8 @@
     body { background: white; }
     table:not(.normal) {
         border-collapse: collapse !important;
+        page-break-before: always !important;
         page-break-inside: avoid !important;
-        /* table-layout: fixed; */
     }
     table tr td,
     table tr th, table thead * {
@@ -17,6 +17,7 @@
     img.logo { max-height: 25px; }
     .header { min-height: 25px; height: 25px; }
     th.highlight, td.highlight , tr.highlight { background: #a8df65; }
+    th.highlight2, td.highlight2 , tr.highlight2 { background: #ffcc60; }
     .check { 
         display: inline;
     }

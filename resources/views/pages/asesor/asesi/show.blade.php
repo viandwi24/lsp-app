@@ -247,9 +247,7 @@ $breadcrumb = [
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
                         </div>
                         <div class="mt-2">
-                            @if ($asesmen->frmak03 != null)
-                                <a target="_blank" href="{{ route('pdf.frmak03', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
-                            @endif
+                            <a target="_blank" href="{{ route('pdf.frmak03', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                     </div>  
 

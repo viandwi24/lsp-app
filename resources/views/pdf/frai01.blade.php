@@ -45,11 +45,10 @@
             <table class="table table-bordered middle">
                 <thead>
                     <tr class="highlight">
-                        <td colspan="7">{{ @$unit->kode }} {{ @$unit->judul }}</td>
+                        <td colspan="6">{{ @$unit->kode }} / {{ @$unit->judul }}</td>
                     </tr>
                     <tr>
                         <th class="highlight">No</th>
-                        <th class="highlight">Elemen</th>
                         <th class="highlight">Kriteria Unjuk Kerja</th>
                         <th class="highlight">Benchmark (SOP / spesifikasi produk industri)</th>
                         <th class="highlight">K</th>
@@ -61,17 +60,13 @@
                     @php $i = 1; @endphp
                     @foreach ($unit->elemen as $elemen)
                         <tr>
-                            <td rowspan="{{ count($elemen->kuk) }}">{{ $i++ }}</td>
-                            <td rowspan="{{ count($elemen->kuk) }}">{{ @$elemen->elemen }}</td>
-                            <td>{{ @$elemen->kuk[0]->kuk }}</td>
-                            <td>{{ @$elemen->kuk[0]->benchmark }}</td>
-                            <td>{!! @($elemen->kuk[0]->pilihan) ? '<div class="check"></div>' : "" !!}</td>
-                            <td>{!! @(!$elemen->kuk[0]->pilihan) ? '<div class="check"></div>' : "" !!}</td>
-                            <td>{{ @$elemen->kuk[0]->penilaian }}</td>
+                            <td colspan="6" class="highlight2">
+                                <b>Elemen : </b> {{ @$elemen->elemen }}
+                            </td>
                         </tr>
                         @foreach ($elemen->kuk as $index => $kuk)
-                            @php if($index == 0) continue; @endphp
                             <tr>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ @$kuk->kuk }}</td>
                                 <td>{{ @$kuk->benchmark }}</td>
                                 <td>{!! @($kuk->pilihan) ? '<div class="check"></div>' : "" !!}</td>
