@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Services\User;
 
+Route::get('/', function () { return view("pages.home"); });
+
 Route::get('berkas/{path?}', function ($path) {
     // role
     $role = 'guest';
