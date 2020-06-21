@@ -24,7 +24,7 @@
         <title>{{ env('APP_NAME', 'Laravel') }}</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand navbar-light bg-light shadow">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container">
                 <a class="navbar-brand" href="#">{{ env('APP_NAME', 'Laravel') }} - SMKN 1 MOJOKERTO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,9 +42,9 @@
             </div>
         </nav>
 
-        <div class="row justify-content-center mt-4 mb-4">
-            <div class="col-8">
-                <div class="container">
+        <div class="container">
+            <div class="row justify-content-center mt-4 mb-4">
+                <div class="col-lg-8 col-sm-12">
                     <video id="lspvideo" class="mb-2" style="width: 100%;height: auto;">
                         <source src="{{ asset('assets/lsp.mp4') }}" type="video/mp4">
                         Your browser does not support HTML5 video.
@@ -96,7 +96,11 @@
                             <p>
                                 Dalam melaksanakan tugas dan fungsi, LSP SMKN 1 Mojokerto mengacu 
                                 kepada Pedoman yang dikeluarkan BNSP. Dalam pedoman tersebut 
-                                ditetapkan persyaratan yang harus ditaati untuk menjamin agar 
+                                if (result.value) {
+                                    video.play();
+                                    video.loop = true;
+                                }
+                            });            ditetapkan persyaratan yang harus ditaati untuk menjamin agar 
                                 lembaga sertifikasi menjalankan prosedur sertifikasi kepada pihak
                                 ketiga secara konsisten dan profesional, sehingga dapat diterima 
                                 di tingkat nasional yang relevan.
@@ -115,12 +119,15 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script>
             $(document).ready(() => {
-                Swal.fire('Welcome to <br>LSP SMKN 1 Mojokerto.').then((result) => {
-                    if (result.value) {
-                        document.getElementById('lspvideo').play();
-                        document.getElementById('lspvideo').loop = true;
-                    }
-                });
+                const video = document.getElementById('lspvideo');
+                video.addEventListener('loadeddata', function() {
+                    Swal.fire('Welcome to <br>LSP SMKN 1 Mojokerto.').then((result) => {
+                        if (result.value) {
+                            video.play();
+                            video.loop = true;
+                        }
+                    });
+                }, false);
             })
         </script>
     </body>
