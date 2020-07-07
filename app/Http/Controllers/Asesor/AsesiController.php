@@ -22,6 +22,7 @@ class AsesiController extends Controller
                 return $query->select('id', 'judul', 'kode');
             }])->where('asesor_id', auth()->user()->id)->get();
             return DataTables::of($asesmen)
+                ->addColumn('form_complete', function (Asesmen $asesmen) { return $this->form_complete($asesmen); })
                 ->addColumn('keputusan', function (Asesmen $asesmen) {
                     $keputusan = $asesmen->keputusan;
                     return ($keputusan == null) ? 'Belum ditentukan' : ($keputusan == 'kompeten' ? 'Kompeten' : 'Belum Kompeten');
@@ -38,6 +39,19 @@ class AsesiController extends Controller
 
         return view('pages.asesor.asesi.index');
     }
+
+    protected function form_complete(Asesmen $asesmen)
+    {
+        $selesai = [];
+        if ($asesmen->frmak01 && $asesmen->frmak01->signed_asesor_at != null) $selesai[] = "frmak01";
+        if ($asesmen->frai01) $selesai[] = "frai01";
+        if ($asesmen->frai02) $selesai[] = "frai02";
+        if ($asesmen->frac01) $selesai[] = "frac01";
+        if ($asesmen->fraiae01) $selesai[] = "fraiae01";
+        if ($asesmen->fraiae03) $selesai[] = "fraiae03";
+        return implode(", ", $selesai);
+    }
+    
 
     public function show(Asesmen $asesmen)
     {
