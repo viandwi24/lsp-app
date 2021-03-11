@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     {
         User::make('admin', 'Example Admin', 'admin@mail.com', 'password', []);
         User::make('asesi', 'Example Asesi', 'asesi@mail.com', 'password', []);
+        User::make('asesi', 'Example Asesi 2', 'asesi2@mail.com', 'password', []);
         User::make('asesor', 'Example Asesor', 'asesor@mail.com', 'password', []);
         User::make('superadmin', 'Example Superadmin', 'superadmin@mail.com', 'password', []);
         $this->asesor();

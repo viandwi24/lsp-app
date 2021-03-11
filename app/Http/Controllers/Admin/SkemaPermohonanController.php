@@ -10,7 +10,7 @@ use App\Models\Skema;
 use App\Models\Tuk;
 use App\User;
 use Carbon\Carbon;
-use DataTables;
+use Yajra\DataTables\DataTables;
 use DB;
 use App\Services\Select2;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,10 +30,12 @@ class SkemaPermohonanController extends Controller
                 return $query->select('id', 'nama');
             }, 'skema' => function ($query) {
                 return $query->select('id', 'judul', 'kode');
-            }])
+            }, 'permohonan_asesi_asesor', 'permohonan_asesi_asesor.asesor'
+            ])
                 ->select('id', 'created_at', 'asesi_id', 'skema_id', 'approved_at')
                 ->whereSkemaId($skema->id)->get();
             return DataTables::of($permohonan)
+                ->editColumn('created_at', function (Permohonan $permohonan) { return Carbon::parse($permohonan->created_at)->format('H:i d-m-Y'); })
                 ->addColumn('action', function (Permohonan $permohonan) use ($skema) {
                     $result = '<div>';
                     if ($permohonan->approved_at == null)
@@ -91,24 +93,55 @@ class SkemaPermohonanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Skema $skema, Permohonan $permohonan)
+    public function edit(Skema $skema, $id)
     {
-        if ($permohonan->approved_at != null || isset($_GET['batal']))
+        $ids = \explode(',', $id);
+        $permohonans = Permohonan::findOrFail($ids);
+
+        // 
+        $users = $skema->asesor;
+        $asesors = new Select2($users, ['id', 'nama']);
+        $skema_jadwal = $skema->jadwal;
+        $jadwals = new Select2($skema_jadwal, ['id', 'nama']);
+        $skema_tuk = $skema->tuk;
+        $tuks = new Select2($skema_tuk, ['id', 'nama']);
+
+        // 
+        if (count($permohonans) == 1)
         {
-            $permohonan->update(['approved_at' => null]);
-            $permohonan->permohonan_asesi_asesor()->delete();
-            return redirect()->back()
-                ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Dibatalkan.']);
-        } else if ($permohonan->approved_at == null || isset($_GET['setujui']))
-        {
-            // dd($permohonan->data->data_diri);
-            $users = User::where('role', 'asesor')->get();
-            $asesors = new Select2($users, ['id', 'nama']);
-            $skema_jadwal = $skema->jadwal;
-            $jadwals = new Select2($skema_jadwal, ['id', 'nama']);
-            $skema_tuk = $skema->tuk;
-            $tuks = new Select2($skema_tuk, ['id', 'nama']);
-            return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors', 'jadwals', 'tuks'));
+            $permohonan = $permohonans[0];
+            if ($permohonan->approved_at != null || isset($_GET['batal']))
+            {
+                $permohonan->update(['approved_at' => null]);
+                $permohonan->permohonan_asesi_asesor()->delete();
+                return redirect()->back()
+                    ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Dibatalkan.']);
+            } else if ($permohonan->approved_at == null || isset($_GET['setujui']))
+            {
+                return view('pages.admin.skema.permohonan.edit', compact('skema', 'permohonan', 'asesors', 'jadwals', 'tuks'));
+            }
+        } else if (count($permohonans) > 1) {
+            if (isset($_GET['batal']))
+            {
+                DB::transaction(function () use ($permohonans) {
+                    $permohonans->each(function (Permohonan $permohonan, $key) {
+                        $permohonan->update(['approved_at' => null]);
+                        $permohonan->permohonan_asesi_asesor()->delete();
+                    });
+                });
+                return redirect()->back()
+                    ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Dibatalkan.']);
+            } else {
+                $gagal = false;
+                $permohonans->each(function (Permohonan $permohonan, $key) use (&$gagal) {
+                    if ($permohonan->approved_at != null) $gagal = true;
+                });
+                if ($gagal) return redirect()->back()
+                    ->with('alert', ['type' => 'warning', 'title' => 'Tidak dapat di proses', 'text' => 'Ada sebagian data yang telah disetujui.']);
+            }
+            return view('pages.admin.skema.permohonan.edit_bulk', compact('skema', 'permohonans', 'asesors', 'jadwals', 'tuks'));
+        } else {
+            return abort(404);
         }
 
         return redirect()->back();
@@ -121,25 +154,54 @@ class SkemaPermohonanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Skema $skema, Permohonan $permohonan)
+    public function update(Request $request, Skema $skema, $id)
     {
-        if ($permohonan->approved_at == null)
+        $ids = \explode(',', $id);
+        $permohonans = Permohonan::findOrFail($ids);
+        if (count($permohonans) == 1)
         {
+            $permohonan = $permohonans[0];
+            if ($permohonan->approved_at == null)
+            {
+                $request->validate(['asesor' => 'required', 'jadwal' => 'required', 'tuk' => 'required']);
+                $asesor = User::findOrFail($request->asesor);
+                $jadwal = Jadwal::findOrFail($request->jadwal);
+                $tuk = Tuk::findOrFail($request->tuk);
+
+                DB::transaction(function () use ($permohonan, $asesor, $jadwal, $tuk) {
+                    $permohonan->update(['approved_at' => Carbon::now()]);
+                    $permohonan->permohonan_asesi_asesor()->create([
+                        'asesor_id' => $asesor->id,
+                        'jadwal_id' => $jadwal->id,
+                        'tuk_id' => $tuk->id,
+                    ]);
+                });
+                return redirect()->route('admin.skema.permohonan.index', [$skema->id])
+                    ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Disetujui.']);
+            }
+        } else if (count($permohonans) > 1) {
             $request->validate(['asesor' => 'required', 'jadwal' => 'required', 'tuk' => 'required']);
             $asesor = User::findOrFail($request->asesor);
             $jadwal = Jadwal::findOrFail($request->jadwal);
             $tuk = Tuk::findOrFail($request->tuk);
 
-            DB::transaction(function () use ($permohonan, $asesor, $jadwal, $tuk) {
-                $permohonan->update(['approved_at' => Carbon::now()]);
-                $permohonan->permohonan_asesi_asesor()->create([
-                    'asesor_id' => $asesor->id,
-                    'jadwal_id' => $jadwal->id,
-                    'tuk_id' => $tuk->id,
-                ]);
+            $permohonans->each(function (Permohonan $permohonan, $key) use ($request, $asesor, $jadwal, $tuk, $skema) {
+                if ($permohonan->approved_at == null)
+                {    
+                    DB::transaction(function () use ($permohonan, $asesor, $jadwal, $tuk) {
+                        $permohonan->update(['approved_at' => Carbon::now()]);
+                        $permohonan->permohonan_asesi_asesor()->create([
+                            'asesor_id' => $asesor->id,
+                            'jadwal_id' => $jadwal->id,
+                            'tuk_id' => $tuk->id,
+                        ]);
+                    });
+                }
             });
             return redirect()->route('admin.skema.permohonan.index', [$skema->id])
                 ->with('alert', ['type' => 'success', 'title' => 'Sukses', 'text' => 'Permohonan Disetujui.']);
+        } else {
+            return abort(404);
         }
 
         return redirect()->back();

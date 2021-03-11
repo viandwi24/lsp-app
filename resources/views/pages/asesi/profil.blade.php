@@ -43,7 +43,7 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <div class="card shadow">
+                    {{-- <div class="card shadow">
                         <div class="card-header">
                             <h4 class="card-title">Ganti Password</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
@@ -70,7 +70,7 @@ $breadcrumb = [
                                 * Isi Hanya Jika Ingin Mengganti Password
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="col-lg-6 col-sm-12">

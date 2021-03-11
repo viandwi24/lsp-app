@@ -25,6 +25,8 @@ $breadcrumb = [
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" id="bulkDelete">Hapus</a>
+                                <a class="dropdown-item" id="bulkAccept">Setujui</a>
+                                <a class="dropdown-item" id="bulkDismiss">Batalkan Setuju</a>
                             </div>
                         </div>
                         <li><a id="reload"><i class="ft-rotate-cw"></i></a></li>
@@ -42,8 +44,8 @@ $breadcrumb = [
                                     </div>
                                 </th>
                                 <th width="8%">#</th>
-                                <th>Skema</th>
                                 <th>Asesi</th>
+                                <th>Asesor</th>
                                 <th>Status</th>
                                 <th>Pada</th>
                                 <th width="15%" class="text-center">...</th>
@@ -82,8 +84,14 @@ $breadcrumb = [
                         `
                     },
                     { render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
-                    { data: 'skema.judul' },
                     { data: 'asesi.nama' },
+                    {
+                        data: null,
+                        render: (data) => {
+                            const asesor = data?.permohonan_asesi_asesor?.asesor?.nama
+                            return (asesor == null) ? '-' : asesor
+                        }
+                    },
                     { data: 'status' },
                     { data: 'created_at' },
                     { data: 'action' },
@@ -113,6 +121,14 @@ $breadcrumb = [
                     var form = $(`<form action="` + url + `" method="post"> @method('delete') @csrf </form>`);
                     $('body').append(form);
                     form.submit();
+                })
+                $('#bulkAccept').on('click', () => {
+                    var url = '{{ route("admin.skema.permohonan.index", [$skema->id]) }}/' + bulkSelectedItem + '/edit?setujui'
+                    window.location.href = url
+                })
+                $('#bulkDismiss').on('click', () => {
+                    var url = '{{ route("admin.skema.permohonan.index", [$skema->id]) }}/' + bulkSelectedItem + '/edit?batal'
+                    window.location.href = url
                 })
             }
         })

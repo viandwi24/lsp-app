@@ -109,6 +109,7 @@ $breadcrumb = [
 
                     this.datatable = $('#table').DataTable( {
                         ajax: "{{ route('admin.skema.index') }}",
+                        serverSide: true,
                         processing: true,
                         order: [[1, 'asc']],
                         columnDefs: [ { orderable: false, targets: [0, 5] }, ],

@@ -81,8 +81,8 @@ $breadcrumb = [
                                 <tbody>
                                     <tr>
                                         <th colspan="2">Dapatkan saya ?</th>
-                                        <th width="7%">K</th>
                                         <th width="7%">BK</th>
+                                        <th width="7%">K</th>
                                     </tr>
                                 </tbody>
                                 <tbody>
