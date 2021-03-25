@@ -78,6 +78,7 @@ $breadcrumb = [
                 </button>
             </div>
         </div>
+        {{-- {{ dd($skema->unit) }} --}}
     </x-dashboard-content>
 @endsection
 
@@ -89,7 +90,7 @@ $breadcrumb = [
                 units: @JSON($skema->unit)
             },
             mounted() {
-                console.log(this.unit);
+                console.log(this.units);
             },
             methods: {
                 hapus(unit, index) {

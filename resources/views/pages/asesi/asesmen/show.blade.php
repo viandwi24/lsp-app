@@ -136,9 +136,9 @@ $breadcrumb = [
                             <span class="badge badge-{{ $style }}">{{ $status }}</span>
                         </div>
                         <div class="mt-2">
-                            @if ($asesmen->frai02 != null)
-                            <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
-                            @endif
+                            {{-- @if ($asesmen->frai02 != null)
+                                <a href="{{ route('asesi.asesmen.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
+                            @endif --}}
                             <a target="_blank" href="{{ route('pdf.frai02', [$asesmen->id]) }}" class="btn btn-sm btn-success">Download</a>
                         </div>
                         @if ($asesmen->frmak01 == null)
@@ -148,7 +148,7 @@ $breadcrumb = [
                         @endif
                     </div>
 
-                    <!-- item ai-ae-01 -->
+                    {{-- <!-- item ai-ae-01 -->
                     <div class="item">
                         @php
                             $status = 'Belum diisi.';
@@ -167,7 +167,7 @@ $breadcrumb = [
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('asesi.asesmen.fraiae01', [$asesmen->id]) }}" class="btn btn-sm btn-primary">Buka / Isi</a>
-                            <button class="btn btn-sm btn-success">Download</button>
+                            <a target="_blank" href="" class="btn btn-sm btn-success">Download</a>
                             @if ($asesmen->fraiae01 != null)
                                 <a href="{{ route('asesi.asesmen.fraiae01', [$asesmen->id]) . '?reset' }}" class="btn btn-sm btn-danger">Reset Form</a>
                             @endif
@@ -208,7 +208,7 @@ $breadcrumb = [
                                 <div>Anda Belum Menyetujui FR-MAK-01</div>
                             </div>                            
                         @endif
-                    </div>
+                    </div> --}}
 
 
                     <!-- item ac-03 -->

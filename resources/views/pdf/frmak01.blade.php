@@ -118,7 +118,8 @@
                             <td width="10%"></td>
                             <td>Tanggal</td>
                             <td width="5%">:</td>
-                            <td>{{ \Carbon\Carbon::parse(@$asesmen->frmak01->signed_asesi_at)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse(@$asesmen->jadwal->waktu_pelaksanaan)->format('d-m-Y') }}</td>
+                            {{-- <td>{{ \Carbon\Carbon::parse(@$asesmen->frmak01->signed_asesi_at)->format('d-m-Y') }}</td> --}}
                         </tr>
                         <tr>
                             <td>Tanda Tangan Asesor</td>
@@ -129,7 +130,8 @@
                             <td width="10%"></td>
                             <td>Tanggal</td>
                             <td width="5%">:</td>
-                            <td>{{ \Carbon\Carbon::parse(@$asesmen->frmak01->signed_asesor_at)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse(@$asesmen->jadwal->waktu_pelaksanaan)->format('d-m-Y') }}</td>
+                            {{-- <td>{{ \Carbon\Carbon::parse(@$asesmen->frmak01->signed_asesor_at)->format('d-m-Y') }}</td> --}}
                         </tr>
                     </table>
                 </td>

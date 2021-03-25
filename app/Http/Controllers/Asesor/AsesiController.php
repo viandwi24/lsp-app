@@ -192,6 +192,7 @@ class AsesiController extends Controller
             {
                 $data[$unit_index] = clone $unit;
                 $data[$unit_index]->pertanyaan = [];
+                if (!isset($unit->pertanyaan)) $unit->pertanyaan = [];
                 foreach($unit->pertanyaan as $index => $pertanyaan)
                 {
                     $data[$unit_index]->pertanyaan[] = (object) ['pertanyaan' => $units[$unit_index]->pertanyaan[$index], 'jawaban' => '', 'memuaskan' => false];
@@ -407,8 +408,8 @@ class AsesiController extends Controller
             $request->validate([
                 'bukti' => 'required',
                 'keputusan' => 'required|in:kompeten,belum_kompeten',
-                'tindak_lanjut' => 'required',
-                'komentar' => 'required',
+                'tindak_lanjut' => 'nullable',
+                'komentar' => 'nullable',
             ]);
 
             DB::transaction(function () use ($asesmen, $request) {

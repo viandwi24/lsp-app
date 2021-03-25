@@ -129,9 +129,9 @@ $breadcrumb = [
                             $status = 'Belum diisi.';
                             $style = 'danger';
                             if ($asesmen->frai02 == null) {
-                                $status = 'Belum diisi asesi.';
+                                $status = 'Belum diisi.';
                             } else {
-                                $status = 'Sudah diisi asesi.';
+                                $status = 'Sudah diisi.';
                                 $style = 'success';
                             }
                         @endphp
@@ -149,7 +149,7 @@ $breadcrumb = [
                         </div>
                     </div>
 
-                    <!-- item ai-ae-01 -->
+                    {{-- <!-- item ai-ae-01 -->
                     <div class="item">
                         @php
                             $status = 'Belum diisi asesi.';
@@ -197,7 +197,7 @@ $breadcrumb = [
                             @endif
                             <button class="btn btn-sm btn-success">Download</button>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- item ac-03 -->
                     <div class="item">

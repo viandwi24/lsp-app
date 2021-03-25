@@ -63,7 +63,7 @@ class AsesmenController extends Controller
 
     public function frai02(Asesmen $asesmen)
     {
-        if ($asesmen->frai02 == null) return dd("asesir belum mengisi.");
+        if ($asesmen->frai02 == null) return dd("asesor belum mengisi.");
         return view('pages.asesi.asesmen.form.frai02', compact('asesmen'));
     }
 
@@ -237,7 +237,9 @@ class AsesmenController extends Controller
         if ($asesmen->umpanbalik == null)
         {
             $data = [];
-            foreach($asesmen->skema->umpanbalik->pertanyaan as $pertanyaan)
+            $tes = ($asesmen->skema->umpanbalik == null) ? null : $asesmen->skema->umpanbalik->pertanyaan;
+            if (!isset($tes) || count($tes) == 0 || $tes == null) $tes = [];
+            foreach($tes as $pertanyaan)
             {
                 $data[] = [ 'pertanyaan' => $pertanyaan, 'hasil' => true, 'komentar' => '' ];
             }
